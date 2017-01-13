@@ -26,7 +26,7 @@ sllnode *newSLLNode(void *value) {
 sllnode *findSLLNode(sll *items, int index) {
 	sllnode *node = items->head;
 	
-	for (int i = 0; i < index; i++) {
+	for (int i = 0; i < index - 1; i++) {
 		if (node->next == 0) {
 			break;
 		}
@@ -82,9 +82,9 @@ void *removeSLL(sll *items, int index) {
 	sllnode *prevNode = node;
 	void *value = node->value;
 	
-	for (int i = 0; i < index; i++) {
+	for (int i = 0; i < index - 1; i++) {
 		if (node->next == 0) {
-			break;
+			return 0;
 		}
 		
 		prevNode = node;
