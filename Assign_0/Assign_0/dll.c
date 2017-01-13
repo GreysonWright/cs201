@@ -1,30 +1,31 @@
 //
-//  sll.c
+//  dll.c
 //  Assign_0
 //
 //  Created by Greyson Wright on 1/13/17.
 //  Copyright © 2017 Greyson Wright. All rights reserved.
 //
 
-#include "sll.h"
+#include "dll.h"
 #include <stdlib.h>
 #include "integer.h"
 
-sllnode *newSLLNode(void *value) {
-	sllnode *node = malloc(sizeof *node);
+dllnode *newDLLNode(void *value) {
+	dllnode *node = malloc(sizeof *node);
 	if (node == 0) {
 		fprintf(stderr, "out of memory");
 		exit(-1);
 	}
 	
 	node->value = value;
+	node->prev = 0;
 	node->next = 0;
 	
 	return node;
 }
 
-sllnode *findSLLNode(sll *items, int index) {
-	sllnode *node = items->head;
+dllnode *findDLLNode(dll *items, int index) {
+	dllnode *node = items->head;
 	
 	for (int i = 0; i < index - 1; i++) {
 		if (node->next == 0) {
@@ -36,8 +37,8 @@ sllnode *findSLLNode(sll *items, int index) {
 	return node;
 }
 
-sll *newSLL(void (*d) (FILE *, void *)) { //d is the display function
-	sll *items = malloc(sizeof *items);
+dll *newDLL(void (*d) (FILE *, void *)) { //d is the display function
+	dll *items = malloc(sizeof *items);
 	
 	if (items == 0) {
 		fprintf(stderr, "out of memory");
@@ -52,9 +53,9 @@ sll *newSLL(void (*d) (FILE *, void *)) { //d is the display function
 	return items;
 }
 
-void insertSLL(sll *items, int index, void *value) {
-	sllnode *node = items->head;
-	sllnode *newNode = newSLLNode(value);
+void insertDLL(dll *items, int index, void *value) {
+	dllnode *node = items->head;
+	dllnode *newNode = newDLLNode(value);
 	
 	items->size++;
 	
@@ -64,65 +65,62 @@ void insertSLL(sll *items, int index, void *value) {
 		return;
 	}
 	
-	node = findSLLNode(items, index);
+	node = findDLLNode(items, index);
 	
 	newNode->next = node->next;
 	node->next = newNode;
-	items->tail = newNode;
+	newNode->prev = node;
+	if (newNode->next) {
+		newNode->next->prev = newNode;
+	}
+	
+	if (index == items->size - 1) {
+		items->tail = newNode;
+	}
 }
 
-void *getSLL(sll *items, int index) {
-	sllnode *node = findSLLNode(items, index);
+void *getDLL(dll *items, int index) {
+	dllnode *node = findDLLNode(items, index);
 	
 	return node->value;
 }
 
-void *removeSLL(sll *items, int index) {
-	sllnode *node = items->head;
-	sllnode *prevNode = node;
-	void *value = 0;
-	
-	for (int i = 0; i < index - 1; i++) {
-		if (node->next == 0) {
-			return 0;
-		}
-		
-		prevNode = node;
-		node = node->next;
-	}
+void *removeDLL(dll *items, int index) {
+	dllnode *node = node = findDLLNode(items, index);
+	void *value = node->value;
 	
 	if (index == 0) {
 		items->head = node->next;
 	}
 	
 	if (index == items->size) {
-		items->tail = prevNode;
+		items->tail = node->prev;
 	}
 	
-	value = node->value;
-	prevNode->next = node->next;
+	node->prev = node->next;
 	free(node);
 	node = 0;
 	
 	return value;
 }
 
-void unionSLL(sll *recipient, sll *donor) {
-	sll *donorCPY = newSLL(0);
+void unionDLL(dll *recipient, dll *donor) {
+	dll *donorCPY = newDLL(0);
 	donorCPY = &(*donor);
 	
 	recipient->tail->next = donorCPY->head;
-	recipient->tail = donorCPY->tail;
+	donorCPY->head->prev = recipient->tail;
+	recipient->tail = donor->tail;
 	
 	donorCPY = 0;
 }
 
-int sizeSLL(sll *items) {
+int sizeDLL(dll *items) {
 	return items->size;
 }
 
-void displaySLL(FILE *file, sll *items) {
-	sllnode *node = items->head;
+void displayDLL(FILE *file, dll *items) {
+	dllnode *node = items->head;
 	
 	fprintf(file, "[");
 	while (node) {

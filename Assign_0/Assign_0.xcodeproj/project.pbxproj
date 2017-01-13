@@ -10,6 +10,7 @@
 		2E332C7D1E29622B00245D88 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 2E332C7C1E29622B00245D88 /* main.c */; };
 		2E332C851E29629700245D88 /* sll.c in Sources */ = {isa = PBXBuildFile; fileRef = 2E332C831E29629700245D88 /* sll.c */; };
 		2E332C881E29640600245D88 /* integer.c in Sources */ = {isa = PBXBuildFile; fileRef = 2E332C861E29640600245D88 /* integer.c */; };
+		2E332C8B1E297E3A00245D88 /* dll.c in Sources */ = {isa = PBXBuildFile; fileRef = 2E332C891E297E3A00245D88 /* dll.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -31,6 +32,8 @@
 		2E332C841E29629700245D88 /* sll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sll.h; sourceTree = "<group>"; };
 		2E332C861E29640600245D88 /* integer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = integer.c; sourceTree = "<group>"; };
 		2E332C871E29640600245D88 /* integer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = integer.h; sourceTree = "<group>"; };
+		2E332C891E297E3A00245D88 /* dll.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = dll.c; sourceTree = "<group>"; };
+		2E332C8A1E297E3A00245D88 /* dll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dll.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +70,8 @@
 				2E332C861E29640600245D88 /* integer.c */,
 				2E332C841E29629700245D88 /* sll.h */,
 				2E332C831E29629700245D88 /* sll.c */,
+				2E332C8A1E297E3A00245D88 /* dll.h */,
+				2E332C891E297E3A00245D88 /* dll.c */,
 				2E332C7C1E29622B00245D88 /* main.c */,
 			);
 			path = Assign_0;
@@ -132,6 +137,7 @@
 			files = (
 				2E332C7D1E29622B00245D88 /* main.c in Sources */,
 				2E332C851E29629700245D88 /* sll.c in Sources */,
+				2E332C8B1E297E3A00245D88 /* dll.c in Sources */,
 				2E332C881E29640600245D88 /* integer.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

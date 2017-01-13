@@ -31,5 +31,4 @@ extern void *removeSLL(sll *items, int index);            //returns a generic va
 extern void unionSLL(sll *recipient, sll *donor);         //merge two lists into one
 extern int sizeSLL(sll *items);
 extern void displaySLL(FILE *, sll *items);
-
 #endif
