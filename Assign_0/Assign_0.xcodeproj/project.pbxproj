@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		2E332C7D1E29622B00245D88 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 2E332C7C1E29622B00245D88 /* main.c */; };
+		2E332C851E29629700245D88 /* sll.c in Sources */ = {isa = PBXBuildFile; fileRef = 2E332C831E29629700245D88 /* sll.c */; };
+		2E332C881E29640600245D88 /* integer.c in Sources */ = {isa = PBXBuildFile; fileRef = 2E332C861E29640600245D88 /* integer.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +27,10 @@
 /* Begin PBXFileReference section */
 		2E332C791E29622B00245D88 /* Assign_0 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Assign_0; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E332C7C1E29622B00245D88 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		2E332C831E29629700245D88 /* sll.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sll.c; sourceTree = "<group>"; };
+		2E332C841E29629700245D88 /* sll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sll.h; sourceTree = "<group>"; };
+		2E332C861E29640600245D88 /* integer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = integer.c; sourceTree = "<group>"; };
+		2E332C871E29640600245D88 /* integer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = integer.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +63,10 @@
 		2E332C7B1E29622B00245D88 /* Assign_0 */ = {
 			isa = PBXGroup;
 			children = (
+				2E332C871E29640600245D88 /* integer.h */,
+				2E332C861E29640600245D88 /* integer.c */,
+				2E332C841E29629700245D88 /* sll.h */,
+				2E332C831E29629700245D88 /* sll.c */,
 				2E332C7C1E29622B00245D88 /* main.c */,
 			);
 			path = Assign_0;
@@ -121,6 +131,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				2E332C7D1E29622B00245D88 /* main.c in Sources */,
+				2E332C851E29629700245D88 /* sll.c in Sources */,
+				2E332C881E29640600245D88 /* integer.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
