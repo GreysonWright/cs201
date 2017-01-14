@@ -140,9 +140,15 @@ void *removeSLL(sll *items, int index) {
 }
 
 void unionSLL(sll *recipient, sll *donor) {
-	recipient->tail->next = donor->head;
-	recipient->tail = donor->tail;
-	recipient->size += donor->size;
+	if (recipient->size > 0) {
+		recipient->head = donor->head;
+		recipient->tail = donor->tail;
+		recipient->size = donor->size;
+	} else {
+		recipient->tail->next = donor->head;
+		recipient->tail = donor->tail;
+		recipient->size += donor->size;
+	}
 	
 	donor->head = 0;
 	donor->tail = 0;
