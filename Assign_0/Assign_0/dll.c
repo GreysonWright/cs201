@@ -147,6 +147,10 @@ void *removeDLL(dll *items, int index) {
 }
 
 void unionDLL(dll *recipient, dll *donor) {
+	if (donor == 0) {
+		return;
+	}
+	
 	if (recipient->size < 1) {
 		recipient->head = donor->head;
 		recipient->tail = donor->tail;
@@ -157,6 +161,7 @@ void unionDLL(dll *recipient, dll *donor) {
 		recipient->tail = donor->tail;
 		recipient->size += donor->size;
 	}
+	
 	donor->head = 0;
 	donor->tail = 0;
 	donor->size = 0;

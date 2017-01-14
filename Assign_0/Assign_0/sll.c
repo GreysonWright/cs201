@@ -125,7 +125,7 @@ void *removeSLL(sll *items, int index) {
 		items->head = node->next;
 	}
 	
-	if (index >= items->size) {
+	if (index >= items->size - 1) {
 		items->tail = prevNode;
 	}
 	
@@ -140,7 +140,11 @@ void *removeSLL(sll *items, int index) {
 }
 
 void unionSLL(sll *recipient, sll *donor) {
-	if (recipient->size < 0) {
+	if (donor == 0) {
+		return;
+	}
+	
+	if (recipient->size < 1) {
 		recipient->head = donor->head;
 		recipient->tail = donor->tail;
 		recipient->size = donor->size;
