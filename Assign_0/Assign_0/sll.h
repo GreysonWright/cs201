@@ -21,7 +21,7 @@ typedef struct sll {
 	sllnode *tail;
 	
 	int size;
-	void (*display)(FILE *,void *);
+	void (*display)(FILE *, void *);
 } sll;
 
 extern sll *newSLL(void (*d) (FILE *, void *));            //constructor

@@ -27,7 +27,7 @@ dllnode *newDLLNode(void *value) {
 dllnode *findDLLNode(dll *items, int index) {
 	dllnode *node = items->head;
 	
-	for (int i = 0; i < index - 1; i++) {
+	for (int i = 0; i < index; i++) {
 		if (node->next == 0) {
 			break;
 		}
@@ -55,6 +55,7 @@ dll *newDLL(void (*d) (FILE *, void *)) { //d is the display function
 
 void insertDLL(dll *items, int index, void *value) {
 	dllnode *node = items->head;
+	dllnode *prevNode = node;
 	dllnode *newNode = newDLLNode(value);
 	
 	items->size++;
@@ -65,18 +66,57 @@ void insertDLL(dll *items, int index, void *value) {
 		return;
 	}
 	
-	node = findDLLNode(items, index);
-	
-	newNode->next = node->next;
-	node->next = newNode;
-	newNode->prev = node;
-	if (newNode->next) {
-		newNode->next->prev = newNode;
+	if (index == 0) {
+		items->head = newNode;
+		newNode->next = node;
+		return;
 	}
 	
-	if (index == items->size - 1) {
+	for (int i = 0; i < index; i++) {
+		if (node->next == 0) {
+			break;
+		}
+		
+		prevNode = node;
+		node = node->next;
+	}
+	
+	if (prevNode != node) {
+		prevNode->next = newNode;
+		newNode->next = node;
+		newNode->prev = prevNode;
+	} else {
+		newNode->next = node->next;
+		newNode->prev = prevNode;
+		node->next = newNode;
+	}
+	
+	if (index >= items->size - 1) {
 		items->tail = newNode;
 	}
+//	dllnode *node = items->head;
+//	dllnode *newNode = newDLLNode(value);
+//	
+//	items->size++;
+//	
+//	if (node == 0) {
+//		items->head = newNode;
+//		items->tail = newNode;
+//		return;
+//	}
+//	
+//	node = findDLLNode(items, index);
+//	
+//	newNode->prev = node->prev;
+//	node->prev = newNode;
+//	newNode->next = node;
+//	if (newNode->prev) {
+//		newNode->prev->next = newNode;
+//	}
+//	
+//	if (index >= items->size - 1) {
+//		items->tail = newNode;
+//	}
 }
 
 void *getDLL(dll *items, int index) {
@@ -101,18 +141,20 @@ void *removeDLL(dll *items, int index) {
 	free(node);
 	node = 0;
 	
+	items->size--;
+	
 	return value;
 }
 
 void unionDLL(dll *recipient, dll *donor) {
-	dll *donorCPY = newDLL(0);
-	donorCPY = &(*donor);
-	
-	recipient->tail->next = donorCPY->head;
-	donorCPY->head->prev = recipient->tail;
+	recipient->tail->next = donor->head;
+	donor->head->prev = recipient->tail;
 	recipient->tail = donor->tail;
+	recipient->size += donor->size;
 	
-	donorCPY = 0;
+	donor->head = 0;
+	donor->tail = 0;
+	donor->size = 0;
 }
 
 int sizeDLL(dll *items) {
@@ -125,7 +167,7 @@ void displayDLL(FILE *file, dll *items) {
 	fprintf(file, "[");
 	while (node) {
 		integer *value = (integer*) node->value;
-		fprintf(file, "%d", value->value);
+		items->display(file, value);
 		if (node->next) {
 			fprintf(file, ",");
 		}

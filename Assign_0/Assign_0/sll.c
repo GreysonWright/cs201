@@ -23,18 +23,18 @@ sllnode *newSLLNode(void *value) {
 	return node;
 }
 
-sllnode *findSLLNode(sll *items, int index) {
-	sllnode *node = items->head;
-	
-	for (int i = 0; i < index - 1; i++) {
-		if (node->next == 0) {
-			break;
-		}
-		node = node->next;
-	}
-	
-	return node;
-}
+//sllnode *findSLLNode(sll *items, int index) {
+//	sllnode *node = items->head;
+//	
+//	for (int i = 0; i < index; i++) {
+//		if (node->next == 0) {
+//			break;
+//		}
+//		node = node->next;
+//	}
+//	
+//	return node;
+//}
 
 sll *newSLL(void (*d) (FILE *, void *)) { //d is the display function
 	sll *items = malloc(sizeof *items);
@@ -54,6 +54,7 @@ sll *newSLL(void (*d) (FILE *, void *)) { //d is the display function
 
 void insertSLL(sll *items, int index, void *value) {
 	sllnode *node = items->head;
+	sllnode *prevNode = node;
 	sllnode *newNode = newSLLNode(value);
 	
 	items->size++;
@@ -64,15 +65,44 @@ void insertSLL(sll *items, int index, void *value) {
 		return;
 	}
 	
-	node = findSLLNode(items, index);
+	if (index == 0) {
+		items->head = newNode;
+		newNode->next = node;
+		return;
+	}
 	
-	newNode->next = node->next;
-	node->next = newNode;
-	items->tail = newNode;
+	for (int i = 0; i < index; i++) {
+		if (node->next == 0) {
+			break;
+		}
+		
+		prevNode = node;
+		node = node->next;
+	}
+	
+	if (prevNode != node) {
+		prevNode->next = newNode;
+		newNode->next = node;
+	} else {
+		newNode->next = node->next;
+		node->next = newNode;
+	}
+	
+	if (index >= items->size - 1) {
+		items->tail = newNode;
+	}
 }
 
 void *getSLL(sll *items, int index) {
-	sllnode *node = findSLLNode(items, index);
+//	sllnode *node = findSLLNode(items, index);
+	sllnode *node = items->head;
+	
+	for (int i = 0; i < index; i++) {
+		if (node->next == 0) {
+			break;
+		}
+		node = node->next;
+	}
 	
 	return node->value;
 }
@@ -82,7 +112,7 @@ void *removeSLL(sll *items, int index) {
 	sllnode *prevNode = node;
 	void *value = 0;
 	
-	for (int i = 0; i < index - 1; i++) {
+	for (int i = 0; i < index; i++) {
 		if (node->next == 0) {
 			return 0;
 		}
@@ -95,7 +125,7 @@ void *removeSLL(sll *items, int index) {
 		items->head = node->next;
 	}
 	
-	if (index == items->size) {
+	if (index >= items->size) {
 		items->tail = prevNode;
 	}
 	
@@ -104,17 +134,19 @@ void *removeSLL(sll *items, int index) {
 	free(node);
 	node = 0;
 	
+	items->size--;
+	
 	return value;
 }
 
 void unionSLL(sll *recipient, sll *donor) {
-	sll *donorCPY = newSLL(0);
-	donorCPY = &(*donor);
+	recipient->tail->next = donor->head;
+	recipient->tail = donor->tail;
+	recipient->size += donor->size;
 	
-	recipient->tail->next = donorCPY->head;
-	recipient->tail = donorCPY->tail;
-	
-	donorCPY = 0;
+	donor->head = 0;
+	donor->tail = 0;
+	donor->size = 0;
 }
 
 int sizeSLL(sll *items) {
@@ -127,7 +159,7 @@ void displaySLL(FILE *file, sll *items) {
 	fprintf(file, "[");
 	while (node) {
 		integer *value = (integer*) node->value;
-		fprintf(file, "%d", value->value);
+		items->display(file, value);
 		if (node->next) {
 			fprintf(file, ",");
 		}
