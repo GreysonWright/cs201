@@ -14,7 +14,7 @@ queue.o : queue.c queue.h
 		gcc $(OPTS) -c queue.c
 		
 sll.o : sll.c sll.h
-		gcc $(OPTS) -c dll.c
+		gcc $(OPTS) -c sll.c
 
 dll.o : dll.c dll.h
 		gcc $(OPTS) -c dll.c
@@ -25,5 +25,6 @@ integer.o : integer.c integer.h
 clean :
 		rm -f $(OBJS) main
 
-test : ./main
+test :
+		./assign_0
 		
