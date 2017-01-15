@@ -129,7 +129,7 @@ void *removeSLL(sll *items, int index) {
 		items->head = node->next;
 	}
 	
-	if (index >= items->size - 1) {
+	if (index == items->size - 1) {
 		items->tail = prevNode;
 	}
 	

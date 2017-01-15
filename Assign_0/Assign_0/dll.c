@@ -69,6 +69,7 @@ void insertDLL(dll *items, int index, void *value) {
 	if (index == 0) {
 		items->head = newNode;
 		newNode->next = node;
+		node->prev = newNode;
 		return;
 	}
 	
@@ -134,27 +135,18 @@ void *removeDLL(dll *items, int index) {
 	dllnode *node = 0;
 	
 	if (index == items->size - 1) {
-		node =  items->tail;
-		value = node->value;
+		node = items->tail;
 		items->tail = node->prev;
-		free(node);
-		node = 0;
+	} else {
+		node = findDLLNode(items, index);
 		
-		return value;
+		if (index == 0) {
+			items->head = node->next;
+		}
 	}
 	
-	node = findDLLNode(items, index);
 	value = node->value;
-	
-	if (index == 0) {
-		items->head = node->next;
-	}
-	
-	if (index == items->size) {
-		items->tail = node->prev;
-	}
-	
-	node->prev = node->next;
+	node->prev->next = node->next;
 	free(node);
 	node = 0;
 	
