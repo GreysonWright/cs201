@@ -16,31 +16,30 @@
 #include "queue.h"
 #include "stack.h"
 
-//
-//static void showItems(sll *items) {
-//	printf("The items are ");
-//	displaySLL(stdout, items);
-//	printf(".\n");
-//}
-//
-//int main(int argc, char **argv) {
-//	sll *items = newSLL(displayInteger);
-//	showItems(items);
-//	insertSLL(items, 0, newInteger(3));                //insert at front
-//	insertSLL(items, sizeSLL(items), newInteger(2));   //insert at back
-//	insertSLL(items, 1, newInteger(1));                //insert at middle
-//	showItems(items);
-//	
-//	printf("The value ");
-//	displayInteger(stdout, removeSLL(items, 0));       //remove from front
-//	printf(" was removed.\n");
-//	
-//	showItems(items);
-//	int x = getInteger((integer *) getSLL(items, 0));
-//	printf("The first item is %d.\n", x);
-//	
-//	return 0;
-//}
+static void showItems(sll *items) {
+	printf("The items are ");
+	displaySLL(stdout, items);
+	printf(".\n");
+}
+
+int main(int argc, char **argv) {
+	sll *items = newSLL(displayInteger);
+	showItems(items);
+	insertSLL(items, 0, newInteger(3));                //insert at front
+	insertSLL(items, sizeSLL(items), newInteger(2));   //insert at back
+	insertSLL(items, 1, newInteger(1));                //insert at middle
+	showItems(items);
+	
+	printf("The value ");
+	displayInteger(stdout, removeSLL(items, 0));       //remove from front
+	printf(" was removed.\n");
+	
+	showItems(items);
+	int x = getInteger((integer *) getSLL(items, 0));
+	printf("The first item is %d.\n", x);
+	
+	return 0;
+}
 
 //static void showItems(dll *items) {
 //	printf("The items are ");
@@ -129,30 +128,30 @@
 //	return 0;
 //}
 
-static void showItems(queue *s) {
-	printf("The queue is ");
-	displayQueue(stdout, s);
-	printf(".\n");
-}
-
-int main(int argc,char **argv) {
-	queue *items = newQueue(displayInteger);
-	showItems(items);
-	enqueue(items,newInteger(3));
-	enqueue(items,newInteger(2));
-	enqueue(items,newInteger(5));
-	enqueue(items,newInteger(7));
-	enqueue(items,newInteger(1));
-	showItems(items);
-	printf("The value ");
-	displayInteger(stdout, dequeue(items));
-	printf(" was dequeued.\n");
-	showItems(items);
-	displayInteger(stdout, peekQueue(items));
-	printf("\n");
-	showItems(items);
-	return 0;
-}
+//static void showItems(queue *s) {
+//	printf("The queue is ");
+//	displayQueue(stdout, s);
+//	printf(".\n");
+//}
+//
+//int main(int argc,char **argv) {
+//	queue *items = newQueue(displayInteger);
+//	showItems(items);
+//	enqueue(items,newInteger(3));
+//	enqueue(items,newInteger(2));
+//	enqueue(items,newInteger(5));
+//	enqueue(items,newInteger(7));
+//	enqueue(items,newInteger(1));
+//	showItems(items);
+//	printf("The value ");
+//	displayInteger(stdout, dequeue(items));
+//	printf(" was dequeued.\n");
+//	showItems(items);
+//	displayInteger(stdout, peekQueue(items));
+//	printf("\n");
+//	showItems(items);
+//	return 0;
+//}
 
 //static void showItems(sll *items) {
 //	printf("The items are ");
