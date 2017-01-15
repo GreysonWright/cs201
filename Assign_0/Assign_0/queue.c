@@ -16,22 +16,22 @@ queue *newQueue(void (*d)(FILE *, void *)) {
 		exit(-1);
 	}
 	
-	nQueue->list = newSLL(d);
+	nQueue->list = newDLL(d);
 	return nQueue;
 }
 
 void enqueue(queue *items, void *value) {
-	insertSLL(items->list, 0, value);
+	insertDLL(items->list, 0, value);
 }
 
 void *dequeue(queue *items) {
-	return removeSLL(items->list, items->list->size - 1);
+	return removeDLL(items->list, items->list->size - 1);
 }
 
 void *peekQueue(queue *items) {
-	return getSLL(items->list, items->list->size - 1);
+	return getDLL(items->list, items->list->size - 1);
 }
 
 void displayQueue(FILE *fp, queue *items) {
-	displaySLL(fp, items->list);
+	displayDLL(fp, items->list);
 }

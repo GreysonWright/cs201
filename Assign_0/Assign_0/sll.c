@@ -97,6 +97,10 @@ void *getSLL(sll *items, int index) {
 //	sllnode *node = findSLLNode(items, index);
 	sllnode *node = items->head;
 	
+	if (index == items->size - 1) {
+		return items->tail->value;
+	}
+	
 	for (int i = 0; i < index; i++) {
 		if (node->next == 0) {
 			break;

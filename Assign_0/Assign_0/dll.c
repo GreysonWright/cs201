@@ -120,14 +120,31 @@ void insertDLL(dll *items, int index, void *value) {
 }
 
 void *getDLL(dll *items, int index) {
+	if (index == items->size - 1) {
+		return items->tail->value;
+	}
+	
 	dllnode *node = findDLLNode(items, index);
 	
 	return node->value;
 }
 
 void *removeDLL(dll *items, int index) {
-	dllnode *node = node = findDLLNode(items, index);
-	void *value = node->value;
+	void *value = 0;
+	dllnode *node = 0;
+	
+	if (index == items->size - 1) {
+		node =  items->tail;
+		value = node->value;
+		items->tail = node->prev;
+		free(node);
+		node = 0;
+		
+		return value;
+	}
+	
+	node = findDLLNode(items, index);
+	value = node->value;
 	
 	if (index == 0) {
 		items->head = node->next;

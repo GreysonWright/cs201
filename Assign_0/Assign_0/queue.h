@@ -10,10 +10,10 @@
 #define queue_h
 
 #include <stdio.h>
-#include "sll.h"
+#include "dll.h"
 
 typedef struct queue {
-	sll *list;
+	dll *list;
 } queue;
 
 queue *newQueue(void (*d)(FILE *,void *));   //constructor
