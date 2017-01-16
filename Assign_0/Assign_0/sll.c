@@ -23,19 +23,6 @@ sllnode *newSLLNode(void *value) {
 	return node;
 }
 
-//sllnode *findSLLNode(sll *items, int index) {
-//	sllnode *node = items->head;
-//	
-//	for (int i = 0; i < index; i++) {
-//		if (node->next == 0) {
-//			break;
-//		}
-//		node = node->next;
-//	}
-//	
-//	return node;
-//}
-
 sll *newSLL(void (*d) (FILE *, void *)) { //d is the display function
 	sll *items = malloc(sizeof *items);
 	
@@ -96,7 +83,6 @@ void insertSLL(sll *items, int index, void *value) {
 }
 
 void *getSLL(sll *items, int index) {
-//	sllnode *node = findSLLNode(items, index);
 	sllnode *node = items->head;
 	
 	if (index == items->size - 1) {
