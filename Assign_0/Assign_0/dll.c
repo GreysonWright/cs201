@@ -55,49 +55,37 @@ dll *newDLL(void (*d) (FILE *, void *)) {
 
 void insertDLL(dll *items, int index, void *value) {
 	dllnode *node = items->head;
-	dllnode *prevNode = 0;
 	dllnode *newNode = newDLLNode(value);
 	
-	items->size++;
-	
-	if (node == 0) {
-		items->head = newNode;
-		items->tail = newNode;
-		return;
-	}
-	
 	if (index == 0) {
+		newNode->next = items->head;
 		items->head = newNode;
-		newNode->next = node;
-		node->prev = newNode;
-		return;
-	}
-	
-	if (index >= items->size - 1) {
-		items->tail->next = newNode;
+		if (newNode->next == 0) {
+			items->tail = newNode;
+		} else {
+			newNode->next->prev = newNode;
+		}
+	} else if (index == items->size) {
 		newNode->prev = items->tail;
+		items->tail->next = newNode;
 		items->tail = newNode;
-		return;
-	}
-	
-	for (int i = 0; i < index; i++) {
-		if (node->next == 0) {
-			break;
+	} else {
+		for (int i = 0; i < index; i++) {
+			if (node->next == 0) {
+				break;
+			}
+			node = node->next;
 		}
 		
-		prevNode = node;
-		node = node->next;
+		if (node->prev) {
+			newNode->prev = node->prev;
+			node->prev->next = newNode;
+		}
+		newNode->next = node;
+		node->prev = newNode;
 	}
 	
-	if (prevNode) {
-		prevNode->next = newNode;
-		newNode->next = node;
-		newNode->prev = prevNode;
-	} else {
-		newNode->next = node->next;
-		newNode->prev = prevNode;
-		node->next = newNode;
-	}
+	items->size++;
 }
 
 void *getDLL(dll *items, int index) {
@@ -154,7 +142,7 @@ void *removeDLL(dll *items, int index) {
 }
 
 void unionDLL(dll *recipient, dll *donor) {
-	if (donor == 0) {
+	if (donor == 0 || donor->size == 0) {
 		return;
 	}
 	

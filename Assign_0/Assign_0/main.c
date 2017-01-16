@@ -99,9 +99,10 @@ int main() {
 	printf("The size of the queue is %d\n", queueItems->list->size);
 	
 	sll *sllMassItems = newSLL(displayInteger);
-	for (int i = 1; i <= 100000; i++) {
+	for (int i = 1; i < 10000; i++) {
 		insertSLL(sllMassItems, 0, newInteger(i));
 	}
 	showSLL(sllMassItems);
+	
 	return 0;
 }

@@ -23,7 +23,7 @@ integer.o : integer.c integer.h
 		gcc $(OPTS) -c integer.c		
 
 clean :
-		rm -f $(OBJS) main
+		rm -f $(OBJS) assign_0
 
 test :
 		./assign_0
