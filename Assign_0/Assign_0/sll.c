@@ -54,7 +54,7 @@ sll *newSLL(void (*d) (FILE *, void *)) { //d is the display function
 
 void insertSLL(sll *items, int index, void *value) {
 	sllnode *node = items->head;
-	sllnode *prevNode = node;
+	sllnode *prevNode = 0;
 	sllnode *newNode = newSLLNode(value);
 	
 	items->size++;
@@ -71,6 +71,12 @@ void insertSLL(sll *items, int index, void *value) {
 		return;
 	}
 	
+	if (index >= items->size - 1) {
+		items->tail->next = newNode;
+		items->tail = newNode;
+		return;
+	}
+	
 	for (int i = 0; i < index; i++) {
 		if (node->next == 0) {
 			break;
@@ -80,16 +86,12 @@ void insertSLL(sll *items, int index, void *value) {
 		node = node->next;
 	}
 	
-	if (prevNode != node) {
+	if (prevNode) {
 		prevNode->next = newNode;
 		newNode->next = node;
 	} else {
 		newNode->next = node->next;
 		node->next = newNode;
-	}
-	
-	if (index >= items->size - 1) {
-		items->tail = newNode;
 	}
 }
 
@@ -108,13 +110,20 @@ void *getSLL(sll *items, int index) {
 		node = node->next;
 	}
 	
-	return node->value;
+	if (node) {
+		return node->value;
+	}
+	return 0;
 }
 
 void *removeSLL(sll *items, int index) {
 	sllnode *node = items->head;
 	sllnode *prevNode = node;
 	void *value = 0;
+	
+	if (node == 0) {
+		return 0;
+	}
 	
 	for (int i = 0; i < index; i++) {
 		if (node->next == 0) {
@@ -134,7 +143,9 @@ void *removeSLL(sll *items, int index) {
 	}
 	
 	value = node->value;
-	prevNode->next = node->next;
+	if (prevNode) {
+		prevNode->next = node->next;
+	}
 	free(node);
 	node = 0;
 	

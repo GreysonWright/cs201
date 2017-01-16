@@ -55,7 +55,7 @@ dll *newDLL(void (*d) (FILE *, void *)) { //d is the display function
 
 void insertDLL(dll *items, int index, void *value) {
 	dllnode *node = items->head;
-	dllnode *prevNode = node;
+	dllnode *prevNode = 0;
 	dllnode *newNode = newDLLNode(value);
 	
 	items->size++;
@@ -73,6 +73,13 @@ void insertDLL(dll *items, int index, void *value) {
 		return;
 	}
 	
+	if (index >= items->size - 1) {
+		items->tail->next = newNode;
+		newNode->prev = items->tail;
+		items->tail = newNode;
+		return;
+	}
+	
 	for (int i = 0; i < index; i++) {
 		if (node->next == 0) {
 			break;
@@ -82,7 +89,7 @@ void insertDLL(dll *items, int index, void *value) {
 		node = node->next;
 	}
 	
-	if (prevNode != node) {
+	if (prevNode) {
 		prevNode->next = newNode;
 		newNode->next = node;
 		newNode->prev = prevNode;
@@ -92,9 +99,6 @@ void insertDLL(dll *items, int index, void *value) {
 		node->next = newNode;
 	}
 	
-	if (index >= items->size - 1) {
-		items->tail = newNode;
-	}
 	//	dllnode *node = items->head;
 	//	dllnode *newNode = newDLLNode(value);
 	//
@@ -127,12 +131,19 @@ void *getDLL(dll *items, int index) {
 	
 	dllnode *node = findDLLNode(items, index);
 	
-	return node->value;
+	if (node) {
+		return node->value;
+	}
+	return 0;
 }
 
 void *removeDLL(dll *items, int index) {
 	void *value = 0;
-	dllnode *node = 0;
+	dllnode *node = items->head;
+	
+	if (node == 0) {
+		return 0;
+	}
 	
 	if (index == items->size - 1) {
 		node = items->tail;
@@ -146,7 +157,9 @@ void *removeDLL(dll *items, int index) {
 	}
 	
 	value = node->value;
-	node->prev->next = node->next;
+	if (node->prev) {
+		node->prev->next = node->next;
+	}
 	free(node);
 	node = 0;
 	

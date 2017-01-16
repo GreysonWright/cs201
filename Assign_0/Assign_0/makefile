@@ -1,5 +1,5 @@
 OBJS = main.o stack.o queue.o sll.o dll.o integer.o
-OPTS = -Wall -g -std=c99
+OPTS = -Wall -g -std=c99 -Wextra
 
 assign_0 : $(OBJS)
 		gcc $(OPTS) $(OBJS) -o assign_0 -lm

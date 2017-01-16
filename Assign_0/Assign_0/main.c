@@ -16,199 +16,73 @@
 #include "queue.h"
 #include "stack.h"
 
-static void showItems(sll *items) {
-	printf("The items are ");
-	displaySLL(stdout, items);
+int findMinDLL(dll *items) {
+	integer *minVal = getDLL(items, 0);
+	int minValIndex = 0;
+	
+	for (int i = 0; i < items->size; i++) {
+		integer *val = getDLL(items, i);
+		
+		if (val->value < minVal->value) {
+			minVal = val;
+			minValIndex = i;
+		}
+	}
+	
+	return minValIndex;
+}
+
+int findMaxSLL(sll *items) {
+	integer *maxVal = getSLL(items, 0);
+	int maxValIndex = 0;
+	
+	for (int i = 0; i < items->size; i++) {
+		integer *val = getSLL(items, i);
+		
+		if (val->value > maxVal->value) {
+			maxVal = val;
+			maxValIndex = i;
+		}
+	}
+	
+	return maxValIndex;
+}
+
+static void showStack(stack *items) {
+	printf("The stack is ");
+	displayStack(stdout, items);
 	printf(".\n");
 }
 
+static void showMinDLL(dll *items) {
+	displayInteger(stdout, (integer *)removeDLL(items, findMinDLL(items)));
+	printf("\n");
+}
+
+static void showMaxSLL(sll *items) {
+	displayInteger(stdout, (integer *)removeSLL(items, findMaxSLL(items)));
+	printf("\n");
+}
+
 int main(int argc, char **argv) {
-	sll *items = newSLL(displayInteger);
-	showItems(items);
-	insertSLL(items, 0, newInteger(3));                //insert at front
-	insertSLL(items, sizeSLL(items), newInteger(2));   //insert at back
-	insertSLL(items, 1, newInteger(1));                //insert at middle
-	showItems(items);
+	stack *stackItems = newStack(displayInteger);
+	showStack(stackItems);
+	push(stackItems, newInteger(3));
+	showStack(stackItems);
+	pop(stackItems);
+	showStack(stackItems);
 	
-	printf("The value ");
-	displayInteger(stdout, removeSLL(items, 0));       //remove from front
-	printf(" was removed.\n");
+	dll *dllItems = newDLL(displayInteger);
+	insertDLL(dllItems, 0, newInteger(0));
+	insertDLL(dllItems, 1, newInteger(3));
+	insertDLL(dllItems, 2, newInteger(2));
+	showMinDLL(dllItems);
 	
-	showItems(items);
-	int x = getInteger((integer *) getSLL(items, 0));
-	printf("The first item is %d.\n", x);
+	sll *sllItems = newSLL(displayInteger);
+	insertSLL(sllItems, 0, newInteger(0));
+	insertSLL(sllItems, 1, newInteger(3));
+	insertSLL(sllItems, 2, newInteger(2));
+	showMaxSLL(sllItems);
 	
 	return 0;
 }
-
-//static void showItems(dll *items) {
-//	printf("The items are ");
-//	displayDLL(stdout, items);
-//	printf(".\n");
-//}
-//
-//int main(int argc, char **argv) {
-//	dll *items = newDLL(displayInteger);
-//	showItems(items);
-//	insertDLL(items, 0 ,newInteger(3));                //insert at front
-//	insertDLL(items, sizeDLL(items), newInteger(2));   //insert at back
-//	insertDLL(items, 1, newInteger(1));                //insert at middle
-//	showItems(items);
-//	
-//	printf("The value ");
-//	displayInteger(stdout, removeDLL(items, 0));       //remove from front
-//	printf(" was removed.\n");
-//	
-//	showItems(items);
-//	int x = getInteger((integer *) getDLL(items, 0));
-//	printf("The first item is %d.\n", x);
-//	
-//	return 0;
-//}
-
-//static void showItems(stack *s) {
-//	printf("The stack is ");
-//	displayStack(stdout,s);
-//	printf(".\n");
-//}
-//
-//int main(int argc,char **argv) {
-//	stack *items = newStack(displayInteger);
-//	showItems(items);
-//	push(items,newInteger(3));
-//	push(items,newInteger(2));
-//	showItems(items);
-//	printf("The value ");
-//	displayInteger(stdout, pop(items));
-//	printf(" was popped.\n");
-//	showItems(items);
-//	return 0;
-//}
-
-//static void showItems(stack *s) {
-//	printf("The stack is ");
-//	displayStack(stdout,s);
-//	printf(".\n");
-//}
-//
-//int main(int argc,char **argv) {
-//	stack *items = newStack(displayInteger);
-//	showItems(items);
-//	push(items, newInteger(3));
-//	push(items, newInteger(2));
-//	push(items, newInteger(4));
-//	push(items, newInteger(8));
-//	showItems(items);
-//	printf("The value ");
-//	displayInteger(stdout, pop(items));
-//	printf(" was popped.\n");
-//	showItems(items);
-//	displayInteger(stdout, peekStack(items));
-//	printf("\n");
-//	showItems(items);
-//	return 0;
-//}
-
-//static void showItems(queue *s) {
-//	printf("The queue is ");
-//	displayQueue(stdout, s);
-//	printf(".\n");
-//}
-//
-//int main(int argc,char **argv) {
-//	queue *items = newQueue(displayInteger);
-//	showItems(items);
-//	enqueue(items,newInteger(3));
-//	enqueue(items,newInteger(2));
-//	showItems(items);
-//	printf("The value ");
-//	displayInteger(stdout, dequeue(items));
-//	printf(" was dequeued.\n");
-//	showItems(items);
-//	return 0;
-//}
-
-//static void showItems(queue *s) {
-//	printf("The queue is ");
-//	displayQueue(stdout, s);
-//	printf(".\n");
-//}
-//
-//int main(int argc,char **argv) {
-//	queue *items = newQueue(displayInteger);
-//	showItems(items);
-//	enqueue(items,newInteger(3));
-//	enqueue(items,newInteger(2));
-//	enqueue(items,newInteger(5));
-//	enqueue(items,newInteger(7));
-//	enqueue(items,newInteger(1));
-//	showItems(items);
-//	printf("The value ");
-//	displayInteger(stdout, dequeue(items));
-//	printf(" was dequeued.\n");
-//	showItems(items);
-//	displayInteger(stdout, peekQueue(items));
-//	printf("\n");
-//	showItems(items);
-//	return 0;
-//}
-
-//static void showItems(sll *items) {
-//	printf("The items are ");
-//	displaySLL(stdout, items);
-//	printf(".\n");
-//}
-//
-//int main(int argc, char **argv) {
-//	sll *items = newSLL(displayInteger);
-//	showItems(items);
-//	insertSLL(items, 0, newInteger(3));                //insert at front
-//	insertSLL(items, sizeSLL(items), newInteger(2));   //insert at back
-//	insertSLL(items, 1, newInteger(1));                //insert at middle
-//	showItems(items);
-//	
-//	sll *items1 = newSLL(displayInteger);
-//	showItems(items1);
-//	insertSLL(items1, 0, newInteger(4));                //insert at front
-//	insertSLL(items1, sizeSLL(items1), newInteger(5));   //insert at back
-//	insertSLL(items1, 1, newInteger(6));                //insert at middle
-//	showItems(items1);
-//	
-//	unionSLL(items, items1);
-//	
-//	showItems(items);
-//	int x = getInteger((integer *) getSLL(items, 0));
-//	printf("The first item is %d.\n", x);
-//	
-//	return 0;
-//}
-
-//static void showItems(dll *items) {
-//	printf("The items are ");
-//	displayDLL(stdout, items);
-//	printf(".\n");
-//}
-//
-//int main() {
-//	dll *items = newDLL(displayInteger);
-//	showItems(items);
-//	insertDLL(items, 0 ,newInteger(3));                //insert at front
-//	insertDLL(items, sizeDLL(items), newInteger(2));   //insert at back
-//	insertDLL(items, 1, newInteger(1));                //insert at middle
-//	showItems(items);
-//	
-//	dll *items1 = newDLL(displayInteger);
-//	showItems(items1);
-//	insertDLL(items1, 0 ,newInteger(6));                //insert at front
-//	insertDLL(items1, sizeDLL(items1), newInteger(7));   //insert at back
-//	insertDLL(items1, 1, newInteger(8));                //insert at middle
-//	showItems(items1);
-//	
-//	unionDLL(items, items1);
-//	
-//	showItems(items);
-//	int x = getInteger((integer *) getDLL(items, 0));
-//	printf("The first item is %d.\n", x);
-//	
-//	return 0;
-//}
