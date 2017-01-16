@@ -104,38 +104,36 @@ void *getSLL(sll *items, int index) {
 
 void *removeSLL(sll *items, int index) {
 	sllnode *node = items->head;
-	sllnode *prevNode = node;
+	sllnode *prevNode = 0;
 	void *value = 0;
 	
 	if (node == 0) {
 		return 0;
 	}
 	
-	for (int i = 0; i < index; i++) {
-		if (node->next == 0) {
-			return 0;
+	if (index == 0) {
+		value = node->value;
+		items->head = node->next;
+	} else {
+		for (int i = 0; i < index; i++) {
+			if (node->next == 0) {
+				return 0;
+			}
+			prevNode = node;
+			node = node->next;
 		}
 		
-		prevNode = node;
-		node = node->next;
-	}
-	
-	if (index == 0) {
-		items->head = node->next;
+		value = node->value;
+		prevNode->next = node->next;
 	}
 	
 	if (index == items->size - 1) {
 		items->tail = prevNode;
 	}
 	
-	value = node->value;
-	if (prevNode) {
-		prevNode->next = node->next;
-	}
+	items->size--;
 	free(node);
 	node = 0;
-	
-	items->size--;
 	
 	return value;
 }

@@ -54,12 +54,6 @@ static void showStack(stack *items) {
 	printf(".\n");
 }
 
-static void showDLL(dll *items) {
-	printf("The dll is ");
-	displayDLL(stdout, items);
-	printf(".\n");
-}
-
 static void showSLL(sll *items) {
 	printf("The sll is ");
 	displaySLL(stdout, items);
@@ -79,6 +73,9 @@ static void showMaxSLL(sll *items) {
 }
 
 int main() {
+	stack *emptyStack = newStack(displayInteger);
+	showStack(emptyStack);
+	
 	stack *stackItems = newStack(displayInteger);
 	showStack(stackItems);
 	push(stackItems, newInteger(3));
@@ -101,14 +98,9 @@ int main() {
 	queue *queueItems = newQueue(displayInteger);
 	printf("The size of the queue is %d\n", queueItems->list->size);
 	
-	int vals[] = {4, 2, 5, 1, 7, 3, 8, 0, 9, 6};
 	sll *sllMassItems = newSLL(displayInteger);
 	for (int i = 1; i <= 100000; i++) {
-		insertSLL(sllMassItems, vals[i % 10], newInteger(i));
-	}
-//	showSLL(sllMassItems);
-	while (sllMassItems->size > 0) {
-		removeSLL(sllMassItems, sllMassItems->size / 5);
+		insertSLL(sllMassItems, 0, newInteger(i));
 	}
 	showSLL(sllMassItems);
 	return 0;

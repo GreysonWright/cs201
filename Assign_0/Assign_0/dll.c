@@ -29,7 +29,7 @@ dllnode *findDLLNode(dll *items, int index) {
 	
 	for (int i = 0; i < index; i++) {
 		if (node->next == 0) {
-			break;
+			return 0;
 		}
 		node = node->next;
 	}
@@ -37,7 +37,7 @@ dllnode *findDLLNode(dll *items, int index) {
 	return node;
 }
 
-dll *newDLL(void (*d) (FILE *, void *)) { //d is the display function
+dll *newDLL(void (*d) (FILE *, void *)) {
 	dll *items = malloc(sizeof *items);
 	
 	if (items == 0) {
@@ -98,30 +98,6 @@ void insertDLL(dll *items, int index, void *value) {
 		newNode->prev = prevNode;
 		node->next = newNode;
 	}
-	
-	//	dllnode *node = items->head;
-	//	dllnode *newNode = newDLLNode(value);
-	//
-	//	items->size++;
-	//
-	//	if (node == 0) {
-	//		items->head = newNode;
-	//		items->tail = newNode;
-	//		return;
-	//	}
-	//
-	//	node = findDLLNode(items, index);
-	//
-	//	newNode->prev = node->prev;
-	//	node->prev = newNode;
-	//	newNode->next = node;
-	//	if (newNode->prev) {
-	//		newNode->prev->next = newNode;
-	//	}
-	//
-	//	if (index >= items->size - 1) {
-	//		items->tail = newNode;
-	//	}
 }
 
 void *getDLL(dll *items, int index) {
@@ -138,32 +114,41 @@ void *getDLL(dll *items, int index) {
 }
 
 void *removeDLL(dll *items, int index) {
-	void *value = 0;
 	dllnode *node = items->head;
+	dllnode *prevNode = node->prev;
+	void *value = 0;
 	
 	if (node == 0) {
 		return 0;
 	}
 	
-	if (index == items->size - 1) {
+	if (index == 0) {
+		if (items->head == items->tail) {
+			items->tail = 0;
+		}
+		value = node->value;
+		items->head = node->next;
+	} else if (index == items->size - 1) {
 		node = items->tail;
-		items->tail = node->prev;
+		prevNode = node->prev;
+		value = node->value;
+		items->tail = prevNode;
+		prevNode->next = 0;
 	} else {
 		node = findDLLNode(items, index);
 		
-		if (index == 0) {
-			items->head = node->next;
-		}
+		value = node->value;
+		prevNode = node->prev;
+		prevNode->next = node->next;
 	}
 	
-	value = node->value;
-	if (node->prev) {
-		node->prev->next = node->next;
+	if (node->next) {
+		node->next->prev = prevNode;
 	}
-	free(node);
-	node = 0;
 	
 	items->size--;
+	free(node);
+	node = 0;
 	
 	return value;
 }
