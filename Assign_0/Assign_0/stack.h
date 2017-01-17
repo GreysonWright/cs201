@@ -10,10 +10,10 @@
 #define stack_h
 
 #include <stdio.h>
-#include "sll.h"
+#include "dll.h"
 
 typedef struct stack {
-	sll *list;
+	dll *list;
 } stack;
 
 stack *newStack(void (*d)(FILE *,void *));   //constructor

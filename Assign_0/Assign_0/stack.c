@@ -16,22 +16,22 @@ stack *newStack(void (*d)(FILE *,void *)) {
 		exit(-1);
 	}
 	
-	nStack->list = newSLL(d);
+	nStack->list = newDLL(d);
 	return nStack;
 }
 
 void push(stack *items, void *value) {
-	insertSLL(items->list, 0, value);
+	insertDLL(items->list, 0, value);
 }
 
 void *pop(stack *items) {
-	return removeSLL(items->list, 0);
+	return removeDLL(items->list, 0);
 }
 
 void *peekStack(stack *items) {
-	return getSLL(items->list, 0);
+	return getDLL(items->list, 0);
 }
 
 void displayStack(FILE *file ,stack *items) {
-	displaySLL(file, items->list);
+	displayDLL(file, items->list);
 }

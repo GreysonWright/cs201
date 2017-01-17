@@ -122,8 +122,8 @@ void *removeSLL(sll *items, int index) {
 	}
 	
 	items->size--;
-	free(node);
-	node = 0;
+//	free(node);
+//	node = 0;
 	
 	return value;
 }

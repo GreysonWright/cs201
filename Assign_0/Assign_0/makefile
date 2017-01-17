@@ -25,6 +25,6 @@ integer.o : integer.c integer.h
 clean :
 		rm -f $(OBJS) assign_0
 
-test :
+test :	./assign_0
 		./assign_0
 		
