@@ -6,8 +6,6 @@
 //  Copyright © 2017 Greyson Wright. All rights reserved.
 //
 
-//#include <stdio.h>
-//
 #include <stdio.h>
 #include <stdlib.h>
 #include "sll.h"
@@ -48,25 +46,25 @@ int findMaxSLL(sll *items) {
 	return maxValIndex;
 }
 
-static void showStack(stack *items) {
+void showStack(stack *items) {
 	printf("The stack is ");
 	displayStack(stdout, items);
 	printf(".\n");
 }
 
-static void showSLL(sll *items) {
+void showSLL(sll *items) {
 	printf("The sll is ");
 	displaySLL(stdout, items);
 	printf(".\n");
 }
 
-static void showMinDLL(dll *items) {
+void showMinDLL(dll *items) {
 	printf("The min value is ");
 	displayInteger(stdout, (integer *)removeDLL(items, findMinDLL(items)));
 	printf("\n");
 }
 
-static void showMaxSLL(sll *items) {
+void showMaxSLL(sll *items) {
 	printf("The max value is ");
 	displayInteger(stdout, (integer *)removeSLL(items, findMaxSLL(items)));
 	printf("\n");
