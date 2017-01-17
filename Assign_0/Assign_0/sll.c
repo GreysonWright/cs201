@@ -44,42 +44,32 @@ void insertSLL(sll *items, int index, void *value) {
 	sllnode *prevNode = 0;
 	sllnode *newNode = newSLLNode(value);
 	
-	items->size++;
-	
-	if (node == 0) {
-		items->head = newNode;
-		items->tail = newNode;
-		return;
-	}
-	
 	if (index == 0) {
+		newNode->next = items->head;
 		items->head = newNode;
-		newNode->next = node;
-		return;
-	}
-	
-	if (index >= items->size - 1) {
+		if (newNode->next == 0) {
+			items->tail = newNode;
+		}
+	} else if (index == items->size) {
 		items->tail->next = newNode;
 		items->tail = newNode;
-		return;
-	}
-	
-	for (int i = 0; i < index; i++) {
-		if (node->next == 0) {
-			break;
+	} else {
+		for (int i = 0; i < index; i++) {
+			if (node->next == 0) {
+				break;
+			}
+			prevNode = node;
+			node = node->next;
 		}
 		
-		prevNode = node;
-		node = node->next;
+		if (prevNode) {
+			prevNode->next = newNode;
+		}
+		newNode->next = node;
 	}
 	
-	if (prevNode) {
-		prevNode->next = newNode;
-		newNode->next = node;
-	} else {
-		newNode->next = node->next;
-		node->next = newNode;
-	}
+	items->size++;
+
 }
 
 void *getSLL(sll *items, int index) {
