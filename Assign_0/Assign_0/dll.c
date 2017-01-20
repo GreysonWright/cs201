@@ -27,11 +27,21 @@ dllnode *newDLLNode(void *value) {
 dllnode *findDLLNode(dll *items, int index) {
 	dllnode *node = items->head;
 	
-	for (int i = 0; i < index; i++) {
-		if (node->next == 0) {
-			return 0;
+	if (index < items->size / 2) {
+		for (int i = 0; i < index; i++) {
+			if (node->next == 0) {
+				return 0;
+			}
+			node = node->next;
 		}
-		node = node->next;
+	} else {
+		node = items->tail;
+		for (int i = items->size; i > items->size - index; i--) {
+			if (node->prev == 0) {
+				return 0;
+			}
+			node = node->prev;
+		}
 	}
 	
 	return node;
@@ -70,11 +80,11 @@ void insertDLL(dll *items, int index, void *value) {
 		items->tail->next = newNode;
 		items->tail = newNode;
 	} else {
-		for (int i = 0; i < index; i++) {
-			if (node->next == 0) {
-				break;
-			}
-			node = node->next;
+		
+		node = findDLLNode(items, index);
+		if (node == 0) {
+			fprintf(stderr, "Index out of range.");
+			exit(-1);
 		}
 		
 		if (node->prev) {
@@ -89,10 +99,6 @@ void insertDLL(dll *items, int index, void *value) {
 }
 
 void *getDLL(dll *items, int index) {
-	if (index == items->size - 1) {
-		return items->tail->value;
-	}
-	
 	dllnode *node = findDLLNode(items, index);
 	
 	if (node) {
