@@ -3,7 +3,7 @@
 #include <limits.h>
 #include "integer.h"
 
-extern void Fatal(char *,...);
+//extern void Fatal(char *,...);
 
 integer *
 newInteger(int x)
@@ -31,7 +31,7 @@ setInteger(integer *v,int x)
 void 
 displayInteger(FILE *fp,void *v)
     {
-    fprintf(fp,"%d",getInteger(v));
+    fprintf(fp,"%d",getInteger((integer *) v));
     }
 
 int

@@ -80,7 +80,6 @@ void insertDLL(dll *items, int index, void *value) {
 		items->tail->next = newNode;
 		items->tail = newNode;
 	} else {
-		
 		node = findDLLNode(items, index);
 		if (node == 0) {
 			fprintf(stderr, "Index out of range.");
