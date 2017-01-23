@@ -26,8 +26,9 @@ dllnode *newDLLNode(void *value) {
 
 dllnode *findDLLNode(dll *items, int index) {
 	dllnode *node = items->head;
+	int size = items->size - 1;
 	
-	if (index < items->size / 2) {
+	if (index < size / 2) {
 		for (int i = 0; i < index; i++) {
 			if (node->next == 0) {
 				return 0;
@@ -36,7 +37,7 @@ dllnode *findDLLNode(dll *items, int index) {
 		}
 	} else {
 		node = items->tail;
-		for (int i = items->size; i > items->size - index; i--) {
+		for (int i = size; i > index; i--) {
 			if (node->prev == 0) {
 				return 0;
 			}
@@ -140,8 +141,8 @@ void *removeDLL(dll *items, int index) {
 	}
 	
 	items->size--;
-//	free(node);
-//	node = 0;
+	//	free(node);
+	//	node = 0;
 	
 	return value;
 }

@@ -84,7 +84,8 @@ int main() {
 	dll *dllItems = newDLL(displayInteger);
 	insertDLL(dllItems, 0, newInteger(0));
 	insertDLL(dllItems, 1, newInteger(3));
-	insertDLL(dllItems, 2, newInteger(2));
+	insertDLL(dllItems, 2, newInteger(4));
+	removeDLL(dllItems, 3);
 	showMinDLL(dllItems);
 	
 	sll *sllItems = newSLL(displayInteger);
