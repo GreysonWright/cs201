@@ -29,7 +29,7 @@ void *dequeue(queue *items) {
 }
 
 void *peekQueue(queue *items) {
-	return getSLL(items->list, items->list->size);
+	return getSLL(items->list, 0);
 }
 
 void displayQueue(FILE *fp, queue *items) {

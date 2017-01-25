@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		2E0FE1031E38066B00BB45BE /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 2E0FE1021E38066B00BB45BE /* main.c */; };
+		2E0FE1141E3806AA00BB45BE /* dll.c in Sources */ = {isa = PBXBuildFile; fileRef = 2E0FE1091E3806AA00BB45BE /* dll.c */; };
+		2E0FE1151E3806AA00BB45BE /* integer.c in Sources */ = {isa = PBXBuildFile; fileRef = 2E0FE10B1E3806AA00BB45BE /* integer.c */; };
+		2E0FE1171E3806AA00BB45BE /* queue.c in Sources */ = {isa = PBXBuildFile; fileRef = 2E0FE10E1E3806AA00BB45BE /* queue.c */; };
+		2E0FE1181E3806AA00BB45BE /* sll.c in Sources */ = {isa = PBXBuildFile; fileRef = 2E0FE1101E3806AA00BB45BE /* sll.c */; };
+		2E0FE1191E3806AA00BB45BE /* stack.c in Sources */ = {isa = PBXBuildFile; fileRef = 2E0FE1121E3806AA00BB45BE /* stack.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +30,16 @@
 /* Begin PBXFileReference section */
 		2E0FE0FF1E38066B00BB45BE /* Assign_1 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Assign_1; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E0FE1021E38066B00BB45BE /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		2E0FE1091E3806AA00BB45BE /* dll.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = dll.c; path = ../../Assign_0/Assign_0/dll.c; sourceTree = "<group>"; };
+		2E0FE10A1E3806AA00BB45BE /* dll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dll.h; path = ../../Assign_0/Assign_0/dll.h; sourceTree = "<group>"; };
+		2E0FE10B1E3806AA00BB45BE /* integer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = integer.c; path = ../../Assign_0/Assign_0/integer.c; sourceTree = "<group>"; };
+		2E0FE10C1E3806AA00BB45BE /* integer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = integer.h; path = ../../Assign_0/Assign_0/integer.h; sourceTree = "<group>"; };
+		2E0FE10E1E3806AA00BB45BE /* queue.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = queue.c; path = ../../Assign_0/Assign_0/queue.c; sourceTree = "<group>"; };
+		2E0FE10F1E3806AA00BB45BE /* queue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = queue.h; path = ../../Assign_0/Assign_0/queue.h; sourceTree = "<group>"; };
+		2E0FE1101E3806AA00BB45BE /* sll.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sll.c; path = ../../Assign_0/Assign_0/sll.c; sourceTree = "<group>"; };
+		2E0FE1111E3806AA00BB45BE /* sll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sll.h; path = ../../Assign_0/Assign_0/sll.h; sourceTree = "<group>"; };
+		2E0FE1121E3806AA00BB45BE /* stack.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = stack.c; path = ../../Assign_0/Assign_0/stack.c; sourceTree = "<group>"; };
+		2E0FE1131E3806AA00BB45BE /* stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stack.h; path = ../../Assign_0/Assign_0/stack.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +72,16 @@
 		2E0FE1011E38066B00BB45BE /* Assign_1 */ = {
 			isa = PBXGroup;
 			children = (
+				2E0FE10A1E3806AA00BB45BE /* dll.h */,
+				2E0FE1091E3806AA00BB45BE /* dll.c */,
+				2E0FE10C1E3806AA00BB45BE /* integer.h */,
+				2E0FE10B1E3806AA00BB45BE /* integer.c */,
+				2E0FE10F1E3806AA00BB45BE /* queue.h */,
+				2E0FE10E1E3806AA00BB45BE /* queue.c */,
+				2E0FE1111E3806AA00BB45BE /* sll.h */,
+				2E0FE1101E3806AA00BB45BE /* sll.c */,
+				2E0FE1131E3806AA00BB45BE /* stack.h */,
+				2E0FE1121E3806AA00BB45BE /* stack.c */,
 				2E0FE1021E38066B00BB45BE /* main.c */,
 			);
 			path = Assign_1;
@@ -120,7 +145,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2E0FE1141E3806AA00BB45BE /* dll.c in Sources */,
 				2E0FE1031E38066B00BB45BE /* main.c in Sources */,
+				2E0FE1171E3806AA00BB45BE /* queue.c in Sources */,
+				2E0FE1181E3806AA00BB45BE /* sll.c in Sources */,
+				2E0FE1191E3806AA00BB45BE /* stack.c in Sources */,
+				2E0FE1151E3806AA00BB45BE /* integer.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
