@@ -52,11 +52,8 @@ void sort(queue *front, Comparator compare, Printer print) {
 	if (swapped) {
 		displayQueue(stdout, back);
 		printf("\n");
-//		return sort(back, compare, print);
 		sort(back, compare, print);
 	}
-	
-//	return back;
 }
 
 void *scanInteger(FILE *file) {
@@ -93,7 +90,7 @@ int main(int argc, const char * argv[]) {
 	FILE *file = stdin;
 	
 	if (argc < 2) {
-		fprintf(stdout, "unknown flag 'q', valid flags are -d, -r, -s, and -v\n");
+		fprintf(stdout, "unknown flag '', valid flags are -d, -r, -s, and -v\n");
 		exit(-2);
 	}
 	
@@ -122,13 +119,12 @@ int main(int argc, const char * argv[]) {
 			scan = scanString;
 			break;
 		default:
-			fprintf(stdout, "unknown flag 'q', valid flags are -d, -r, -s, and -v\n");
+			fprintf(stdout, "unknown flag '%c', valid flags are -d, -r, -s, and -v\n", argv[1][1]);
 			exit(-2);
 			break;
 	}
 	
 	queue *inputQueue = newQueue(print);
-//	readChar(file);
 	void *token = scan(file);
 	
 	while (!feof(file)) {
@@ -137,7 +133,6 @@ int main(int argc, const char * argv[]) {
 		}
 		
 		enqueue(inputQueue, token);
-		readChar(file);
 		token = scan(file);
 	}
 	
