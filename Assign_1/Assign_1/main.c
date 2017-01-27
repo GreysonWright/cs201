@@ -33,16 +33,20 @@ void sort(queue *front, Comparator compare, Printer print) {
 		frontTop = peekQueue(front);
 		stackTop = peekStack(stackItems);
 		
-		if (stackTop && compare(stackTop, element) >= 0) {
-			enqueue(back, pop(stackItems));
-			enqueue(front, element);
-			swapped = 1;
-		} else if (frontTop && compare(element, frontTop) < 0) {
+		if (frontTop && compare(element, frontTop) < 0) {
 			push(stackItems, element);
+			swapped = 1;
+		} else if (stackTop && compare(element, stackTop) <= 0) {
+			while (stackTop) {
+				enqueue(back, pop(stackItems));
+				stackTop = peekStack(stackItems);
+			}
+			enqueue(back, element);
 			swapped = 1;
 		} else {
 			enqueue(back, element);
 		}
+		
 	}
 	
 	while (peekStack(stackItems)) {
