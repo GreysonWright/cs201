@@ -7,46 +7,37 @@
 //
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "queue.h"
 #include "stack.h"
 #include "integer.h"
+#include "real.h"
+#include "string.h"
 
-int stackIsEmpty(stack *items) {
-	if (peekStack(items)) {
-		return 0;
-	}
-	
-	return 1;
-}
+typedef int (*Comparator)(void *, void *);
+typedef void (*Printer)(FILE *, void *);
 
-int queueIsEmpty(queue *items) {
-	if (peekQueue(items)) {
-		return 0;
-	}
-	
-	return 1;
-}
-
-void *sort(queue *front) {
-	queue *back = newQueue(displayInteger);
-	stack *stackItems = newStack(displayInteger);
-	integer *element = 0;
-	integer *frontTop = 0;
-	integer *stackTop = 0;
-	integer *backTop = 0;
+void *sort(queue *front, Comparator compare, Printer print) {
+	queue *back = newQueue(print);
+	stack *stackItems = newStack(print);
+	void *element = 0;
+	void *frontTop = 0;
+	void *stackTop = 0;
+	int swapped = 0;
 	
 	while (peekQueue(front)) {
 		element = dequeue(front);
 		frontTop = peekQueue(front);
 		stackTop = peekStack(stackItems);
-		backTop = peekQueue(back);
 		
-		if (stackTop && stackTop->value > element->value) {
+		if (stackTop && compare(stackTop, element) >= 0) {
 			enqueue(back, pop(stackItems));
-		}
-		
-		if (frontTop && element->value < frontTop->value) {
+			enqueue(front, element);
+			swapped = 1;
+		} else if (frontTop && compare(element, frontTop) < 0) {
 			push(stackItems, element);
+			swapped = 1;
 		} else {
 			enqueue(back, element);
 		}
@@ -56,20 +47,75 @@ void *sort(queue *front) {
 		enqueue(back, pop(stackItems));
 	}
 	
+	if (swapped) {
+		displayQueue(stdout, back);
+		printf("\n");
+		return sort(back, compare, print);
+	}
+	
 	return back;
 }
 
 int main(int argc, const char * argv[]) {
-	queue *inputQueue = newQueue(displayInteger);
-	enqueue(inputQueue, newInteger(1));
-	enqueue(inputQueue, newInteger(2));
-	enqueue(inputQueue, newInteger(3));
-	enqueue(inputQueue, newInteger(4));
+	Comparator comp = compareInteger;
+	Printer print = displayInteger;
+	
+	if (argc < 2) {
+		fprintf(stdout, "unknown flag 'q', valid flags are -d, -r, -s, and -v\n");
+		exit(-2);
+	}
+	
+	switch (argv[1][1]) {
+		case 'v':
+			fprintf(stdout, "Greyson M. Wright\n");
+			exit(0);
+			break;
+		case 'd':
+			print = displayInteger;
+			comp = compareInteger;
+			break;
+		case 'r':
+			print = displayReal;
+			comp = compareReal;
+			break;
+		case 's':
+			print = displayString;
+			comp = compareString;
+			break;
+		default:
+			fprintf(stdout, "unknown flag 'q', valid flags are -d, -r, -s, and -v\n");
+			exit(-2);
+			break;
+	}
+	
+	queue *inputQueue = newQueue(print);
+//	enqueue(inputQueue, newInteger(2));
+//	enqueue(inputQueue, newInteger(4));
+//	enqueue(inputQueue, newInteger(5));
+//	enqueue(inputQueue, newInteger(3));
+//	enqueue(inputQueue, newInteger(1));
+	
+	enqueue(inputQueue, newInteger(6));
 	enqueue(inputQueue, newInteger(5));
+	enqueue(inputQueue, newInteger(4));
+	enqueue(inputQueue, newInteger(3));
+	enqueue(inputQueue, newInteger(2));
+	enqueue(inputQueue, newInteger(1));
+	
+//	enqueue(inputQueue, newString("goodbye"));
+//	enqueue(inputQueue, newString("c is the best"));
+//	enqueue(inputQueue, newString("hello"));
+//	enqueue(inputQueue, newString("please compile"));
+//	enqueue(inputQueue, newString("0"));
+	
+//	enqueue(inputQueue, newReal(1.5));
+//	enqueue(inputQueue, newReal(2.6));
+//	enqueue(inputQueue, newReal(3.8));
+//	enqueue(inputQueue, newReal(1.9));
 	
 	displayQueue(stdout, inputQueue);
-	queue *sortedQueue = sort(inputQueue);
-//	sortedQueue = sort(sortedQueue);
-	displayQueue(stdout, sortedQueue);
+	printf("\n");
+	queue *sortedQueue = sort(inputQueue, comp, print);
+	
 	return 0;
 }

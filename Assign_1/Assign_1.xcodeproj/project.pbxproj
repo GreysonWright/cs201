@@ -8,11 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		2E0FE1031E38066B00BB45BE /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 2E0FE1021E38066B00BB45BE /* main.c */; };
-		2E0FE1141E3806AA00BB45BE /* dll.c in Sources */ = {isa = PBXBuildFile; fileRef = 2E0FE1091E3806AA00BB45BE /* dll.c */; };
-		2E0FE1151E3806AA00BB45BE /* integer.c in Sources */ = {isa = PBXBuildFile; fileRef = 2E0FE10B1E3806AA00BB45BE /* integer.c */; };
-		2E0FE1171E3806AA00BB45BE /* queue.c in Sources */ = {isa = PBXBuildFile; fileRef = 2E0FE10E1E3806AA00BB45BE /* queue.c */; };
-		2E0FE1181E3806AA00BB45BE /* sll.c in Sources */ = {isa = PBXBuildFile; fileRef = 2E0FE1101E3806AA00BB45BE /* sll.c */; };
-		2E0FE1191E3806AA00BB45BE /* stack.c in Sources */ = {isa = PBXBuildFile; fileRef = 2E0FE1121E3806AA00BB45BE /* stack.c */; };
+		2EA219A11E3BA615005C04CE /* string.c in Sources */ = {isa = PBXBuildFile; fileRef = 2EA2199F1E3BA615005C04CE /* string.c */; };
+		2EA219A41E3BAA2E005C04CE /* real.c in Sources */ = {isa = PBXBuildFile; fileRef = 2EA219A21E3BAA2E005C04CE /* real.c */; };
+		2EA219AF1E3BB8AB005C04CE /* dll.c in Sources */ = {isa = PBXBuildFile; fileRef = 2EA219A51E3BB8AB005C04CE /* dll.c */; };
+		2EA219B01E3BB8AB005C04CE /* integer.c in Sources */ = {isa = PBXBuildFile; fileRef = 2EA219A71E3BB8AB005C04CE /* integer.c */; };
+		2EA219B11E3BB8AB005C04CE /* queue.c in Sources */ = {isa = PBXBuildFile; fileRef = 2EA219A91E3BB8AB005C04CE /* queue.c */; };
+		2EA219B21E3BB8AB005C04CE /* sll.c in Sources */ = {isa = PBXBuildFile; fileRef = 2EA219AB1E3BB8AB005C04CE /* sll.c */; };
+		2EA219B31E3BB8AB005C04CE /* stack.c in Sources */ = {isa = PBXBuildFile; fileRef = 2EA219AD1E3BB8AB005C04CE /* stack.c */; };
+		2EA219B61E3BBA32005C04CE /* scanner.c in Sources */ = {isa = PBXBuildFile; fileRef = 2EA219B41E3BBA32005C04CE /* scanner.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -30,16 +33,22 @@
 /* Begin PBXFileReference section */
 		2E0FE0FF1E38066B00BB45BE /* Assign_1 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Assign_1; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E0FE1021E38066B00BB45BE /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
-		2E0FE1091E3806AA00BB45BE /* dll.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = dll.c; path = ../../Assign_0/Assign_0/dll.c; sourceTree = "<group>"; };
-		2E0FE10A1E3806AA00BB45BE /* dll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dll.h; path = ../../Assign_0/Assign_0/dll.h; sourceTree = "<group>"; };
-		2E0FE10B1E3806AA00BB45BE /* integer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = integer.c; path = ../../Assign_0/Assign_0/integer.c; sourceTree = "<group>"; };
-		2E0FE10C1E3806AA00BB45BE /* integer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = integer.h; path = ../../Assign_0/Assign_0/integer.h; sourceTree = "<group>"; };
-		2E0FE10E1E3806AA00BB45BE /* queue.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = queue.c; path = ../../Assign_0/Assign_0/queue.c; sourceTree = "<group>"; };
-		2E0FE10F1E3806AA00BB45BE /* queue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = queue.h; path = ../../Assign_0/Assign_0/queue.h; sourceTree = "<group>"; };
-		2E0FE1101E3806AA00BB45BE /* sll.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sll.c; path = ../../Assign_0/Assign_0/sll.c; sourceTree = "<group>"; };
-		2E0FE1111E3806AA00BB45BE /* sll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sll.h; path = ../../Assign_0/Assign_0/sll.h; sourceTree = "<group>"; };
-		2E0FE1121E3806AA00BB45BE /* stack.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = stack.c; path = ../../Assign_0/Assign_0/stack.c; sourceTree = "<group>"; };
-		2E0FE1131E3806AA00BB45BE /* stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stack.h; path = ../../Assign_0/Assign_0/stack.h; sourceTree = "<group>"; };
+		2EA2199F1E3BA615005C04CE /* string.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = string.c; sourceTree = "<group>"; };
+		2EA219A01E3BA615005C04CE /* string.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = string.h; sourceTree = "<group>"; };
+		2EA219A21E3BAA2E005C04CE /* real.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = real.c; sourceTree = "<group>"; };
+		2EA219A31E3BAA2E005C04CE /* real.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = real.h; sourceTree = "<group>"; };
+		2EA219A51E3BB8AB005C04CE /* dll.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = dll.c; sourceTree = "<group>"; };
+		2EA219A61E3BB8AB005C04CE /* dll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dll.h; sourceTree = "<group>"; };
+		2EA219A71E3BB8AB005C04CE /* integer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = integer.c; sourceTree = "<group>"; };
+		2EA219A81E3BB8AB005C04CE /* integer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = integer.h; sourceTree = "<group>"; };
+		2EA219A91E3BB8AB005C04CE /* queue.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = queue.c; sourceTree = "<group>"; };
+		2EA219AA1E3BB8AB005C04CE /* queue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = queue.h; sourceTree = "<group>"; };
+		2EA219AB1E3BB8AB005C04CE /* sll.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sll.c; sourceTree = "<group>"; };
+		2EA219AC1E3BB8AB005C04CE /* sll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sll.h; sourceTree = "<group>"; };
+		2EA219AD1E3BB8AB005C04CE /* stack.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = stack.c; sourceTree = "<group>"; };
+		2EA219AE1E3BB8AB005C04CE /* stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stack.h; sourceTree = "<group>"; };
+		2EA219B41E3BBA32005C04CE /* scanner.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = scanner.c; sourceTree = "<group>"; };
+		2EA219B51E3BBA32005C04CE /* scanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = scanner.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,16 +81,22 @@
 		2E0FE1011E38066B00BB45BE /* Assign_1 */ = {
 			isa = PBXGroup;
 			children = (
-				2E0FE10A1E3806AA00BB45BE /* dll.h */,
-				2E0FE1091E3806AA00BB45BE /* dll.c */,
-				2E0FE10C1E3806AA00BB45BE /* integer.h */,
-				2E0FE10B1E3806AA00BB45BE /* integer.c */,
-				2E0FE10F1E3806AA00BB45BE /* queue.h */,
-				2E0FE10E1E3806AA00BB45BE /* queue.c */,
-				2E0FE1111E3806AA00BB45BE /* sll.h */,
-				2E0FE1101E3806AA00BB45BE /* sll.c */,
-				2E0FE1131E3806AA00BB45BE /* stack.h */,
-				2E0FE1121E3806AA00BB45BE /* stack.c */,
+				2EA219A81E3BB8AB005C04CE /* integer.h */,
+				2EA219A71E3BB8AB005C04CE /* integer.c */,
+				2EA219A31E3BAA2E005C04CE /* real.h */,
+				2EA219A21E3BAA2E005C04CE /* real.c */,
+				2EA219A01E3BA615005C04CE /* string.h */,
+				2EA2199F1E3BA615005C04CE /* string.c */,
+				2EA219B51E3BBA32005C04CE /* scanner.h */,
+				2EA219B41E3BBA32005C04CE /* scanner.c */,
+				2EA219AC1E3BB8AB005C04CE /* sll.h */,
+				2EA219AB1E3BB8AB005C04CE /* sll.c */,
+				2EA219A61E3BB8AB005C04CE /* dll.h */,
+				2EA219A51E3BB8AB005C04CE /* dll.c */,
+				2EA219AA1E3BB8AB005C04CE /* queue.h */,
+				2EA219A91E3BB8AB005C04CE /* queue.c */,
+				2EA219AE1E3BB8AB005C04CE /* stack.h */,
+				2EA219AD1E3BB8AB005C04CE /* stack.c */,
 				2E0FE1021E38066B00BB45BE /* main.c */,
 			);
 			path = Assign_1;
@@ -145,12 +160,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2E0FE1141E3806AA00BB45BE /* dll.c in Sources */,
+				2EA219B21E3BB8AB005C04CE /* sll.c in Sources */,
+				2EA219B61E3BBA32005C04CE /* scanner.c in Sources */,
+				2EA219A11E3BA615005C04CE /* string.c in Sources */,
 				2E0FE1031E38066B00BB45BE /* main.c in Sources */,
-				2E0FE1171E3806AA00BB45BE /* queue.c in Sources */,
-				2E0FE1181E3806AA00BB45BE /* sll.c in Sources */,
-				2E0FE1191E3806AA00BB45BE /* stack.c in Sources */,
-				2E0FE1151E3806AA00BB45BE /* integer.c in Sources */,
+				2EA219AF1E3BB8AB005C04CE /* dll.c in Sources */,
+				2EA219B11E3BB8AB005C04CE /* queue.c in Sources */,
+				2EA219B01E3BB8AB005C04CE /* integer.c in Sources */,
+				2EA219B31E3BB8AB005C04CE /* stack.c in Sources */,
+				2EA219A41E3BAA2E005C04CE /* real.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -279,6 +297,7 @@
 				2E0FE1081E38066B00BB45BE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
