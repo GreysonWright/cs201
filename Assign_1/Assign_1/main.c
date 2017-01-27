@@ -82,7 +82,7 @@ void *scanString(FILE *file) {
 	if (token == 0) {
 		return 0;
 	}
-	string *newStr = newString(readString(file));
+	string *newStr = newString(token);
 	return newStr;
 }
 
