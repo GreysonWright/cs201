@@ -12,6 +12,9 @@
 #include "string.h"
 
 string *newString(char *str) {
+	if (str == 0) {
+		return 0;
+	}
 	string *newStr = malloc(sizeof *newString);
 	if (newStr == 0) {
 		fprintf(stderr, "out of memory");

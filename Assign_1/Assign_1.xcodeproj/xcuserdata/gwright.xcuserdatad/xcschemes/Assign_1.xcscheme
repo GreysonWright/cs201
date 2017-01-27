@@ -63,12 +63,16 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "-d"
+            argument = "-s"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
+            argument = "-d"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
             argument = "/Users/gwright/Git/cs201/Assign_1/Assign_1/mytestfile"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
       </CommandLineArguments>
       <AdditionalOptions>

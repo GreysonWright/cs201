@@ -60,16 +60,28 @@ void sort(queue *front, Comparator compare, Printer print) {
 }
 
 void *scanInteger(FILE *file) {
-	integer *newInt = newInteger(readInt(file));
+	int token = readInt(file);
+	if (token == 0) {
+		return 0;
+	}
+	integer *newInt = newInteger(token);
 	return newInt;
 }
 
 void *scanReal(FILE *file) {
-	real *newRl = newReal(readReal(file));
+	float token = readReal(file);
+	if (token == 0) {
+		return 0;
+	}
+	real *newRl = newReal(token);
 	return newRl;
 }
 
 void *scanString(FILE *file) {
+	char *token = readString(file);
+	if (token == 0) {
+		return 0;
+	}
 	string *newStr = newString(readString(file));
 	return newStr;
 }
@@ -116,10 +128,14 @@ int main(int argc, const char * argv[]) {
 	}
 	
 	queue *inputQueue = newQueue(print);
-	readChar(file);
+//	readChar(file);
 	void *token = scan(file);
 	
 	while (!feof(file)) {
+		if (token == 0) {
+			break;
+		}
+		
 		enqueue(inputQueue, token);
 		readChar(file);
 		token = scan(file);
