@@ -1,4 +1,4 @@
-OBJS = main.o stack.o queue.o sll.o dll.o integer.o real.o string.o
+OBJS = main.o stack.o queue.o sll.o dll.o scanner.o integer.o real.o string.o
 OPTS = -Wall -g -std=c99 -Wextra
 
 sqsort : $(OBJS)
@@ -18,6 +18,9 @@ sll.o : sll.c sll.h
 
 dll.o : dll.c dll.h
 		gcc $(OPTS) -c dll.c
+
+scanner.o : scanner.c scanner.h
+		gcc $(OPTS) -c scanner.c
 
 integer.o : integer.c integer.h
 		gcc $(OPTS) -c integer.c		

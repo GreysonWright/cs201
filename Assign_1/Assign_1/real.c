@@ -8,10 +8,9 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
 #include "real.h"
 
-extern real *newReal(double rl) {
+real *newReal(float rl) {
 	real *newRl = malloc(sizeof *newReal);
 	if (newRl == 0) {
 		fprintf(stderr, "Out of memory.");
@@ -21,18 +20,18 @@ extern real *newReal(double rl) {
 	return newRl;
 }
 
-double getReal(real *rl) {
+float getReal(real *rl) {
 	return rl->value;
 }
 
-double setReal(real *rl, double newVal) {
-	double oldRl = rl->value;
+float setReal(real *rl, float newVal) {
+	float oldRl = rl->value;
 	rl->value = newVal;
 	return oldRl;
 }
 
 void displayReal(FILE *file, void *rl) {
-	fprintf(file ,"%lf", getReal(rl));
+	fprintf(file ,"%.1lf", getReal(rl));
 }
 
 int compareReal(void *left, void *right) {

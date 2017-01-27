@@ -14,11 +14,13 @@
 #include "integer.h"
 #include "real.h"
 #include "string.h"
+#include "scanner.h"
 
 typedef int (*Comparator)(void *, void *);
 typedef void (*Printer)(FILE *, void *);
+typedef void *(*Scanner)(FILE*);
 
-void *sort(queue *front, Comparator compare, Printer print) {
+void sort(queue *front, Comparator compare, Printer print) {
 	queue *back = newQueue(print);
 	stack *stackItems = newStack(print);
 	void *element = 0;
@@ -50,19 +52,41 @@ void *sort(queue *front, Comparator compare, Printer print) {
 	if (swapped) {
 		displayQueue(stdout, back);
 		printf("\n");
-		return sort(back, compare, print);
+//		return sort(back, compare, print);
+		sort(back, compare, print);
 	}
 	
-	return back;
+//	return back;
+}
+
+void *scanInteger(FILE *file) {
+	integer *newInt = newInteger(readInt(file));
+	return newInt;
+}
+
+void *scanReal(FILE *file) {
+	real *newRl = newReal(readReal(file));
+	return newRl;
+}
+
+void *scanString(FILE *file) {
+	string *newStr = newString(readString(file));
+	return newStr;
 }
 
 int main(int argc, const char * argv[]) {
-	Comparator comp = compareInteger;
-	Printer print = displayInteger;
+	Comparator comp = 0;
+	Printer print = 0;
+	Scanner scan = 0;
+	FILE *file = stdin;
 	
 	if (argc < 2) {
 		fprintf(stdout, "unknown flag 'q', valid flags are -d, -r, -s, and -v\n");
 		exit(-2);
+	}
+	
+	if (argv[2]) {
+		file = fopen(argv[2], "r");
 	}
 	
 	switch (argv[1][1]) {
@@ -73,14 +97,17 @@ int main(int argc, const char * argv[]) {
 		case 'd':
 			print = displayInteger;
 			comp = compareInteger;
+			scan = scanInteger;
 			break;
 		case 'r':
 			print = displayReal;
 			comp = compareReal;
+			scan = scanReal;
 			break;
 		case 's':
 			print = displayString;
 			comp = compareString;
+			scan = scanString;
 			break;
 		default:
 			fprintf(stdout, "unknown flag 'q', valid flags are -d, -r, -s, and -v\n");
@@ -89,33 +116,18 @@ int main(int argc, const char * argv[]) {
 	}
 	
 	queue *inputQueue = newQueue(print);
-//	enqueue(inputQueue, newInteger(2));
-//	enqueue(inputQueue, newInteger(4));
-//	enqueue(inputQueue, newInteger(5));
-//	enqueue(inputQueue, newInteger(3));
-//	enqueue(inputQueue, newInteger(1));
+	readChar(file);
+	void *token = scan(file);
 	
-	enqueue(inputQueue, newInteger(6));
-	enqueue(inputQueue, newInteger(5));
-	enqueue(inputQueue, newInteger(4));
-	enqueue(inputQueue, newInteger(3));
-	enqueue(inputQueue, newInteger(2));
-	enqueue(inputQueue, newInteger(1));
-	
-//	enqueue(inputQueue, newString("goodbye"));
-//	enqueue(inputQueue, newString("c is the best"));
-//	enqueue(inputQueue, newString("hello"));
-//	enqueue(inputQueue, newString("please compile"));
-//	enqueue(inputQueue, newString("0"));
-	
-//	enqueue(inputQueue, newReal(1.5));
-//	enqueue(inputQueue, newReal(2.6));
-//	enqueue(inputQueue, newReal(3.8));
-//	enqueue(inputQueue, newReal(1.9));
+	while (!feof(file)) {
+		enqueue(inputQueue, token);
+		readChar(file);
+		token = scan(file);
+	}
 	
 	displayQueue(stdout, inputQueue);
 	printf("\n");
-	queue *sortedQueue = sort(inputQueue, comp, print);
+	sort(inputQueue, comp, print);
 	
 	return 0;
 }
