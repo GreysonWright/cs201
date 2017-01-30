@@ -32,6 +32,10 @@ void *peekQueue(queue *items) {
 	return getSLL(items->list, 0);
 }
 
+int sizeQueue(queue *items) {
+	return items->list->size;
+}
+
 void displayQueue(FILE *fp, queue *items) {
 	displaySLL(fp, items->list);
 }
