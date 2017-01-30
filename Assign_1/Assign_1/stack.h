@@ -20,5 +20,6 @@ stack *newStack(void (*d)(FILE *,void *));   //constructor
 void push(stack *items, void *value);        //stores a generic value
 void *pop(stack *items);                     //returns a generic value
 void *peekStack(stack *items);               //returns a generic value
+int sizeStack(stack *items);
 void displayStack(FILE *,stack *items);
 #endif /* stack_h */

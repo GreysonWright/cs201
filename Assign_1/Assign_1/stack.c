@@ -32,6 +32,10 @@ void *peekStack(stack *items) {
 	return getDLL(items->list, 0);
 }
 
+int sizeStack(stack *items) {
+	return items->list->size;
+}
+
 void displayStack(FILE *file ,stack *items) {
 	displayDLL(file, items->list);
 }

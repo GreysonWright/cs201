@@ -25,18 +25,20 @@ void sort(queue *front, Comparator compare, Printer print) {
 	stack *stackItems = newStack(print);
 	void *element = 0;
 	void *frontTop = 0;
+	void *backTop = 0;
 	void *stackTop = 0;
 	int swapped = 0;
 	
 	while (peekQueue(front)) {
 		element = dequeue(front);
 		frontTop = peekQueue(front);
+		backTop = peekQueue(back);
 		stackTop = peekStack(stackItems);
 		
 		if (frontTop && compare(element, frontTop) < 0) {
 			push(stackItems, element);
 			swapped = 1;
-		} else if (stackTop && compare(element, stackTop) <= 0) {
+		} else if (stackTop && backTop && compare(element, stackTop) <= 0 && compare(backTop, stackTop) >= 0) {
 			while (stackTop) {
 				enqueue(back, pop(stackItems));
 				stackTop = peekStack(stackItems);
@@ -45,8 +47,13 @@ void sort(queue *front, Comparator compare, Printer print) {
 			swapped = 1;
 		} else {
 			enqueue(back, element);
+			
+			backTop = peekQueue(back);
+			while (backTop && compare(element, backTop) > 0) {
+				enqueue(back, dequeue(back));
+				backTop = peekQueue(back);
+			}
 		}
-		
 	}
 	
 	while (peekStack(stackItems)) {
