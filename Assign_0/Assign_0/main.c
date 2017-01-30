@@ -78,7 +78,7 @@ int main() {
 	srand((unsigned)time(NULL));
 	int rando = 0;
 	
-	for (int i = 0; i < 100; i++) {
+	for (int i = 0; i < 10000; i++) {
 		if (a->size == 0) {
 			insertSLL(a, 0, newInteger(i));
 		} else {
@@ -87,7 +87,15 @@ int main() {
 		}
 	}
 	
-	for (int i = 0; i < 100; i++) {
+	for (int i = 0; i < 100000000; i++) {
+		unionSLL(a, b);
+		unionSLL(b, a);
+	}
+	
+	showSLL(a);
+	showSLL(b);
+	
+	for (int i = 0; i < 10000; i++) {
 		if (b->size == 0) {
 			insertSLL(b, 0, newInteger(i));
 		} else {
@@ -96,9 +104,9 @@ int main() {
 		}
 	}
 	
-	for (int i = 0; i < 10000; i++) {
-		unionSLL(a, b);
+	for (int i = 0; i < 100000000; i++) {
 		unionSLL(b, a);
+		unionSLL(a, b);
 	}
 	
 	showSLL(a);
