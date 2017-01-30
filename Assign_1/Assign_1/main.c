@@ -60,6 +60,11 @@ void sort(queue *front, Comparator compare, Printer print) {
 		enqueue(back, pop(stackItems));
 	}
 	
+	free(front);
+	front = 0;
+	free(stackItems);
+	stackItems = 0;
+	
 	if (swapped) {
 		displayQueue(stdout, back);
 		printf("\n");
@@ -146,6 +151,9 @@ int main(int argc, const char * argv[]) {
 		enqueue(inputQueue, token);
 		token = scan(file);
 	}
+	
+	fclose(file);
+	file = 0;
 	
 	displayQueue(stdout, inputQueue);
 	printf("\n");
