@@ -19,8 +19,9 @@
 typedef int (*Comparator)(void *, void *);
 typedef void (*Printer)(FILE *, void *);
 typedef void *(*Scanner)(FILE*);
+typedef void (*GC)(void *);
 
-void sort(queue *front, Comparator compare, Printer print) {
+void *sort(queue *front, Comparator compare, Printer print) {
 	queue *back = newQueue(print);
 	stack *stackItems = newStack(print);
 	void *element = 0;
@@ -68,8 +69,10 @@ void sort(queue *front, Comparator compare, Printer print) {
 	if (swapped) {
 		displayQueue(stdout, back);
 		printf("\n");
-		sort(back, compare, print);
+		return sort(back, compare, print);
 	}
+	
+	return back;
 }
 
 void *scanInteger(FILE *file) {
@@ -99,10 +102,23 @@ void *scanString(FILE *file) {
 	return newStr;
 }
 
+void gcInteger(void *integer) {
+	freeInteger(integer);
+}
+
+void gcReal(void *real) {
+	freeReal(real);
+}
+
+void gcString(void *string) {
+	freeString(string);
+}
+
 int main(int argc, const char * argv[]) {
 	Comparator comp = 0;
 	Printer print = 0;
 	Scanner scan = 0;
+	GC gc = 0;
 	FILE *file = stdin;
 	
 	if (argc < 2) {
@@ -123,16 +139,19 @@ int main(int argc, const char * argv[]) {
 			print = displayInteger;
 			comp = compareInteger;
 			scan = scanInteger;
+			gc = gcInteger;
 			break;
 		case 'r':
 			print = displayReal;
 			comp = compareReal;
 			scan = scanReal;
+			gc = gcReal;
 			break;
 		case 's':
 			print = displayString;
 			comp = compareString;
 			scan = scanString;
+			gc = gcString;
 			break;
 		default:
 			fprintf(stdout, "unknown flag '%c', valid flags are -d, -r, -s, and -v\n", argv[1][1]);
@@ -157,7 +176,12 @@ int main(int argc, const char * argv[]) {
 	
 	displayQueue(stdout, inputQueue);
 	printf("\n");
-	sort(inputQueue, comp, print);
+	queue *outputQueue = sort(inputQueue, comp, print);
+	
+	while (peekQueue(outputQueue)) {
+		void *value = dequeue(outputQueue);
+		gc(value);
+	}
 	
 	return 0;
 }

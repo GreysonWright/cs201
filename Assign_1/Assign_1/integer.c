@@ -43,5 +43,6 @@ compareInteger(void *v,void *w)
 void
 freeInteger(integer *v)
     {
+	v->value = 0;
     free(v);
     }

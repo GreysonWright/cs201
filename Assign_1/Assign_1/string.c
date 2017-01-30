@@ -47,5 +47,7 @@ int compareString(void *left, void *right) {
 }
 
 void freeString(string *str) {
+	free(str->value);
+	str->value = 0;
 	free(str);
 }

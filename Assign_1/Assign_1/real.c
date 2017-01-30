@@ -45,5 +45,6 @@ int compareReal(void *left, void *right) {
 }
 
 void freeReal(real *rl) {
+	rl->value = 0;
 	free(rl);
 }
