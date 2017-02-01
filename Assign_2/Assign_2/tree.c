@@ -9,6 +9,9 @@
 #include "tree.h"
 #include <stdlib.h>
 
+#define BLACK = 0;
+#define RED = 1;
+
 treenode *newRBNode(void *value, unsigned color) {
 	treenode *newNode = malloc(sizeof *newNode);
 	if (newNode == 0) {
@@ -39,37 +42,46 @@ tree *newTree(void (*display)(FILE *, void *)) {
 	return newTree;
 }
 
-treenode *findNode(tree *tree, void *value, Comparator compare) {
+treenode *findNode(tree *tree, void *value, Comparator *compare) {
 	treenode *node = tree->root;
 	
-	if (compare(value, node) < 0) {
-		node = findNode(<#tree *tree#>, <#void *value#>, <#Comparator compare#>)
-	}
-	
-	if (compare(value, node) > 0) {
-		
+	while (node) {
+		if (compare(value, node) < 0) {
+			node = node->left;
+		} else if (compare(value, node) > 0) {
+			node = node->right;
+		} else {
+			break;
+		}
 	}
 	
 	return node;
 }
 
-void insertBST(tree *tree, void *value, Comparator compare) {
-	treenode *root = tree->root;
-	
-	if (root == 0) {
-		tree->root = newBSNode(value);
-		return;
+treenode *insertNode(treenode *node, treenode *newNode, Comparator *compare) {
+	if (node == 0) {
+		return newNode;
 	}
 	
-	if (compare(value, root->value) < 0) {
-		
-	} else {
-		
+	if (compare(newNode->value, node->value) < 0) {
+		node->left = insertNode(node->left, newNode, compare);
+	} else if (compare(newNode->value, node->value) >= 0) {
+		node->right = insertNode(node->right, newNode, compare);
 	}
 	
+	return node;
 }
 
-void insertRBT(tree *tree, void *value, Comparator compare) {
+void insertBST(tree *tree, void *value, Comparator *compare) {
+	treenode *newNode = newBSNode(value);
+	if (tree->root == 0) {
+		tree->root = insertNode(tree->root, newNode, compare);
+	} else {
+		insertNode(tree->root, newNode, compare);
+	}
+}
+
+void insertRBT(tree *tree, void *value, Comparator *compare) {
 	
 }
 
@@ -79,6 +91,12 @@ void *removeBST(tree *tree) {
 
 void *removeRBT(tree *tree) {
 	return 0;
+}
+
+void *searchTree(tree *tree, void *value, Comparator *compare) {
+	treenode *node = findNode(tree, value, compare);
+	
+	return node;
 }
 
 void displayTree(FILE *file, tree *tree) {

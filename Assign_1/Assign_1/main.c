@@ -16,12 +16,12 @@
 #include "string.h"
 #include "scanner.h"
 
-typedef int (*Comparator)(void *, void *);
-typedef void (*Printer)(FILE *, void *);
-typedef void *(*Scanner)(FILE*);
-typedef void (*GC)(void *);
+typedef int (Comparator)(void *, void *);
+typedef void (Printer)(FILE *, void *);
+typedef void *(Scanner)(FILE*);
+typedef void (GC)(void *);
 
-void *sort(queue *front, Comparator compare, Printer print) {
+void *sort(queue *front, Comparator *compare, Printer *print) {
 	queue *back = newQueue(print);
 	stack *stackItems = newStack(print);
 	void *element = 0;
@@ -115,10 +115,10 @@ void gcString(void *string) {
 }
 
 int main(int argc, const char * argv[]) {
-	Comparator comp = 0;
-	Printer print = 0;
-	Scanner scan = 0;
-	GC gc = 0;
+	Comparator *comp = 0;
+	Printer *print = 0;
+	Scanner *scan = 0;
+	GC *gc = 0;
 	FILE *file = stdin;
 	
 	if (argc < 2) {

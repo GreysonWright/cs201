@@ -7,9 +7,16 @@
 //
 
 #include <stdio.h>
+#include "tree.h"
+#include "integer.h"
+#include "real.h"
+#include "string.h"
 
 int main(int argc, const char * argv[]) {
-	// insert code here...
-	printf("Hello, World!\n");
+	tree *bst = newTree(displayInteger);
+	insertBST(bst, newInteger(0), compareInteger);
+	insertBST(bst, newInteger(2), compareInteger);
+	insertBST(bst, newInteger(1), compareInteger);
+	
     return 0;
 }
