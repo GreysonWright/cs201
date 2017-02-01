@@ -18,9 +18,13 @@ string *newString(char *str) {
 	string *newStr = malloc(sizeof *newString);
 	if (newStr == 0) {
 		fprintf(stderr, "out of memory");
-		exit(1);
+		exit(-1);
 	}
 	newStr->value = malloc(strlen(str));
+	if (newStr->value == 0) {
+		fprintf(stderr, "out of memory");
+		exit(-1);
+	}
 	strcpy(newStr->value, str);
 	return newStr;
 }
