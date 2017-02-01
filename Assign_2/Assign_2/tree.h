@@ -11,7 +11,8 @@
 
 #include <stdio.h>
 
-typedef int (Comparator)(void*,void*);
+typedef int (Comparator)(void*, void*);
+typedef void (Display)(FILE *, void *);
 
 typedef struct treenode {
 	void *value;
@@ -22,14 +23,15 @@ typedef struct treenode {
 
 typedef struct tree {
 	treenode *root;
-	void (*display)(FILE *, void *);
+	Display *display;
+	Comparator *compare;
 } tree;
 
-tree *newTree(void (*)(FILE *, void *));
-void insertBST(tree *, void *, Comparator *);
-void insertRBT(tree *, void *, Comparator *);
+tree *newTree(Display *display, Comparator *compare);
+void insertBST(tree *, void *);
+void insertRBT(tree *, void *);
 void *removeBST(tree *);
 void *removeRBT(tree *);
-void *searchTree(tree *, void *, Comparator *);
+void *searchTree(tree *, void *);
 void displayTree(FILE *, tree *);
 #endif /* tree_h */

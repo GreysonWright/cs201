@@ -13,10 +13,10 @@
 #include "string.h"
 
 int main(int argc, const char * argv[]) {
-	tree *bst = newTree(displayInteger);
-	insertBST(bst, newInteger(0), compareInteger);
-	insertBST(bst, newInteger(2), compareInteger);
-	insertBST(bst, newInteger(1), compareInteger);
+	tree *bst = newTree(displayInteger, compareInteger);
+	insertBST(bst, newInteger(0));
+	insertBST(bst, newInteger(2));
+	insertBST(bst, newInteger(1));
 	
     return 0;
 }

@@ -30,14 +30,16 @@ treenode *newBSNode(void *value) {
 	return newRBNode(value, 0);
 }
 
-tree *newTree(void (*display)(FILE *, void *)) {
+tree *newTree(Display *display, Comparator *compare) {
 	tree *newTree = malloc(sizeof *newTree);
 	if (newTree == 0) {
 		fprintf(stderr, "out of memory");
 		exit(-1);
 	}
+	
 	newTree->root = 0;
 	newTree->display = display;
+	newTree->compare = compare;
 	
 	return newTree;
 }
@@ -58,7 +60,7 @@ treenode *findNode(tree *tree, void *value, Comparator *compare) {
 	return node;
 }
 
-treenode *insertNode(treenode *node, treenode *newNode, Comparator *compare) {
+treenode *insertNode(treenode *node, treenode *newNode, Comparator compare) {
 	if (node == 0) {
 		return newNode;
 	}
@@ -72,16 +74,16 @@ treenode *insertNode(treenode *node, treenode *newNode, Comparator *compare) {
 	return node;
 }
 
-void insertBST(tree *tree, void *value, Comparator *compare) {
+void insertBST(tree *tree, void *value) {
 	treenode *newNode = newBSNode(value);
 	if (tree->root == 0) {
-		tree->root = insertNode(tree->root, newNode, compare);
+		tree->root = insertNode(tree->root, newNode, tree->compare);
 	} else {
-		insertNode(tree->root, newNode, compare);
+		insertNode(tree->root, newNode, tree->compare);
 	}
 }
 
-void insertRBT(tree *tree, void *value, Comparator *compare) {
+void insertRBT(tree *tree, void *value) {
 	
 }
 
@@ -93,8 +95,8 @@ void *removeRBT(tree *tree) {
 	return 0;
 }
 
-void *searchTree(tree *tree, void *value, Comparator *compare) {
-	treenode *node = findNode(tree, value, compare);
+void *searchTree(tree *tree, void *value) {
+	treenode *node = findNode(tree, value, tree->compare);
 	
 	return node;
 }
