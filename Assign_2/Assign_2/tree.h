@@ -17,6 +17,7 @@ typedef void (Display)(FILE *, void *);
 typedef struct treenode {
 	void *value;
 	unsigned color: 1;
+	struct treenode *parent;
 	struct treenode *right;
 	struct treenode *left;
 } treenode;
@@ -30,8 +31,8 @@ typedef struct tree {
 tree *newTree(Display *display, Comparator *compare);
 void insertBST(tree *, void *);
 void insertRBT(tree *, void *);
-void *removeBST(tree *);
-void *removeRBT(tree *);
+void removeBST(tree *, void *);
+void removeRBT(tree *, void *);
 void *searchTree(tree *, void *);
 void displayTree(FILE *, tree *);
 #endif /* tree_h */

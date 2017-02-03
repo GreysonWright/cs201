@@ -12,6 +12,8 @@
 		2E47F7491E417099006BBBF2 /* integer.c in Sources */ = {isa = PBXBuildFile; fileRef = 2E47F7431E417099006BBBF2 /* integer.c */; };
 		2E47F74A1E417099006BBBF2 /* real.c in Sources */ = {isa = PBXBuildFile; fileRef = 2E47F7451E417099006BBBF2 /* real.c */; };
 		2E47F74B1E417099006BBBF2 /* string.c in Sources */ = {isa = PBXBuildFile; fileRef = 2E47F7471E417099006BBBF2 /* string.c */; };
+		2EF60B121E42575400160038 /* queue.c in Sources */ = {isa = PBXBuildFile; fileRef = 2EF60B101E42575400160038 /* queue.c */; };
+		2EF60B151E4258A100160038 /* sll.c in Sources */ = {isa = PBXBuildFile; fileRef = 2EF60B131E4258A100160038 /* sll.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -37,6 +39,10 @@
 		2E47F7461E417099006BBBF2 /* real.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = real.h; sourceTree = "<group>"; };
 		2E47F7471E417099006BBBF2 /* string.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = string.c; sourceTree = "<group>"; };
 		2E47F7481E417099006BBBF2 /* string.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = string.h; sourceTree = "<group>"; };
+		2EF60B101E42575400160038 /* queue.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = queue.c; sourceTree = "<group>"; };
+		2EF60B111E42575400160038 /* queue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = queue.h; sourceTree = "<group>"; };
+		2EF60B131E4258A100160038 /* sll.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sll.c; sourceTree = "<group>"; };
+		2EF60B141E4258A100160038 /* sll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sll.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,14 +75,18 @@
 		2E47F7321E4139BF006BBBF2 /* Assign_2 */ = {
 			isa = PBXGroup;
 			children = (
-				2E47F7411E414B49006BBBF2 /* tree.h */,
-				2E47F7401E414B49006BBBF2 /* tree.c */,
 				2E47F7441E417099006BBBF2 /* integer.h */,
 				2E47F7431E417099006BBBF2 /* integer.c */,
 				2E47F7461E417099006BBBF2 /* real.h */,
 				2E47F7451E417099006BBBF2 /* real.c */,
 				2E47F7481E417099006BBBF2 /* string.h */,
 				2E47F7471E417099006BBBF2 /* string.c */,
+				2EF60B141E4258A100160038 /* sll.h */,
+				2EF60B131E4258A100160038 /* sll.c */,
+				2EF60B111E42575400160038 /* queue.h */,
+				2EF60B101E42575400160038 /* queue.c */,
+				2E47F7411E414B49006BBBF2 /* tree.h */,
+				2E47F7401E414B49006BBBF2 /* tree.c */,
 				2E47F7331E4139BF006BBBF2 /* main.c */,
 			);
 			path = Assign_2;
@@ -140,9 +150,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2EF60B151E4258A100160038 /* sll.c in Sources */,
 				2E47F7341E4139BF006BBBF2 /* main.c in Sources */,
 				2E47F7421E414B49006BBBF2 /* tree.c in Sources */,
 				2E47F7491E417099006BBBF2 /* integer.c in Sources */,
+				2EF60B121E42575400160038 /* queue.c in Sources */,
 				2E47F74A1E417099006BBBF2 /* real.c in Sources */,
 				2E47F74B1E417099006BBBF2 /* string.c in Sources */,
 			);
@@ -273,6 +285,7 @@
 				2E47F7391E4139BF006BBBF2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

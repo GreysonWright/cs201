@@ -85,7 +85,7 @@ void *scanInteger(FILE *file) {
 }
 
 void *scanReal(FILE *file) {
-	float token = readReal(file);
+	double token = readReal(file);
 	if (token == 0) {
 		return 0;
 	}

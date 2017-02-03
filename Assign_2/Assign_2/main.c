@@ -17,6 +17,7 @@ int main(int argc, const char * argv[]) {
 	insertBST(bst, newInteger(0));
 	insertBST(bst, newInteger(2));
 	insertBST(bst, newInteger(1));
-	
+//	removeBST(bst, newInteger(0));
+	displayTree(stdout, bst);
     return 0;
 }

@@ -16,9 +16,9 @@ typedef struct real
 	double value;
 } real;
 
-real *newReal(float);
-float getReal(real *);
-float setReal(real *, float);
+real *newReal(double);
+double getReal(real *);
+double setReal(real *, double);
 void displayReal(FILE *, void *);
 int compareReal(void *, void *);
 void freeReal(real *);

@@ -10,7 +10,7 @@
 #include <stdlib.h>
 #include "real.h"
 
-real *newReal(float rl) {
+real *newReal(double rl) {
 	real *newRl = malloc(sizeof *newReal);
 	if (newRl == 0) {
 		fprintf(stderr, "Out of memory.");
@@ -20,18 +20,18 @@ real *newReal(float rl) {
 	return newRl;
 }
 
-float getReal(real *rl) {
+double getReal(real *rl) {
 	return rl->value;
 }
 
-float setReal(real *rl, float newVal) {
-	float oldRl = rl->value;
+double setReal(real *rl, double newVal) {
+	double oldRl = rl->value;
 	rl->value = newVal;
 	return oldRl;
 }
 
 void displayReal(FILE *file, void *rl) {
-	fprintf(file ,"%.1lf", getReal(rl));
+	fprintf(file ,"%lf", getReal(rl));
 }
 
 int compareReal(void *left, void *right) {
