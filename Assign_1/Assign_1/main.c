@@ -27,7 +27,6 @@ void *sort(queue *front, Comparator *compare, Printer *print) {
 	void *backTail = 0;
 	void *element = dequeue(front);
 	void *frontTop = peekQueue(front);
-	void *backTop = peekQueue(back);
 	void *stackTop = peekStack(stackItems);
 	int swapped = 0;
 	
@@ -47,7 +46,6 @@ void *sort(queue *front, Comparator *compare, Printer *print) {
 		}
 		
 		frontTop = peekQueue(front);
-		backTop = peekQueue(back);
 		stackTop = peekStack(stackItems);
 	}
 	
