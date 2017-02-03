@@ -24,37 +24,31 @@ typedef void (GC)(void *);
 void *sort(queue *front, Comparator *compare, Printer *print) {
 	queue *back = newQueue(print);
 	stack *stackItems = newStack(print);
-	void *element = 0;
-	void *frontTop = 0;
-	void *backTop = 0;
-	void *stackTop = 0;
+	void *backTail = 0;
+	void *element = dequeue(front);
+	void *frontTop = peekQueue(front);
+	void *backTop = peekQueue(back);
+	void *stackTop = peekStack(stackItems);
 	int swapped = 0;
 	
-	while (peekQueue(front)) {
-		element = dequeue(front);
+	while (element) {
+		if (frontTop && compare(element, frontTop) < 0) {
+			push(stackItems, element);
+			element = dequeue(front);
+			swapped = 1;
+		} else if (stackTop && compare(stackTop, element) >= 0) {
+			backTail = pop(stackItems);
+			enqueue(back, backTail);
+			swapped = 1;
+		} else {
+			backTail = element;
+			enqueue(back, element);
+			element = dequeue(front);
+		}
+		
 		frontTop = peekQueue(front);
 		backTop = peekQueue(back);
 		stackTop = peekStack(stackItems);
-		
-		if (frontTop && compare(element, frontTop) < 0) {
-			push(stackItems, element);
-			swapped = 1;
-		} else if (stackTop && backTop && compare(element, stackTop) <= 0 && compare(backTop, stackTop) >= 0) {
-			while (stackTop) {
-				enqueue(back, pop(stackItems));
-				stackTop = peekStack(stackItems);
-			}
-			enqueue(back, element);
-			swapped = 1;
-		} else {
-			enqueue(back, element);
-			
-			backTop = peekQueue(back);
-			while (backTop && compare(element, backTop) > 0) {
-				enqueue(back, dequeue(back));
-				backTop = peekQueue(back);
-			}
-		}
 	}
 	
 	while (peekStack(stackItems)) {
@@ -77,18 +71,12 @@ void *sort(queue *front, Comparator *compare, Printer *print) {
 
 void *scanInteger(FILE *file) {
 	int token = readInt(file);
-	if (token == 0) {
-		return 0;
-	}
 	integer *newInt = newInteger(token);
 	return newInt;
 }
 
 void *scanReal(FILE *file) {
 	double token = readReal(file);
-	if (token == 0) {
-		return 0;
-	}
 	real *newRl = newReal(token);
 	return newRl;
 }
@@ -163,10 +151,6 @@ int main(int argc, const char * argv[]) {
 	void *token = scan(file);
 	
 	while (!feof(file)) {
-		if (token == 0) {
-			break;
-		}
-		
 		enqueue(inputQueue, token);
 		token = scan(file);
 	}
