@@ -21,24 +21,23 @@ typedef void (Printer)(FILE *, void *);
 typedef void *(Scanner)(FILE*);
 typedef void (GC)(void *);
 
-void *sort(queue *front, Comparator *compare, Printer *print) {
+void *sort(queue *front, Comparator *compare, Printer *print, int *sorted) {
 	queue *back = newQueue(print);
 	stack *stackItems = newStack(print);
 	void *backTail = 0;
 	void *element = dequeue(front);
 	void *frontTop = peekQueue(front);
 	void *stackTop = peekStack(stackItems);
-	int swapped = 0;
 	
 	while (element) {
 		if (frontTop && compare(element, frontTop) < 0) {
 			push(stackItems, element);
 			element = dequeue(front);
-			swapped = 1;
+			*sorted = 0;
 		} else if (stackTop && compare(stackTop, element) >= 0) {
 			backTail = pop(stackItems);
 			enqueue(back, backTail);
-			swapped = 1;
+			*sorted = 0;
 		} else {
 			backTail = element;
 			enqueue(back, element);
@@ -53,16 +52,8 @@ void *sort(queue *front, Comparator *compare, Printer *print) {
 		enqueue(back, pop(stackItems));
 	}
 	
-	free(front);
-	front = 0;
 	free(stackItems);
 	stackItems = 0;
-	
-	if (swapped) {
-		displayQueue(stdout, back);
-		printf("\n");
-		return sort(back, compare, print);
-	}
 	
 	return back;
 }
@@ -100,7 +91,62 @@ void gcString(void *string) {
 	freeString(string);
 }
 
-int main(int argc, const char * argv[]) {
+void setOptions(const char **argv, Comparator **comp, Printer **print, Scanner **scan, GC **gc) {
+	switch (argv[1][1]) {
+		case 'v':
+			fprintf(stdout, "Greyson M. Wright\n");
+			exit(0);
+			break;
+		case 'd':
+			*print = displayInteger;
+			*comp = compareInteger;
+			*scan = scanInteger;
+			*gc = gcInteger;
+			break;
+		case 'r':
+			*print = displayReal;
+			*comp = compareReal;
+			*scan = scanReal;
+			*gc = gcReal;
+			break;
+		case 's':
+			*print = displayString;
+			*comp = compareString;
+			*scan = scanString;
+			*gc = gcString;
+			break;
+		default:
+			fprintf(stdout, "unknown flag '%c', valid flags are -d, -r, -s, and -v\n", argv[1][1]);
+			exit(-2);
+			break;
+	}
+}
+
+queue *getFileContent(FILE *file, Scanner *scan, Printer *print) {
+	queue *inputQueue = newQueue(*print);
+	void *token = scan(file);
+	
+	while (!feof(file)) {
+		enqueue(inputQueue, token);
+		token = scan(file);
+	}
+	
+	fclose(file);
+	file = 0;
+	
+	return inputQueue;
+}
+
+void freeQueue(queue *items, GC *gc) {
+	while (peekQueue(items)) {
+		void *value = dequeue(items);
+		gc(value);
+	}
+	
+	free(items);
+}
+
+int main(int argc, const char *argv[]) {
 	Comparator *comp = 0;
 	Printer *print = 0;
 	Scanner *scan = 0;
@@ -116,53 +162,29 @@ int main(int argc, const char * argv[]) {
 		file = fopen(argv[2], "r");
 	}
 	
-	switch (argv[1][1]) {
-		case 'v':
-			fprintf(stdout, "Greyson M. Wright\n");
-			exit(0);
-			break;
-		case 'd':
-			print = displayInteger;
-			comp = compareInteger;
-			scan = scanInteger;
-			gc = gcInteger;
-			break;
-		case 'r':
-			print = displayReal;
-			comp = compareReal;
-			scan = scanReal;
-			gc = gcReal;
-			break;
-		case 's':
-			print = displayString;
-			comp = compareString;
-			scan = scanString;
-			gc = gcString;
-			break;
-		default:
-			fprintf(stdout, "unknown flag '%c', valid flags are -d, -r, -s, and -v\n", argv[1][1]);
-			exit(-2);
-			break;
-	}
-	
-	queue *inputQueue = newQueue(print);
-	void *token = scan(file);
-	
-	while (!feof(file)) {
-		enqueue(inputQueue, token);
-		token = scan(file);
-	}
-	
-	fclose(file);
-	file = 0;
+	setOptions(argv, &comp, &print, &scan, &gc);
+	queue *inputQueue = getFileContent(file, scan, print);
 	
 	displayQueue(stdout, inputQueue);
 	printf("\n");
-	queue *outputQueue = sort(inputQueue, comp, print);
 	
-	while (peekQueue(outputQueue)) {
-		void *value = dequeue(outputQueue);
-		gc(value);
+	int sorted = 0;
+	queue *outputQueue = sort(inputQueue, comp, print, &sorted);
+	freeQueue(inputQueue, gc);
+	inputQueue = outputQueue;
+	
+	while (!sorted) {
+		sorted = 1;
+		displayQueue(stdout, outputQueue);
+		printf("\n");
+		outputQueue = sort(inputQueue, comp, print, &sorted);
+		freeQueue(inputQueue, gc);
+		inputQueue = outputQueue;
+	}
+	
+	if (outputQueue) {
+		freeQueue(outputQueue, gc);
+		outputQueue = 0;
 	}
 	
 	return 0;
