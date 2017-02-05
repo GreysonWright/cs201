@@ -168,18 +168,24 @@ int main(int argc, const char *argv[]) {
 	displayQueue(stdout, inputQueue);
 	printf("\n");
 	
-	int sorted = 0;
-	queue *outputQueue = sort(inputQueue, comp, print, &sorted);
-	freeQueue(inputQueue, gc);
-	inputQueue = outputQueue;
+	queue *outputQueue = 0;
 	
-	while (!sorted) {
-		sorted = 1;
-		displayQueue(stdout, outputQueue);
-		printf("\n");
+	if (peekQueue(inputQueue)) {
+		
+		int sorted = 0;
 		outputQueue = sort(inputQueue, comp, print, &sorted);
 		freeQueue(inputQueue, gc);
 		inputQueue = outputQueue;
+		
+		while (!sorted) {
+			sorted = 1;
+			displayQueue(stdout, outputQueue);
+			printf("\n");
+			outputQueue = sort(inputQueue, comp, print, &sorted);
+			freeQueue(inputQueue, gc);
+			inputQueue = outputQueue;
+		}
+		
 	}
 	
 	if (outputQueue) {
