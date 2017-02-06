@@ -10,17 +10,18 @@
 #include <stdlib.h>
 #include "queue.h"
 
-#define BLACK = 0;
-#define RED = 1;
+#define BLACK 0;
+#define RED 1;
 
-treenode *newRBNode(void *value, unsigned color) {
+treenode *newTreeNode(void *value) {
 	treenode *newNode = malloc(sizeof *newNode);
 	if (newNode == 0) {
 		fprintf(stderr, "out of memory");
 		exit(-1);
 	}
 	newNode->value = value;
-	newNode->color = color;
+	newNode->frequency = 1;
+	newNode->color = RED;
 	newNode->parent = 0;
 	newNode->left = 0;
 	newNode->right = 0;
@@ -28,22 +29,18 @@ treenode *newRBNode(void *value, unsigned color) {
 	return newNode;
 }
 
-treenode *newBSNode(void *value) {
-	return newRBNode(value, 0);
-}
-
 tree *newTree(Display *display, Comparator *compare) {
-	tree *newTree = malloc(sizeof *newTree);
-	if (newTree == 0) {
+	tree *tree = malloc(sizeof *tree);
+	if (tree == 0) {
 		fprintf(stderr, "out of memory");
 		exit(-1);
 	}
 	
-	newTree->root = 0;
-	newTree->display = display;
-	newTree->compare = compare;
+	tree->root = 0;
+	tree->display = display;
+	tree->compare = compare;
 	
-	return newTree;
+	return tree;
 }
 
 treenode *findNode(treenode *node, void *value, Comparator *compare) {
@@ -51,29 +48,58 @@ treenode *findNode(treenode *node, void *value, Comparator *compare) {
 		return node;
 	}
 	
-	if (compare(value, node) < 0) {
-		return findNode(node->right, value, compare);
+	if (compare(value, node->value) == 0) {
+		return node;
 	}
 	
-	return findNode(node->left, value, compare);
+	if (compare(value, node->value) < 0) {
+		return findNode(node->left, value, compare);
+	}
+	
+	return findNode(node->right, value, compare);
 }
 
-treenode *insertNode(treenode *node, treenode *newNode, Comparator *compare) {
+treenode *insertNode(treenode *node, void *value, Comparator *compare) {
+	treenode *current = node;
+	
 	if (node == 0) {
-		return newNode;
+		return newTreeNode(value);
 	}
 	
-	if (compare(newNode->value, node->value) < 0) {
-		node->left = insertNode(node->left, newNode, compare);
-	} else if (compare(newNode->value, node->value) >= 0) {
-		node->right = insertNode(node->right, newNode, compare);
+	while (current) {
+		if (compare(value, current->value) < 0) {
+			if (current->left) {
+				current = current->left;
+			} else {
+				current->left = newTreeNode(value);
+				current->left->parent = current;
+				current = current->left;
+				break;
+			}
+		} else if (compare(value, current->value) > 0) {
+			if (current->right) {
+				current = current->right;
+			} else {
+				current->right = newTreeNode(value);
+				current->right->parent = current;
+				current = current->right;
+				break;
+			}
+		} else {
+			current->frequency++;
+			break;
+		}
 	}
 	
-	return node;
+	return current;
 }
 
-treenode *findPredecessor(treenode *node) {
+treenode *extractPredecessor(treenode *node) {
 	treenode *predecessor = 0;
+	
+	if (node->left == 0 && node->right == 0) {
+		return predecessor;
+	}
 	
 	if (node->left && node->right) {
 		predecessor = node->left;
@@ -81,22 +107,23 @@ treenode *findPredecessor(treenode *node) {
 		while (predecessor->right) {
 			predecessor = predecessor->right;
 		}
+		predecessor->parent->right = 0;
 	} else if (node->right == 0) {
 		predecessor = node->left;
-		
+		predecessor->parent->left = 0;
 	} else if (node->right) {
 		predecessor = node->right;
+		predecessor->parent->right = 0;
 	}
 	
 	return predecessor;
 }
 
 void insertBST(tree *tree, void *value) {
-	treenode *newNode = newBSNode(value);
+	treenode *node = insertNode(tree->root, value, tree->compare);
+	
 	if (tree->root == 0) {
-		tree->root = insertNode(tree->root, newNode, tree->compare);
-	} else {
-		insertNode(tree->root, newNode, tree->compare);
+		tree->root = node;
 	}
 }
 
@@ -112,24 +139,38 @@ void removeBST(tree *tree, void *value) {
 		return;
 	}
 	
-	tmp = findPredecessor(node);
-	if (tmp->right == 0) {
-		tmp->right = node->right;
+	if (node->frequency > 1) {
+		node->frequency--;
+		return;
 	}
 	
-	if (tmp->left == 0) {
-		tmp->left = node->left;
+	tmp = extractPredecessor(node);
+	
+	if (tmp) {
+		tmp->parent = node->parent;
+		if (tmp->right == 0) {
+			tmp->right = node->right;
+		}
+		
+		if (tmp->left == 0) {
+			tmp->left = node->left;
+		}
 	}
 	
-	tmp->parent = node->parent;
-	*node = *tmp;
+	if (node->parent) {
+		if (node == node->parent->left) {
+			node->parent->left = tmp;
+		} else {
+			node->parent->right = tmp;
+		}
+	}
 	
-//	if (node == tree->root) {
-//		tree->root = tmp;
-//	}
+	if (node == tree->root) {
+		tree->root = tmp;
+	}
 	
-	free(tmp);
-	node = tmp;
+	free(node);
+	node = 0;
 }
 
 void removeRBT(tree *tree, void *value) {
@@ -147,6 +188,7 @@ void displayTree(FILE *file, tree *tree) {
 	queue *items = newQueue(tree->display);
 	while (node) {
 		tree->display(file, node->value);
+		printf("-%d", node->frequency);
 		printf(" ");
 		if (node->left) {
 			enqueue(items, node->left);

@@ -16,6 +16,7 @@ typedef void (Display)(FILE *, void *);
 
 typedef struct treenode {
 	void *value;
+	unsigned int frequency;
 	unsigned color: 1;
 	struct treenode *parent;
 	struct treenode *right;

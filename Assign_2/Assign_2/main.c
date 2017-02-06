@@ -14,10 +14,17 @@
 
 int main(int argc, const char * argv[]) {
 	tree *bst = newTree(displayInteger, compareInteger);
-	insertBST(bst, newInteger(0));
+	insertBST(bst, newInteger(10));
+	insertBST(bst, newInteger(10));
+	insertBST(bst, newInteger(5));
+	insertBST(bst, newInteger(20));
 	insertBST(bst, newInteger(2));
-	insertBST(bst, newInteger(1));
-//	removeBST(bst, newInteger(0));
+	insertBST(bst, newInteger(17));
+	insertBST(bst, newInteger(9));
+	removeBST(bst, newInteger(10));
+	removeBST(bst, newInteger(10));
+	removeBST(bst, newInteger(9));
+	removeBST(bst, newInteger(2));
 	displayTree(stdout, bst);
     return 0;
 }
