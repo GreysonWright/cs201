@@ -10,8 +10,8 @@
 #include <stdlib.h>
 #include "queue.h"
 
-#define BLACK 0;
-#define RED 1;
+static const int BLACK = 0;
+static const int RED =  1;
 
 treenode *newTreeNode(void *value) {
 	treenode *newNode = malloc(sizeof *newNode);
@@ -119,20 +119,138 @@ treenode *extractPredecessor(treenode *node) {
 	return predecessor;
 }
 
-void insertBST(tree *tree, void *value) {
-	treenode *node = insertNode(tree->root, value, tree->compare);
+void insertBST(tree *items, void *value) {
+	treenode *node = insertNode(items->root, value, items->compare);
 	
-	if (tree->root == 0) {
-		tree->root = node;
+	if (items->root == 0) {
+		items->root = node;
 	}
 }
 
-void insertRBT(tree *tree, void *value) {
-	
+int getColor(treenode *node) {
+	if (node == 0) {
+		return BLACK;
+	}
+	return node->color;
 }
 
-void removeBST(tree *tree, void *value) {
-	treenode *node = findNode(tree->root, value, tree->compare);
+int isLeftChild(treenode *node) {
+	if (node->parent) {
+		return node == node->parent->left;
+	}
+	return 0;
+}
+
+treenode *getUncle(treenode *node) {
+	treenode *parent = node->parent;
+	
+	if (parent && parent->parent) {
+		if (isLeftChild(parent)) {
+			return parent->parent->right;
+		}
+		return parent->parent->left;
+	}
+	return 0;
+}
+
+int isLinear(treenode *node) {
+	return (isLeftChild(node) && isLeftChild(node->parent)) || (!isLeftChild(node) && !isLeftChild(node->parent));
+}
+
+void rotateLeft(tree *items, treenode *node) {	
+	treenode *right = node->right;
+	node->right = right->left;
+	
+	if (node->right) {
+		node->right->parent = node;
+	}
+	
+	right->parent = node->parent;
+ 
+	if (node->parent == 0) {
+		items->root = right;
+	} else if(node == node->parent->left) {
+		node->parent->left = right;
+	} else {
+		node->parent->right = right;
+	}
+ 
+	right->left = node;
+	node->parent = right;
+}
+
+void rotateRight(tree *items, treenode *node) {
+	treenode *left = node->left;
+	node->left = left->right;
+ 
+	if (node->left) {
+		node->left->parent = node;
+	}
+ 
+	left->parent = node->parent;
+ 
+	if (node->parent == 0) {
+		items->root = left;
+	} else if (node == node->parent->left) {
+		node->parent->left = left;
+	} else {
+		node->parent->right = left;
+	}
+ 
+	left->right = node;
+	node->parent = left;
+}
+
+void rotate(tree *items, treenode *node) {
+	if (isLeftChild(node)) {
+		rotateRight(items, node->parent);
+	} else {
+		rotateLeft(items, node->parent);
+	}
+}
+
+void insertFixUp(tree *items, treenode *node) {
+	treenode *parent = node->parent;
+	treenode *uncle = getUncle(node);
+	
+	while (node != items->root) {
+		if (getColor(parent) == BLACK) {
+			break;
+		}
+		
+		if (getColor(uncle) == RED) {
+			parent->color = BLACK;
+			uncle->color = BLACK;
+			parent->parent->color = RED;
+			node = parent->parent;
+		} else {
+			if (!isLinear(node) && !isLinear(parent)) {
+				rotate(items, node);
+				treenode *tmp = parent;
+				parent = node;
+				node = tmp;
+			}
+			
+			parent->color = BLACK;
+			parent->parent->color = RED;
+			rotate(items, parent);
+			break;
+		}
+	}
+}
+
+void insertRBT(tree *items, void *value) {
+	treenode *node = insertNode(items->root, value, items->compare);
+	insertFixUp(items, node);
+	
+	if (items->root == 0) {
+		node->color = BLACK;
+		items->root = node;
+	}
+}
+
+void removeBST(tree *items, void *value) {
+	treenode *node = findNode(items->root, value, items->compare);
 	treenode *tmp = 0;
 	
 	if (node == 0) {
@@ -165,39 +283,39 @@ void removeBST(tree *tree, void *value) {
 		}
 	}
 	
-	if (node == tree->root) {
-		tree->root = tmp;
+	if (node == items->root) {
+		items->root = tmp;
 	}
 	
 	free(node);
 	node = 0;
 }
 
-void removeRBT(tree *tree, void *value) {
+void removeRBT(tree *items, void *value) {
 	
 }
 
-void *searchTree(tree *tree, void *value) {
-	treenode *node = findNode(tree->root, value, tree->compare);
+void *searchTree(tree *items, void *value) {
+	treenode *node = findNode(items->root, value, items->compare);
 	
 	return node;
 }
 
-void displayTree(FILE *file, tree *tree) {
-	treenode *node = tree->root;
-	queue *items = newQueue(tree->display);
+void displayTree(FILE *file, tree *items) {
+	treenode *node = items->root;
+	queue *queueItems = newQueue(items->display);
 	while (node) {
-		tree->display(file, node->value);
-		printf("-%d", node->frequency);
+		items->display(file, node->value);
+		printf("-%d", isLeftChild(node));
 		printf(" ");
 		if (node->left) {
-			enqueue(items, node->left);
+			enqueue(queueItems, node->left);
 		}
 		
 		if (node->right) {
-			enqueue(items, node->right);
+			enqueue(queueItems, node->right);
 		}
 		
-		node = dequeue(items);
+		node = dequeue(queueItems);
 	}
 }
