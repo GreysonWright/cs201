@@ -31,7 +31,7 @@ double setReal(real *rl, double newVal) {
 }
 
 void displayReal(FILE *file, void *rl) {
-	fprintf(file ,"%lf", getReal(rl));
+	fprintf(file ,"%f", getReal(rl));
 }
 
 int compareReal(void *left, void *right) {

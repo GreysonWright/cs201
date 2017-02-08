@@ -15,9 +15,8 @@
 #include "real.h"
 #include "string.h"
 #include "scanner.h"
+#include "comparator.h"
 
-typedef int (Comparator)(void *, void *);
-typedef void (Printer)(FILE *, void *);
 typedef void *(Scanner)(FILE*);
 typedef void (GC)(void *);
 
@@ -99,19 +98,19 @@ void setOptions(const char **argv, Comparator **comp, Printer **print, Scanner *
 			break;
 		case 'd':
 			*print = displayInteger;
-			*comp = compareInteger;
+			*comp = intComparator;
 			*scan = scanInteger;
 			*gc = gcInteger;
 			break;
 		case 'r':
 			*print = displayReal;
-			*comp = compareReal;
+			*comp = realComparator;
 			*scan = scanReal;
 			*gc = gcReal;
 			break;
 		case 's':
 			*print = displayString;
-			*comp = compareString;
+			*comp = stringComparator;
 			*scan = scanString;
 			*gc = gcString;
 			break;

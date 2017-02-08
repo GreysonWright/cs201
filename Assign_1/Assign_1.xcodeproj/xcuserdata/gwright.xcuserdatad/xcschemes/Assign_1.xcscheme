@@ -76,7 +76,7 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "/Users/gwright/Git/cs201/Assign_1/Assign_1/mytestfile"
-            isEnabled = "NO">
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "/Users/gwright/Git/cs201/Assign_1/Assign_1/test.txt"
