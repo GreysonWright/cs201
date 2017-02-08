@@ -29,13 +29,16 @@ void *sort(queue *front, Comparator *compare, Printer *print, int *sorted) {
 	void *stackTop = peekStack(stackItems);
 	
 	while (element) {
-		if (frontTop && compare(element, frontTop) < 0) {
-			push(stackItems, element);
-			element = dequeue(front);
-			*sorted = 0;
-		} else if (stackTop && compare(stackTop, element) >= 0) {
+		if (stackTop && compare(stackTop, element) >= 0) {
+			if (backTail && compare(backTail, stackTop) < 0) {
+				continue;
+			}
 			backTail = pop(stackItems);
 			enqueue(back, backTail);
+			*sorted = 0;
+		} else if (frontTop && compare(element, frontTop) < 0) {
+			push(stackItems, element);
+			element = dequeue(front);
 			*sorted = 0;
 		} else {
 			backTail = element;
@@ -169,22 +172,18 @@ int main(int argc, const char *argv[]) {
 	
 	queue *outputQueue = 0;
 	
-	if (peekQueue(inputQueue)) {
-		
-		int sorted = 0;
+	int sorted = 0;
+	outputQueue = sort(inputQueue, comp, print, &sorted);
+	freeQueue(inputQueue, gc);
+	inputQueue = outputQueue;
+	
+	while (!sorted) {
+		sorted = 1;
+		displayQueue(stdout, outputQueue);
+		printf("\n");
 		outputQueue = sort(inputQueue, comp, print, &sorted);
 		freeQueue(inputQueue, gc);
 		inputQueue = outputQueue;
-		
-		while (!sorted) {
-			sorted = 1;
-			displayQueue(stdout, outputQueue);
-			printf("\n");
-			outputQueue = sort(inputQueue, comp, print, &sorted);
-			freeQueue(inputQueue, gc);
-			inputQueue = outputQueue;
-		}
-		
 	}
 	
 	if (outputQueue) {
