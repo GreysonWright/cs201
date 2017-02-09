@@ -12,7 +12,6 @@
 #include <stdio.h>
 
 typedef int (Comparator)(void *, void *);
-typedef void (Printer)(FILE *, void *);
 
 int intComparator(void *, void *);
 int realComparator(void *, void *);

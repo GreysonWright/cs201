@@ -17,6 +17,7 @@
 #include "scanner.h"
 #include "comparator.h"
 
+typedef void (Printer)(FILE *, void *);
 typedef void *(Scanner)(FILE*);
 typedef void (GC)(void *);
 
