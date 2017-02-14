@@ -11,6 +11,7 @@
 #include "integer.h"
 #include "real.h"
 #include "string.h"
+#include "bst.h"
 
 int main(int argc, const char * argv[]) {
 //	tree *bst = newTree(displayInteger, compareInteger);
@@ -27,10 +28,11 @@ int main(int argc, const char * argv[]) {
 //	removeBST(bst, newInteger(2));
 //	displayTree(stdout, bst);
 	
-	tree *rbt = newTree(displayInteger, compareInteger);
-	insertRBT(rbt, newInteger(10));
-	insertRBT(rbt, newInteger(9));
-	insertRBT(rbt, newInteger(8));
-	displayTree(stdout, rbt);
-    return 0;
+//	tree *rbt = newTree(displayInteger, compareInteger);
+//	insertRBT(rbt, newInteger(10));
+//	insertRBT(rbt, newInteger(9));
+//	insertRBT(rbt, newInteger(8));
+//	displayTree(stdout, rbt);
+	
+	return 0;
 }

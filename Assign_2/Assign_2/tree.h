@@ -29,11 +29,11 @@ typedef struct tree {
 	Comparator *compare;
 } tree;
 
-tree *newTree(Display *display, Comparator *compare);
-void insertBST(tree *, void *);
-void insertRBT(tree *, void *);
-void removeBST(tree *, void *);
-void removeRBT(tree *, void *);
-void *searchTree(tree *, void *);
-void displayTree(FILE *, tree *);
+//tree *newTree(Display *display, Comparator *compare);
+//void insertBST(tree *, void *);
+//void insertRBT(tree *, void *);
+//void removeBST(tree *, void *);
+//void removeRBT(tree *, void *);
+//void *searchTree(tree *, void *);
+//void displayTree(FILE *, tree *);
 #endif /* tree_h */

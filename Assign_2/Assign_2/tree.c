@@ -29,20 +29,6 @@ treenode *newTreeNode(void *value) {
 	return newNode;
 }
 
-tree *newTree(Display *display, Comparator *compare) {
-	tree *tree = malloc(sizeof *tree);
-	if (tree == 0) {
-		fprintf(stderr, "out of memory");
-		exit(-1);
-	}
-	
-	tree->root = 0;
-	tree->display = display;
-	tree->compare = compare;
-	
-	return tree;
-}
-
 treenode *findNode(treenode *node, void *value, Comparator *compare) {
 	if (node == 0) {
 		return node;
@@ -119,12 +105,50 @@ treenode *extractPredecessor(treenode *node) {
 	return predecessor;
 }
 
-void insertBST(tree *items, void *value) {
-	treenode *node = insertNode(items->root, value, items->compare);
+treenode *removeNode(tree *items, void *value) {
+	treenode *node = findNode(items->root, value, items->compare);
+	treenode *tmp = 0;
 	
-	if (items->root == 0) {
-		items->root = node;
+	if (node == 0) {
+		return 0;
 	}
+	
+	if (node->frequency > 1) {
+		node->frequency--;
+		return node->parent;
+	}
+	
+	tmp = extractPredecessor(node);
+	
+	if (tmp) {
+		tmp->parent = node->parent;
+		if (tmp->right == 0) {
+			tmp->right = node->right;
+		}
+		
+		if (tmp->left == 0) {
+			tmp->left = node->left;
+		}
+	}
+	
+	if (node->parent) {
+		if (node == node->parent->left) {
+			node->parent->left = tmp;
+		} else {
+			node->parent->right = tmp;
+		}
+	}
+	
+	if (node == items->root) {
+		items->root = tmp;
+	}
+	
+	treenode *parent = node->parent;
+	
+	free(node);
+	node = 0;
+	
+	return parent;
 }
 
 int getColor(treenode *node) {
@@ -151,6 +175,29 @@ treenode *getUncle(treenode *node) {
 		return parent->parent->left;
 	}
 	return 0;
+}
+
+treenode *getSibling(treenode *node) {
+	if (isLeftChild(node)) {
+		return node->parent->right;
+	}
+	return node->parent->left;
+}
+
+treenode *getNephew(treenode *node) {
+	treenode *sibling = getSibling(node);
+	if (isLeftChild(node)) {
+		return sibling->right;
+	}
+	return sibling->left;
+}
+
+treenode *getNiece(treenode *node) {
+	treenode *sibling = getSibling(node);
+	if (isLeftChild(node)) {
+		return sibling->left;
+	}
+	return sibling->right;
 }
 
 int isLinear(treenode *node) {
@@ -239,6 +286,59 @@ void insertFixUp(tree *items, treenode *node) {
 	}
 }
 
+void deletionFixUp(tree *items, treenode *node) {
+	while (node != items->root) {
+		if (getColor(node) == RED) {
+			break;
+		}
+		
+		treenode *sibling = getSibling(node);
+		treenode *nephew = getNephew(node);
+		treenode *niece = getNiece(node);
+		if (getColor(sibling) == RED) {
+			node->parent->color = RED;
+			sibling->color = RED;
+			rotate(items, sibling->parent);
+		} else if(getColor(nephew) == RED) {
+			sibling->color = getColor(node->parent);
+			node->parent->color = BLACK;
+			nephew->color = BLACK;
+			//rotate
+			node = items->root;
+		} else if(getColor(niece) == RED) {
+			niece->color = BLACK;
+			sibling->color = RED;
+			//rotate
+		} else {
+			sibling->color = RED;
+			node = node->parent;
+		}
+	}
+	node->color = BLACK;
+}
+
+tree *newTree(Display *display, Comparator *compare) {
+	tree *tree = malloc(sizeof *tree);
+	if (tree == 0) {
+		fprintf(stderr, "out of memory");
+		exit(-1);
+	}
+	
+	tree->root = 0;
+	tree->display = display;
+	tree->compare = compare;
+	
+	return tree;
+}
+
+void insertBST(tree *items, void *value) {
+	treenode *node = insertNode(items->root, value, items->compare);
+	
+	if (items->root == 0) {
+		items->root = node;
+	}
+}
+
 void insertRBT(tree *items, void *value) {
 	treenode *node = insertNode(items->root, value, items->compare);
 	insertFixUp(items, node);
@@ -250,48 +350,11 @@ void insertRBT(tree *items, void *value) {
 }
 
 void removeBST(tree *items, void *value) {
-	treenode *node = findNode(items->root, value, items->compare);
-	treenode *tmp = 0;
-	
-	if (node == 0) {
-		return;
-	}
-	
-	if (node->frequency > 1) {
-		node->frequency--;
-		return;
-	}
-	
-	tmp = extractPredecessor(node);
-	
-	if (tmp) {
-		tmp->parent = node->parent;
-		if (tmp->right == 0) {
-			tmp->right = node->right;
-		}
-		
-		if (tmp->left == 0) {
-			tmp->left = node->left;
-		}
-	}
-	
-	if (node->parent) {
-		if (node == node->parent->left) {
-			node->parent->left = tmp;
-		} else {
-			node->parent->right = tmp;
-		}
-	}
-	
-	if (node == items->root) {
-		items->root = tmp;
-	}
-	
-	free(node);
-	node = 0;
+	removeNode(items, value);
 }
 
 void removeRBT(tree *items, void *value) {
+	treenode *node = removeNode(items, value);
 	
 }
 
