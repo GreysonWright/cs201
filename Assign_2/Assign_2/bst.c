@@ -6,8 +6,9 @@
 //  Copyright © 2017 Greyson Wright. All rights reserved.
 //
 
-#include "bst.h"
 #include <stdlib.h>
+#include "bst.h"
+#include "queue.h"
 
 bstNode *findPredecessor(bstNode *node) {
 	bstNode *predecessor = 0;
@@ -37,11 +38,10 @@ bstNode *newBSTNode(void *value) {
 		fprintf(stderr, "out of memory");
 		exit(-1);
 	}
-	newNode->value = value;
 	newNode->parent = 0;
 	newNode->left = 0;
 	newNode->right = 0;
-	
+	newNode->value = value;
 	return newNode;
 }
 
@@ -63,6 +63,7 @@ bstNode *insertBST(bst *items, void *value) {
 	bstNode *newNode = newBSTNode(value);
 	
 	if (node == 0) {
+		items->root = newNode;
 		return newNode;
 	}
 	
@@ -140,5 +141,31 @@ void statisticsBST(bst *items, FILE *file) {
 }
 
 void displayBST(bst *items, FILE *file) {
+	bstNode *node = items->root;
+	queue *queueItems = newQueue(items->display);
+	enqueue(queueItems, node);
+	enqueue(queueItems, 0);
 	
+	while (sizeQueue(queueItems) > 1) {
+		node = dequeue(queueItems);
+		
+		if (node == 0) {
+			node = dequeue(queueItems);
+			printf("\n");
+			enqueue(queueItems, 0);
+		}
+		
+		if (node) {
+			items->display(file, node->value);
+			printf(" ");
+			
+			if (node->left) {
+				enqueue(queueItems, node->left);
+			}
+			
+			if (node->right) {
+				enqueue(queueItems, node->right);
+			}
+		}
+	}
 }

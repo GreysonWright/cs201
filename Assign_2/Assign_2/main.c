@@ -7,26 +7,26 @@
 //
 
 #include <stdio.h>
-#include "tree.h"
 #include "integer.h"
 #include "real.h"
 #include "string.h"
 #include "bst.h"
+#include "vbst.h"
 
 int main(int argc, const char * argv[]) {
-//	tree *bst = newTree(displayInteger, compareInteger);
-//	insertBST(bst, newInteger(10));
-//	insertBST(bst, newInteger(10));
-//	insertBST(bst, newInteger(5));
-//	insertBST(bst, newInteger(20));
-//	insertBST(bst, newInteger(2));
-//	insertBST(bst, newInteger(17));
-//	insertBST(bst, newInteger(9));
+	vbst *bst = newVBST(displayInteger, compareInteger);
+	insertVBST(bst, newInteger(10));
+	insertVBST(bst, newInteger(10));
+	insertVBST(bst, newInteger(5));
+	insertVBST(bst, newInteger(20));
+	insertVBST(bst, newInteger(2));
+	insertVBST(bst, newInteger(17));
+	insertVBST(bst, newInteger(9));
 //	removeBST(bst, newInteger(10));
 //	removeBST(bst, newInteger(10));
 //	removeBST(bst, newInteger(9));
 //	removeBST(bst, newInteger(2));
-//	displayTree(stdout, bst);
+	displayVBST(bst, stdout);
 	
 //	tree *rbt = newTree(displayInteger, compareInteger);
 //	insertRBT(rbt, newInteger(10));
