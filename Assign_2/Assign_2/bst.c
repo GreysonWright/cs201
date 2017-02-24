@@ -107,8 +107,10 @@ bstNode *findBSTNode(bst *items, void *value) {
 	while (current) {
 		if (items->compare(value, current->value) < 0) {
 			current = current->left;
-		} else {
+		} else if (items->compare(value, current->value) > 0) {
 			current = current->right;
+		} else {
+			return current;
 		}
 	}
 	

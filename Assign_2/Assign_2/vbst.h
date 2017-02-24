@@ -20,7 +20,11 @@ typedef struct vbstValue {
 } vbstValue;
 
 typedef struct vbst {
-	bst *store;
+	bst *tree;
+	void (*display)(FILE *, void *);
+	int (*compare)(void *, void *);
+	int size;
+	int words;
 }vbst;
 
 vbst *newVBST(void (*)(FILE *, void *), int (*)(void *, void *));

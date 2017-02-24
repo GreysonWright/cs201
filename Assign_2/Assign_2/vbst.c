@@ -17,6 +17,8 @@ vbstValue *newVBSTValue(void *value, void (*display)(FILE *file, void *display),
 	}
 	newNode->value = value;
 	newNode->frequency = 0;
+	newNode->display = display;
+	newNode->compare = compare;
 	return newNode;
 }
 
@@ -26,30 +28,35 @@ vbst *newVBST(void (*display)(FILE *file, void *display), int (*compare)(void *l
 		fprintf(stderr, "out of memory");
 		exit(-1);
 	}
-	tree->store = newBST(display, compare);
+	tree->tree = newBST(display, compare);
 	return tree;
 }
 
 bstNode *insertVBST(vbst *tree, void *value) {
-	bstNode *node = findBSTNode(tree->store, value);
+	vbstValue *val = newVBSTValue(value, tree->tree->display, tree->tree->compare);
+	bstNode *node = findBSTNode(tree->tree, val);
 	if (node) {
 		((vbstValue *)node->value)->frequency++;
 		return node;
 	}
-	vbstValue *val = newVBSTValue(value, tree->store->display, tree->store->compare);
-	return insertBST(tree->store, val);
+	return insertBST(tree->tree, val);
 }
 
 bstNode *deleteVBST(vbst *tree, void *value) {
-	bstNode *node = findBSTNode(tree->store, value);
-	node = swapToLeafBSTNode(node);
-	pruneBSTNode(node);
+	bstNode *node = findBSTNode(tree->tree, value);
+	vbstValue *nodeValue = node->value;
+	if (nodeValue->frequency > 1) {
+		nodeValue->frequency--;
+	} else {
+		node = swapToLeafBSTNode(node);
+		pruneBSTNode(node);
+	}
 	
 	return node;
 }
 
 int findVBST(vbst *tree, void *value) {
-	return findBST(tree->store, value);
+	return findBST(tree->tree, value);
 }
 
 void statisticsVBST(vbst *tree, FILE *file) {
@@ -57,5 +64,5 @@ void statisticsVBST(vbst *tree, FILE *file) {
 }
 
 void displayVBST(vbst *tree, FILE *file){
-	displayBST(tree->store, file);
+	displayBST(tree->tree, file);
 }
