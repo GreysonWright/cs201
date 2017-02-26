@@ -123,6 +123,8 @@ bstNode *swapToLeafBSTNode(bstNode *node) {
 		void *tmp = node->value;
 		node->value = predecessor->value;
 		predecessor->value = tmp;
+	} else {
+		return node;
 	}
 	
 	if (predecessor && (predecessor->left || predecessor->right)) {

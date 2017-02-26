@@ -82,54 +82,60 @@ int isLinear(bstNode *node) {
 }
 
 void rotateLeft(rbt *tree, bstNode *node) {
-	bstNode *right = node->right;
-	node->right = right->left;
-	
-	if (node->right) {
-		node->right->parent = node;
-	}
-	
-	right->parent = node->parent;
- 
-	if (node->parent == 0) {
-		tree->tree->root = right;
-	} else if(node == node->parent->left) {
-		node->parent->left = right;
+	bstNode *parent = node->parent;
+	bstNode *left = node->left;
+
+	if (parent->parent) {
+		if (isLeftChild(parent)) {
+			parent->parent->left = node;
+		} else {
+			parent->parent->right = node;
+		}
+		node->parent = parent->parent;
 	} else {
-		node->parent->right = right;
+		tree->tree->root = node;
+		node->parent = 0;
 	}
- 
-	right->left = node;
-	node->parent = right;
+	
+	parent->right = left;
+	if (left) {
+		left->parent = parent;
+	}
+	
+	node->left = parent;
+	parent->parent = node;
 }
 
 void rotateRight(rbt *tree, bstNode *node) {
-	bstNode *left = node->left;
-	node->left = left->right;
- 
-	if (node->left) {
-		node->left->parent = node;
-	}
- 
-	left->parent = node->parent;
- 
-	if (node->parent == 0) {
-		tree->tree->root = left;
-	} else if (node == node->parent->left) {
-		node->parent->left = left;
+	bstNode *parent = node->parent;
+	bstNode *right = node->right;
+	
+	if (parent->parent) {
+		if (isLeftChild(parent)) {
+			parent->parent->left = node;
+		} else {
+			parent->parent->right = node;
+		}
+		node->parent = parent->parent;
 	} else {
-		node->parent->right = left;
+		tree->tree->root = node;
+		node->parent = 0;
 	}
- 
-	left->right = node;
-	node->parent = left;
+	
+	parent->left = right;
+	if (right) {
+		right->parent = parent;
+	}
+	
+	node->right = parent;
+	parent->parent = node;
 }
 
 void rotate(rbt *tree, bstNode *node) {
 	if (isLeftChild(node)) {
-		rotateRight(tree, node->parent);
+		rotateRight(tree, node);
 	} else {
-		rotateLeft(tree, node->parent);
+		rotateLeft(tree, node);
 	}
 }
 
@@ -176,17 +182,17 @@ void deletionFixUp(rbt *tree, bstNode *node) {
 		if (getColor(sibling) == RED) {
 			setColor(node->parent, RED);
 			setColor(sibling, RED);
-			//rotate
+			rotate(tree, sibling);
 		} else if(getColor(nephew) == RED) {
 			setColor(sibling, getColor(node->parent));
 			setColor(node->parent, BLACK);
 			setColor(nephew, BLACK);
-			//rotate
+			rotate(tree, sibling);
 			break;
 		} else if(getColor(niece) == RED) {
 			setColor(niece, BLACK);
 			setColor(sibling->parent, RED);
-			//rotate
+			rotate(tree, niece);
 		} else {
 			setColor(sibling->parent, RED);
 			node = node->parent;
@@ -247,8 +253,8 @@ void deleteRBT(rbt *tree, void *value) {
 		((rbtValue *)node->value)->frequency--;
 	} else {
 		node = swapToLeafBSTNode(node);
-		pruneBSTNode(node);
 		deletionFixUp(tree, node);
+		pruneBSTNode(node);
 	}
 }
 
