@@ -139,7 +139,7 @@ void rotate(rbt *tree, bstNode *node) {
 	}
 }
 
-void insertFixUp(rbt *tree, bstNode *node) {
+void insertionFixUp(rbt *tree, bstNode *node) {
 	bstNode *parent = node->parent;
 	
 	while (node != tree->tree->root) {
@@ -171,14 +171,18 @@ void insertFixUp(rbt *tree, bstNode *node) {
 }
 
 void deletionFixUp(rbt *tree, bstNode *node) {
+	bstNode *sibling = 0;
+	bstNode *nephew = 0;
+	bstNode *niece = 0;
+	
 	while (node != tree->tree->root) {
 		if (getColor(node) == RED) {
 			break;
 		}
 		
-		bstNode *sibling = getSibling(node);
-		bstNode *nephew = getNephew(node);
-		bstNode *niece = getNiece(node);
+		sibling = getSibling(node);
+		nephew = getNephew(node);
+		niece = getNiece(node);
 		if (getColor(sibling) == RED) {
 			setColor(node->parent, RED);
 			setColor(sibling, BLACK);
@@ -236,7 +240,7 @@ void insertRBT(rbt *tree, void *value) {
 		((rbtValue *)node->value)->frequency++;
 	} else {
 		node = insertBST(tree->tree, val);
-		insertFixUp(tree, node);
+		insertionFixUp(tree, node);
 		tree->size++;
 	}
 	tree->words++;
