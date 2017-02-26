@@ -10,6 +10,54 @@
 #include "bst.h"
 #include "queue.h"
 
+static int min(int right, int left) {
+	return right > left ? left : right;
+}
+
+static int max(int right, int left) {
+	return right < left ? left : right;
+}
+
+static int findMinHeight(bstNode *node) {
+	if (node == 0) {
+		return 0;
+	}
+	
+	if (node->left == 0 && node->right == 0) {
+		return 1;
+	}
+	
+	if (node->left == 0) {
+		return findMinHeight(node->right) + 1;
+	}
+	
+	if (node->right == 0) {
+		return findMinHeight(node->left) + 1;
+	}
+	
+	return min(findMinHeight(node->left), findMinHeight(node->right)) + 1;
+}
+
+static int findMaxHeight(bstNode *node) {
+	if (node == 0) {
+		return 0;
+	}
+	
+	if (node->left == 0 && node->right == 0) {
+		return 1;
+	}
+	
+	if (node->left == 0) {
+		return findMaxHeight(node->right) + 1;
+	}
+	
+	if (node->right == 0) {
+		return findMaxHeight(node->left) + 1;
+	}
+	
+	return max(findMaxHeight(node->left), findMaxHeight(node->right)) + 1;
+}
+
 bstNode *findPredecessor(bstNode *node) {
 	bstNode *predecessor = 0;
 	
@@ -46,29 +94,29 @@ bstNode *newBSTNode(void *value) {
 }
 
 bst *newBST(void (*display)(FILE *file, void *display), int (*compare)(void *left, void *right)) {
-	bst *items = items = malloc(sizeof *items);
-	if (items == 0) {
+	bst *tree = tree = malloc(sizeof *tree);
+	if (tree == 0) {
 		fprintf(stderr, "out of memory");
 		exit(-1);
 	}
-	items->root = 0;
-	items->display = display;
-	items->compare = compare;
-	return items;
+	tree->root = 0;
+	tree->display = display;
+	tree->compare = compare;
+	return tree;
 }
 
-bstNode *insertBST(bst *items, void *value) {
-	bstNode *node = items->root;
+bstNode *insertBST(bst *tree, void *value) {
+	bstNode *node = tree->root;
 	bstNode *current = node;
 	bstNode *newNode = newBSTNode(value);
 	
 	if (node == 0) {
-		items->root = newNode;
+		tree->root = newNode;
 		return newNode;
 	}
 	
 	while (current) {
-		if (items->compare(value, current->value) < 0) {
+		if (tree->compare(value, current->value) < 0) {
 			if (current->left) {
 				current = current->left;
 			} else {
@@ -77,7 +125,7 @@ bstNode *insertBST(bst *items, void *value) {
 				current = current->left;
 				break;
 			}
-		} else { //if (items->compare(value, current->value) > 0) {
+		} else { //if (tree->compare(value, current->value) > 0) {
 			if (current->right) {
 				current = current->right;
 			} else {
@@ -92,12 +140,12 @@ bstNode *insertBST(bst *items, void *value) {
 	return current;
 }
 
-int findBST(bst *items, void *value) {
-	return findBSTNode(items, value) != 0;
+int findBST(bst *tree, void *value) {
+	return findBSTNode(tree, value) != 0;
 }
 
-bstNode *findBSTNode(bst *items, void *value) {
-	bstNode *node = items->root;
+bstNode *findBSTNode(bst *tree, void *value) {
+	bstNode *node = tree->root;
 	bstNode *current = node;
 	
 	if (node == 0) {
@@ -105,9 +153,9 @@ bstNode *findBSTNode(bst *items, void *value) {
 	}
 	
 	while (current) {
-		if (items->compare(value, current->value) < 0) {
+		if (tree->compare(value, current->value) < 0) {
 			current = current->left;
-		} else if (items->compare(value, current->value) > 0) {
+		} else if (tree->compare(value, current->value) > 0) {
 			current = current->right;
 		} else {
 			return current;
@@ -144,13 +192,15 @@ void pruneBSTNode(bstNode *node) {
 	}
 }
 
-void statisticsBST(bst *items, FILE *file) {
-	
+void statisticsBST(bst *tree, FILE *file) {
+	int minDepth = findMinHeight(tree->root);
+	int maxDepth = findMaxHeight(tree->root);
+	fprintf(file, "Minimum depth: %d\nMaximum depth: %d\n", minDepth, maxDepth);
 }
 
-void displayBST(bst *items, FILE *file) {
-	bstNode *node = items->root;
-	queue *queueItems = newQueue(items->display);
+void displayBST(bst *tree, FILE *file) {
+	bstNode *node = tree->root;
+	queue *queueItems = newQueue(tree->display);
 	enqueue(queueItems, node);
 	enqueue(queueItems, 0);
 	
@@ -164,7 +214,7 @@ void displayBST(bst *items, FILE *file) {
 		}
 		
 		if (node) {
-			items->display(file, node->value);
+			tree->display(file, node->value);
 			printf(" ");
 			
 			if (node->left) {

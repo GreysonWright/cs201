@@ -181,7 +181,7 @@ void deletionFixUp(rbt *tree, bstNode *node) {
 		bstNode *niece = getNiece(node);
 		if (getColor(sibling) == RED) {
 			setColor(node->parent, RED);
-			setColor(sibling, RED);
+			setColor(sibling, BLACK);
 			rotate(tree, sibling);
 		} else if(getColor(nephew) == RED) {
 			setColor(sibling, getColor(node->parent));
@@ -191,10 +191,10 @@ void deletionFixUp(rbt *tree, bstNode *node) {
 			break;
 		} else if(getColor(niece) == RED) {
 			setColor(niece, BLACK);
-			setColor(sibling->parent, RED);
+			setColor(sibling, RED);
 			rotate(tree, niece);
 		} else {
-			setColor(sibling->parent, RED);
+			setColor(sibling, RED);
 			node = node->parent;
 		}
 	}
@@ -221,7 +221,11 @@ rbt *newRBT(void (*display)(FILE *file, void *display), int (*compare)(void *lef
 		fprintf(stderr, "out of memory");
 		exit(-1);
 	}
+	tree->display = display;
+	tree->compare = compare;
 	tree->tree = newBST(display, compare);
+	tree->size = 0;
+	tree->words = 0;
 	return tree;
 }
 
@@ -230,10 +234,12 @@ void insertRBT(rbt *tree, void *value) {
 	bstNode *node = findBSTNode(tree->tree, val);
 	if (node) {
 		((rbtValue *)node->value)->frequency++;
-		return;
+	} else {
+		node = insertBST(tree->tree, val);
+		insertFixUp(tree, node);
+		tree->size++;
 	}
-	node = insertBST(tree->tree, val);
-	insertFixUp(tree, node);
+	tree->words++;
 }
 
 int findRBT(rbt *tree, void *value) {
@@ -255,11 +261,14 @@ void deleteRBT(rbt *tree, void *value) {
 		node = swapToLeafBSTNode(node);
 		deletionFixUp(tree, node);
 		pruneBSTNode(node);
+		tree->size--;
 	}
+	tree->words--;
 }
 
 void statisticsRBT(rbt *tree, FILE *file) {
-	
+	fprintf(file, "Nodes: %d\nWords/Phrases: %d\n", tree->size, tree->words);
+	statisticsBST(tree->tree, file);
 }
 
 void displayRBT(FILE *file, rbt *tree) {

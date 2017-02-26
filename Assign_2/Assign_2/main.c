@@ -67,21 +67,22 @@ int main(int argc, const char * argv[]) {
 //	displayTree(stdout, rbt);
 
 	rbt *tree = newRBT(rbtIntDisplay, rbtIntComparator);
-	insertRBT(tree, newInteger(100));
-	insertRBT(tree, newInteger(20));
-	insertRBT(tree, newInteger(21));
-	insertRBT(tree, newInteger(19));
-	deleteRBT(tree, newInteger(100));
-//	insertRBT(tree, newInteger(10));
-//	insertRBT(tree, newInteger(10));
-//	insertRBT(tree, newInteger(5));
+//	insertRBT(tree, newInteger(100));
+//	insertRBT(tree, newInteger(100));
 //	insertRBT(tree, newInteger(20));
-//	insertRBT(tree, newInteger(2));
-//	insertRBT(tree, newInteger(17));
-//	deleteRBT(tree, newInteger(10));
-//	deleteRBT(tree, newInteger(10));
-//	deleteRBT(tree, newInteger(17));
+//	insertRBT(tree, newInteger(21));
+//	insertRBT(tree, newInteger(19));
+//	deleteRBT(tree, newInteger(100));
+	insertRBT(tree, newInteger(10));
+	insertRBT(tree, newInteger(10));
+	insertRBT(tree, newInteger(5));
+	insertRBT(tree, newInteger(20));
+	insertRBT(tree, newInteger(2));
+	insertRBT(tree, newInteger(17));
+	deleteRBT(tree, newInteger(10));
+	deleteRBT(tree, newInteger(10));
+	deleteRBT(tree, newInteger(17));
 	displayRBT(stdout, tree);
-	
+	statisticsRBT(tree, stdout);
 	return 0;
 }
