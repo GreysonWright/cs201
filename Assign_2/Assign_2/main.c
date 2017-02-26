@@ -73,6 +73,10 @@ int main(int argc, const char * argv[]) {
 	insertRBT(tree, newInteger(20));
 	insertRBT(tree, newInteger(2));
 	insertRBT(tree, newInteger(17));
+	deleteRBT(tree, newInteger(10));
+	deleteRBT(tree, newInteger(10));
+	deleteRBT(tree, newInteger(17));
+	displayRBT(stdout, tree);
 	
 	return 0;
 }

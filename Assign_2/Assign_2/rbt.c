@@ -13,8 +13,10 @@ static const int BLACK = 0;
 static const int RED =  1;
 
 void setColor(bstNode *node, int color) {
-	rbtValue *nodeValue = node->value;
-	nodeValue->color = color;
+	if (node != 0) {
+		rbtValue *nodeValue = node->value;
+		nodeValue->color = color;
+	}
 }
 
 int getColor(bstNode *node) {
@@ -44,6 +46,9 @@ bstNode *getUncle(bstNode *node) {
 }
 
 bstNode *getSibling(bstNode *node) {
+	if (node->parent == 0) {
+		return 0;
+	}
 	if (isLeftChild(node)) {
 		return node->parent->right;
 	}
@@ -52,6 +57,9 @@ bstNode *getSibling(bstNode *node) {
 
 bstNode *getNephew(bstNode *node) {
 	bstNode *sibling = getSibling(node);
+	if (sibling == 0) {
+		return 0;
+	}
 	if (isLeftChild(node)) {
 		return sibling->right;
 	}
@@ -60,6 +68,9 @@ bstNode *getNephew(bstNode *node) {
 
 bstNode *getNiece(bstNode *node) {
 	bstNode *sibling = getSibling(node);
+	if (sibling == 0) {
+		return 0;
+	}
 	if (isLeftChild(node)) {
 		return sibling->left;
 	}
@@ -124,26 +135,24 @@ void rotate(rbt *tree, bstNode *node) {
 
 void insertFixUp(rbt *tree, bstNode *node) {
 	bstNode *parent = node->parent;
-	bstNode *uncle = getUncle(node);
 	
 	while (node != tree->tree->root) {
 		if (getColor(parent) == BLACK) {
 			break;
 		}
 		
-		if (getColor(uncle) == RED) {
+		if (getColor(getUncle(node)) == RED) {
 			setColor(parent, BLACK);
-			setColor(uncle, BLACK);
+			setColor(getUncle(node), BLACK);
 			setColor(parent->parent, RED);
 			node = parent->parent;
-			uncle = getUncle(node);
+			parent = node->parent;
 		} else {
 			if (!isLinear(node) && !isLinear(parent)) {
 				rotate(tree, node);
 				bstNode *tmp = parent;
 				parent = node;
 				node = tmp;
-				uncle = getUncle(node);
 			}
 			
 			setColor(parent, BLACK);
@@ -152,6 +161,7 @@ void insertFixUp(rbt *tree, bstNode *node) {
 			break;
 		}
 	}
+	setColor(tree->tree->root, BLACK);
 }
 
 void deletionFixUp(rbt *tree, bstNode *node) {
@@ -166,19 +176,19 @@ void deletionFixUp(rbt *tree, bstNode *node) {
 		if (getColor(sibling) == RED) {
 			setColor(node->parent, RED);
 			setColor(sibling, RED);
-			rotate(tree, sibling->parent);
+			//rotate
 		} else if(getColor(nephew) == RED) {
 			setColor(sibling, getColor(node->parent));
 			setColor(node->parent, BLACK);
 			setColor(nephew, BLACK);
 			//rotate
-			node = tree->tree->root;
+			break;
 		} else if(getColor(niece) == RED) {
 			setColor(niece, BLACK);
-			setColor(sibling, RED);
+			setColor(sibling->parent, RED);
 			//rotate
 		} else {
-			setColor(sibling, RED);
+			setColor(sibling->parent, RED);
 			node = node->parent;
 		}
 	}
@@ -192,7 +202,7 @@ rbtValue *newRBTValue(void *value, void (*display)(FILE *file, void *display), i
 		exit(-1);
 	}
 	newNode->value = value;
-	newNode->frequency = 0;
+	newNode->frequency = 1;
 	newNode->color = RED;
 	newNode->display = display;
 	newNode->compare = compare;
@@ -225,14 +235,20 @@ int findRBT(rbt *tree, void *value) {
 }
 
 void deleteRBT(rbt *tree, void *value) {
-	bstNode *node = findBSTNode(tree->tree, value);
-	rbtValue *nodeValue = node->value;
-	
-	if (nodeValue->frequency > 1) {
-		nodeValue->frequency--;
+	rbtValue *val = newRBTValue(value, tree->tree->display, tree->tree->compare);
+	bstNode *node = findBSTNode(tree->tree, val);
+	if (node == 0) {
+		fprintf(stderr, "Value ");
+		val->display(stderr, val);
+		fprintf(stderr, " not found.\n");
+		return;
+	}
+	if (((rbtValue *)node->value)->frequency > 1) {
+		((rbtValue *)node->value)->frequency--;
 	} else {
 		node = swapToLeafBSTNode(node);
 		pruneBSTNode(node);
+		deletionFixUp(tree, node);
 	}
 }
 

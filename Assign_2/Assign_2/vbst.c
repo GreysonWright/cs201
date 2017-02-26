@@ -16,7 +16,7 @@ vbstValue *newVBSTValue(void *value, void (*display)(FILE *file, void *display),
 		exit(-1);
 	}
 	newNode->value = value;
-	newNode->frequency = 0;
+	newNode->frequency = 1;
 	newNode->display = display;
 	newNode->compare = compare;
 	return newNode;
@@ -35,6 +35,13 @@ vbst *newVBST(void (*display)(FILE *file, void *display), int (*compare)(void *l
 bstNode *insertVBST(vbst *tree, void *value) {
 	vbstValue *val = newVBSTValue(value, tree->tree->display, tree->tree->compare);
 	bstNode *node = findBSTNode(tree->tree, val);
+	if (node == 0) {
+		fprintf(stderr, "Value ");
+		val->display(stderr, val);
+		fprintf(stderr, " not found.\n");
+		return 0;
+	}
+	
 	if (node) {
 		((vbstValue *)node->value)->frequency++;
 		return node;
@@ -43,10 +50,10 @@ bstNode *insertVBST(vbst *tree, void *value) {
 }
 
 bstNode *deleteVBST(vbst *tree, void *value) {
-	bstNode *node = findBSTNode(tree->tree, value);
-	vbstValue *nodeValue = node->value;
-	if (nodeValue->frequency > 1) {
-		nodeValue->frequency--;
+	vbstValue *val = newVBSTValue(value, tree->tree->display, tree->tree->compare);
+	bstNode *node = findBSTNode(tree->tree, val);
+	if (val->frequency > 1) {
+		((vbstValue *)node->value)->frequency--;
 	} else {
 		node = swapToLeafBSTNode(node);
 		pruneBSTNode(node);
