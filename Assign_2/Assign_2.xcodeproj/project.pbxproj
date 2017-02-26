@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2E3160C51E538787002C9B50 /* bst.c in Sources */ = {isa = PBXBuildFile; fileRef = 2E3160C31E538787002C9B50 /* bst.c */; };
-		2E47F7341E4139BF006BBBF2 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 2E47F7331E4139BF006BBBF2 /* main.c */; };
+		2E47F7341E4139BF006BBBF2 /* bstrees.c in Sources */ = {isa = PBXBuildFile; fileRef = 2E47F7331E4139BF006BBBF2 /* bstrees.c */; };
 		2E47F7491E417099006BBBF2 /* integer.c in Sources */ = {isa = PBXBuildFile; fileRef = 2E47F7431E417099006BBBF2 /* integer.c */; };
 		2E47F74A1E417099006BBBF2 /* real.c in Sources */ = {isa = PBXBuildFile; fileRef = 2E47F7451E417099006BBBF2 /* real.c */; };
 		2E47F74B1E417099006BBBF2 /* string.c in Sources */ = {isa = PBXBuildFile; fileRef = 2E47F7471E417099006BBBF2 /* string.c */; };
@@ -35,7 +35,7 @@
 		2E3160C31E538787002C9B50 /* bst.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = bst.c; sourceTree = "<group>"; };
 		2E3160C41E538787002C9B50 /* bst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bst.h; sourceTree = "<group>"; };
 		2E47F7301E4139BF006BBBF2 /* Assign_2 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Assign_2; sourceTree = BUILT_PRODUCTS_DIR; };
-		2E47F7331E4139BF006BBBF2 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		2E47F7331E4139BF006BBBF2 /* bstrees.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = bstrees.c; sourceTree = "<group>"; };
 		2E47F7431E417099006BBBF2 /* integer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = integer.c; sourceTree = "<group>"; };
 		2E47F7441E417099006BBBF2 /* integer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = integer.h; sourceTree = "<group>"; };
 		2E47F7451E417099006BBBF2 /* real.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = real.c; sourceTree = "<group>"; };
@@ -102,7 +102,7 @@
 				2E581CB61E5E33B5001F0836 /* vbst.c */,
 				2EB608F11E60C2320008D888 /* rbt.h */,
 				2EB608F01E60C2320008D888 /* rbt.c */,
-				2E47F7331E4139BF006BBBF2 /* main.c */,
+				2E47F7331E4139BF006BBBF2 /* bstrees.c */,
 			);
 			path = Assign_2;
 			sourceTree = "<group>";
@@ -166,7 +166,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2EF60B151E4258A100160038 /* sll.c in Sources */,
-				2E47F7341E4139BF006BBBF2 /* main.c in Sources */,
+				2E47F7341E4139BF006BBBF2 /* bstrees.c in Sources */,
 				2E47F7491E417099006BBBF2 /* integer.c in Sources */,
 				2EF60B121E42575400160038 /* queue.c in Sources */,
 				2EB608F21E60C2320008D888 /* rbt.c in Sources */,
