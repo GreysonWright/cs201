@@ -25,21 +25,6 @@ typedef int (Find)(void *, string *);
 typedef void (Statistics)(void *, FILE *);
 typedef void (Display)(FILE *, void *);
 
-void vbstIntDisplay(FILE *file, void *integer) {
-	vbstValue *intVal = integer;
-	displayInteger(file, intVal->value);
-}
-
-void vbstRealDisplay(FILE *file, void *real) {
-	vbstValue *realVal = real;
-	displayInteger(file, realVal->value);
-}
-
-void vbstStringDisplay(FILE *file, void *string) {
-	vbstValue *stringVal = string;
-	displayInteger(file, stringVal->value);
-}
-
 void rbtIntDisplay(FILE *file, void *integer) {
 	rbtValue *intVal = integer;
 	displayInteger(file, intVal->value);
@@ -47,12 +32,12 @@ void rbtIntDisplay(FILE *file, void *integer) {
 
 void rbtRealDisplay(FILE *file, void *real) {
 	rbtValue *realVal = real;
-	displayInteger(file, realVal->value);
+	displayReal(file, realVal->value);
 }
 
 void rbtStringDisplay(FILE *file, void *string) {
 	rbtValue *stringVal = string;
-	displayInteger(file, stringVal->value);
+	displayString(file, stringVal->value);
 }
 
 void rbtInsert(void *tree, string *value) {
@@ -73,6 +58,21 @@ void rbtStatistics(void *tree, FILE *file) {
 
 void rbtDisplay(FILE *file, void *tree) {
 	displayRBT(file, tree);
+}
+
+void vbstIntDisplay(FILE *file, void *integer) {
+	vbstValue *intVal = integer;
+	displayInteger(file, intVal->value);
+}
+
+void vbstRealDisplay(FILE *file, void *real) {
+	vbstValue *realVal = real;
+	displayReal(file, realVal->value);
+}
+
+void vbstStringDisplay(FILE *file, void *string) {
+	vbstValue *stringVal = string;
+	displayString(file, stringVal->value);
 }
 
 void vbstInsert(void *tree, string *value) {
@@ -143,43 +143,43 @@ void buildTree(FILE *file, void *tree, Insert *insert) {
 	}
 }
 
-void interpretCommands(FILE *file, void *tree, Insert *insert, Delete *delete, Find *find, Statistics *statistics, Display *display) {
-	char *token = readToken(file);
+void interpretCommands(FILE *input, FILE *output, void *tree, Insert *insert, Delete *delete, Find *find, Statistics *statistics, Display *display) {
+	char *token = readToken(input);
 	processString(token);
-	while (!feof(file)) {
+	while (!feof(input)) {
 		if (strcmp(token, "i") == 0) {
-			token = readToken(file);
+			token = readToken(input);
 			if (token[0] == '"') {
-				char *str = readWholeString(file);
+				char *str = readWholeString(input);
 				token = realloc(token, strlen(token) + strlen(str));
 				strcat(token, str);
 			}
 			token = processString(token);
 			insert(tree, newString(token));
 		} else if (strcmp(token, "d") == 0) {
-			token = readToken(file);
+			token = readToken(input);
 			if (token[0] == '"') {
-				char *str = readWholeString(file);
+				char *str = readWholeString(input);
 				token = realloc(token, strlen(token) + strlen(str));
 				strcat(token, str);
 			}
 			token = processString(token);
 			delete(tree, newString(token));
 		} else if (strcmp(token, "f") == 0) {
-			token = readToken(file);
+			token = readToken(input);
 			if (token[0] == '"') {
-				char *str = readWholeString(file);
+				char *str = readWholeString(input);
 				token = realloc(token, strlen(token) + strlen(str));
 				strcat(token, str);
 			}
 			token = processString(token);
 			find(tree, newString(token));
 		} else if (strcmp(token, "s") == 0) {
-			display(file, tree);
+			display(output, tree);
 		} else {
-			statistics(tree, file);
+			statistics(tree, output);
 		}
-		token = readToken(file);
+		token = readToken(input);
 	}
 }
 
@@ -216,7 +216,7 @@ int main(int argc, const char * argv[]) {
 			statistics = rbtStatistics;
 			display = rbtDisplay;
 			comparator = rbtStringComparator;
-			tree = newRBT(vbstStringDisplay, comparator);
+			tree = newRBT(rbtStringDisplay, comparator);
 			break;
 		default:
 			fprintf(stdout, "unknown flag '%c', valid flags are -v and -r\n", argv[1][1]);
@@ -226,8 +226,7 @@ int main(int argc, const char * argv[]) {
 	
 	buildTree(input, tree, insert);
 	fclose(input);
-	interpretCommands(commands, tree, insert, delete, find, statistics, display);
+	interpretCommands(commands, output, tree, insert, delete, find, statistics, display);
 	fclose(commands);
-	
 	return 0;
 }
