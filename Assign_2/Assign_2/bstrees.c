@@ -25,16 +25,6 @@ typedef int (Find)(void *, string *);
 typedef void (Statistics)(void *, FILE *);
 typedef void (Display)(FILE *, void *);
 
-void rbtIntDisplay(FILE *file, void *integer) {
-	rbtValue *intVal = integer;
-	displayInteger(file, intVal->value);
-}
-
-void rbtRealDisplay(FILE *file, void *real) {
-	rbtValue *realVal = real;
-	displayReal(file, realVal->value);
-}
-
 void rbtStringDisplay(FILE *file, void *string) {
 	rbtValue *stringVal = string;
 	displayString(file, stringVal->value);
@@ -58,16 +48,6 @@ void rbtStatistics(void *tree, FILE *file) {
 
 void rbtDisplay(FILE *file, void *tree) {
 	displayRBT(file, tree);
-}
-
-void vbstIntDisplay(FILE *file, void *integer) {
-	vbstValue *intVal = integer;
-	displayInteger(file, intVal->value);
-}
-
-void vbstRealDisplay(FILE *file, void *real) {
-	vbstValue *realVal = real;
-	displayReal(file, realVal->value);
 }
 
 void vbstStringDisplay(FILE *file, void *string) {
@@ -134,6 +114,16 @@ char *processString(char *string) {
 	return str;
 }
 
+char *getInput(FILE *file) {
+	char *token = readToken(file);
+	if (token[0] == '"') {
+		char *str = readWholeString(file);
+		token = realloc(token, strlen(token) + strlen(str));
+		strcat(token, str);
+	}
+	return processString(token);
+}
+
 void buildTree(FILE *file, void *tree, Insert *insert) {
 	string *token = scanString(file);
 	while (!feof(file)) {
@@ -148,31 +138,13 @@ void interpretCommands(FILE *input, FILE *output, void *tree, Insert *insert, De
 	processString(token);
 	while (!feof(input)) {
 		if (strcmp(token, "i") == 0) {
-			token = readToken(input);
-			if (token[0] == '"') {
-				char *str = readWholeString(input);
-				token = realloc(token, strlen(token) + strlen(str));
-				strcat(token, str);
-			}
-			token = processString(token);
+			token = getInput(input);
 			insert(tree, newString(token));
 		} else if (strcmp(token, "d") == 0) {
-			token = readToken(input);
-			if (token[0] == '"') {
-				char *str = readWholeString(input);
-				token = realloc(token, strlen(token) + strlen(str));
-				strcat(token, str);
-			}
-			token = processString(token);
+			token = getInput(input);
 			delete(tree, newString(token));
 		} else if (strcmp(token, "f") == 0) {
-			token = readToken(input);
-			if (token[0] == '"') {
-				char *str = readWholeString(input);
-				token = realloc(token, strlen(token) + strlen(str));
-				strcat(token, str);
-			}
-			token = processString(token);
+			token = getInput(input);
 			find(tree, newString(token));
 		} else if (strcmp(token, "s") == 0) {
 			display(output, tree);
