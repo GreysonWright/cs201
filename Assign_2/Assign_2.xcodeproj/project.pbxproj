@@ -17,6 +17,7 @@
 		2EB608F21E60C2320008D888 /* rbt.c in Sources */ = {isa = PBXBuildFile; fileRef = 2EB608F01E60C2320008D888 /* rbt.c */; };
 		2EF60B121E42575400160038 /* queue.c in Sources */ = {isa = PBXBuildFile; fileRef = 2EF60B101E42575400160038 /* queue.c */; };
 		2EF60B151E4258A100160038 /* sll.c in Sources */ = {isa = PBXBuildFile; fileRef = 2EF60B131E4258A100160038 /* sll.c */; };
+		2EFEE5131E64A10200FF2CFD /* scanner.c in Sources */ = {isa = PBXBuildFile; fileRef = 2EFEE5111E64A10200FF2CFD /* scanner.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -52,6 +53,8 @@
 		2EF60B111E42575400160038 /* queue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = queue.h; sourceTree = "<group>"; };
 		2EF60B131E4258A100160038 /* sll.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sll.c; sourceTree = "<group>"; };
 		2EF60B141E4258A100160038 /* sll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sll.h; sourceTree = "<group>"; };
+		2EFEE5111E64A10200FF2CFD /* scanner.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = scanner.c; sourceTree = "<group>"; };
+		2EFEE5121E64A10200FF2CFD /* scanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = scanner.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +87,8 @@
 		2E47F7321E4139BF006BBBF2 /* Assign_2 */ = {
 			isa = PBXGroup;
 			children = (
+				2EFEE5121E64A10200FF2CFD /* scanner.h */,
+				2EFEE5111E64A10200FF2CFD /* scanner.c */,
 				2EB608EE1E60BBD60008D888 /* comparator.h */,
 				2EB608ED1E60BBD60008D888 /* comparator.c */,
 				2E47F7441E417099006BBBF2 /* integer.h */,
@@ -168,6 +173,7 @@
 				2EF60B151E4258A100160038 /* sll.c in Sources */,
 				2E47F7341E4139BF006BBBF2 /* bstrees.c in Sources */,
 				2E47F7491E417099006BBBF2 /* integer.c in Sources */,
+				2EFEE5131E64A10200FF2CFD /* scanner.c in Sources */,
 				2EF60B121E42575400160038 /* queue.c in Sources */,
 				2EB608F21E60C2320008D888 /* rbt.c in Sources */,
 				2EB608EF1E60BBD60008D888 /* comparator.c in Sources */,

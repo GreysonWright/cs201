@@ -79,6 +79,6 @@ void statisticsVBST(vbst *tree, FILE *file) {
 	statisticsBST(tree->tree, file);
 }
 
-void displayVBST(vbst *tree, FILE *file){
+void displayVBST(FILE *file, vbst *tree){
 	displayBST(tree->tree, file);
 }

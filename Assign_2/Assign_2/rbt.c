@@ -268,6 +268,11 @@ void deleteRBT(rbt *tree, void *value) {
 		tree->size--;
 	}
 	tree->words--;
+	
+	free(((rbtValue *)node->value)->value);
+	free(node->value);
+	free(node);
+	node = 0;
 }
 
 void statisticsRBT(rbt *tree, FILE *file) {

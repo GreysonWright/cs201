@@ -32,5 +32,5 @@ bstNode *insertVBST(vbst *, void *);
 bstNode *deleteVBST(vbst *, void *);
 int findVBST(vbst *, void *);
 void statisticsVBST(vbst *, FILE *);
-void displayVBST(vbst *, FILE *);
+void displayVBST(FILE *, vbst *);
 #endif /* vbst_h */
