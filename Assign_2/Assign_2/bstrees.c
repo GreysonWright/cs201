@@ -56,11 +56,11 @@ void vbstStringDisplay(FILE *file, void *string) {
 }
 
 void vbstInsert(void *tree, string *value) {
-	insertVBST(tree, value);
+	(void)insertVBST(tree, value);
 }
 
 void vbstDelete(void *tree, string *value) {
-	deleteVBST(tree, value);
+	(void)deleteVBST(tree, value);
 }
 
 int vbstFind(void *tree, string *value) {
