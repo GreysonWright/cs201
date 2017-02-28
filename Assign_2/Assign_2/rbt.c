@@ -12,6 +12,23 @@
 static const int BLACK = 0;
 static const int RED =  1;
 
+static int rbtComparator(void *left, void *right) {
+	rbtValue *leftVal = left;
+	rbtValue *rightVal = right;
+	return leftVal->compare(leftVal->value, rightVal->value);
+}
+
+static void rbtDisplay(FILE *file, void *value) {
+	rbtValue *val = value;
+	val->display(file, val->value);
+	
+	if (val->color == RED) {
+		fprintf(file, "-R");
+	} else {
+		fprintf(file, "-B");
+	}
+}
+
 void setColor(bstNode *node, int color) {
 	if (node != 0) {
 		rbtValue *nodeValue = node->value;
@@ -36,7 +53,7 @@ int isLeftChild(bstNode *node) {
 bstNode *getUncle(bstNode *node) {
 	bstNode *parent = node->parent;
 	
-	if (parent && parent->parent) {
+	if (parent != node && parent->parent) {
 		if (isLeftChild(parent)) {
 			return parent->parent->right;
 		}
@@ -46,7 +63,7 @@ bstNode *getUncle(bstNode *node) {
 }
 
 bstNode *getSibling(bstNode *node) {
-	if (node->parent == 0) {
+	if (node->parent == node) {
 		return 0;
 	}
 	if (isLeftChild(node)) {
@@ -85,7 +102,7 @@ void rotateLeft(rbt *tree, bstNode *node) {
 	bstNode *parent = node->parent;
 	bstNode *left = node->left;
 
-	if (parent->parent) {
+	if (parent->parent != parent) {
 		if (isLeftChild(parent)) {
 			parent->parent->left = node;
 		} else {
@@ -94,7 +111,7 @@ void rotateLeft(rbt *tree, bstNode *node) {
 		node->parent = parent->parent;
 	} else {
 		tree->tree->root = node;
-		node->parent = 0;
+		node->parent = node;
 	}
 	
 	parent->right = left;
@@ -110,7 +127,7 @@ void rotateRight(rbt *tree, bstNode *node) {
 	bstNode *parent = node->parent;
 	bstNode *right = node->right;
 	
-	if (parent->parent) {
+	if (parent->parent != parent) {
 		if (isLeftChild(parent)) {
 			parent->parent->left = node;
 		} else {
@@ -119,7 +136,7 @@ void rotateRight(rbt *tree, bstNode *node) {
 		node->parent = parent->parent;
 	} else {
 		tree->tree->root = node;
-		node->parent = 0;
+		node->parent = node;
 	}
 	
 	parent->left = right;
@@ -227,21 +244,19 @@ rbt *newRBT(void (*display)(FILE *file, void *display), int (*compare)(void *lef
 	}
 	tree->display = display;
 	tree->compare = compare;
-	tree->tree = newBST(display, compare);
-	tree->size = 0;
+	tree->tree = newBST(rbtDisplay, rbtComparator);
 	tree->words = 0;
 	return tree;
 }
 
 void insertRBT(rbt *tree, void *value) {
-	rbtValue *val = newRBTValue(value, tree->tree->display, tree->tree->compare);
+	rbtValue *val = newRBTValue(value, tree->display, tree->compare);
 	bstNode *node = findBSTNode(tree->tree, val);
 	if (node) {
 		((rbtValue *)node->value)->frequency++;
 	} else {
 		node = insertBST(tree->tree, val);
 		insertionFixUp(tree, node);
-		tree->size++;
 	}
 	tree->words++;
 }
@@ -251,7 +266,7 @@ int findRBT(rbt *tree, void *value) {
 }
 
 void deleteRBT(rbt *tree, void *value) {
-	rbtValue *val = newRBTValue(value, tree->tree->display, tree->tree->compare);
+	rbtValue *val = newRBTValue(value, tree->display, tree->compare);
 	bstNode *node = findBSTNode(tree->tree, val);
 	if (node == 0) {
 		fprintf(stderr, "Value ");
@@ -264,8 +279,7 @@ void deleteRBT(rbt *tree, void *value) {
 	} else {
 		node = swapToLeafBSTNode(node);
 		deletionFixUp(tree, node);
-		pruneBSTNode(node);
-		tree->size--;
+		pruneBSTNode(tree->tree, node);
 	}
 	tree->words--;
 	
@@ -276,11 +290,11 @@ void deleteRBT(rbt *tree, void *value) {
 }
 
 void statisticsRBT(rbt *tree, FILE *file) {
-	fprintf(file, "Nodes: %d\nWords/Phrases: %d\n", tree->size, tree->words);
+	fprintf(file, "Words/Phrases: %d\n", tree->words);
 	statisticsBST(tree->tree, file);
 }
 
 void displayRBT(FILE *file, rbt *tree) {
 	displayBST(tree->tree, file);
-	printf("\n");
+	fprintf(file, "\n");
 }

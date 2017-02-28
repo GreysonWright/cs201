@@ -18,6 +18,29 @@ static int max(int right, int left) {
 	return right < left ? left : right;
 }
 
+static int isLeaf(bstNode *node) {
+	if (node->left || node->right) {
+		return 0;
+	}
+	
+	return 1;
+}
+
+static int isRoot(bstNode *node) {
+	if (node->parent == node) {
+		return 1;
+	}
+	
+	return 0;
+}
+
+static int isLeftChild(bstNode *node) {
+	if (node->parent) {
+		return node == node->parent->left;
+	}
+	return 0;
+}
+
 static int findMinHeight(bstNode *node) {
 	if (node == 0) {
 		return 0;
@@ -100,6 +123,7 @@ bst *newBST(void (*display)(FILE *file, void *display), int (*compare)(void *lef
 		exit(-1);
 	}
 	tree->root = 0;
+	tree->size = 0;
 	tree->display = display;
 	tree->compare = compare;
 	return tree;
@@ -112,6 +136,7 @@ bstNode *insertBST(bst *tree, void *value) {
 	
 	if (node == 0) {
 		tree->root = newNode;
+		newNode->parent = newNode;
 		return newNode;
 	}
 	
@@ -137,6 +162,7 @@ bstNode *insertBST(bst *tree, void *value) {
 		}
 	}
 	
+	tree->size++;
 	return current;
 }
 
@@ -182,20 +208,22 @@ bstNode *swapToLeafBSTNode(bstNode *node) {
 	return predecessor;
 }
 
-void pruneBSTNode(bstNode *node) {
-	if (node->parent) {
+void pruneBSTNode(bst* tree, bstNode *node) {
+	if (node->parent != node) {
 		if (node->parent->left == node) {
 			node->parent->left = 0;
 		} else {
 			node->parent->right = 0;
 		}
+	} else {
+		tree->root = 0;
 	}
 }
 
 void statisticsBST(bst *tree, FILE *file) {
 	int minDepth = findMinHeight(tree->root);
 	int maxDepth = findMaxHeight(tree->root);
-	fprintf(file, "Minimum depth: %d\nMaximum depth: %d\n", minDepth, maxDepth);
+	fprintf(file, "Nodes: %d\nMinimum depth: %d\nMaximum depth: %d\n", tree->size, minDepth, maxDepth);
 }
 
 void displayBST(bst *tree, FILE *file) {
@@ -203,19 +231,47 @@ void displayBST(bst *tree, FILE *file) {
 	queue *queueItems = newQueue(tree->display);
 	enqueue(queueItems, node);
 	enqueue(queueItems, 0);
+	int count = 0;
 	
+	if (node == 0) {
+		fprintf(file, "%d: ", count);
+		return;
+	}
+
+	fprintf(file, "%d: ", count++);
 	while (sizeQueue(queueItems) > 1) {
 		node = dequeue(queueItems);
 		
 		if (node == 0) {
 			node = dequeue(queueItems);
-			printf("\n");
+			fprintf(file, "\n");
+			fprintf(file, "%d: ", count++);
 			enqueue(queueItems, 0);
 		}
 		
 		if (node) {
+			if (isLeaf(node)) {
+				fprintf(file, "=");
+			}
+			
 			tree->display(file, node->value);
-			printf(" ");
+			fprintf(file, "(");
+			tree->display(file, node->parent->value);
+			fprintf(file, ")");
+			
+			if (isRoot(node)) {
+				fprintf(file, "-");
+			} else {
+				if (isLeftChild(node)) {
+					fprintf(file, "-l");
+				} else {
+					fprintf(file, "-r");
+				}
+			}
+			
+			if (peekQueue(queueItems) != 0) {
+				printf(" ");
+			}
 			
 			if (node->left) {
 				enqueue(queueItems, node->left);

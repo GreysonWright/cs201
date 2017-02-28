@@ -14,10 +14,8 @@
 typedef void (Printer)(FILE *, void *);
 typedef int (Comparator)(void *, void *);
 
-int vbstIntComparator(void *, void *);
-int vbstRealComparator(void *, void *);
-int vbstStringComparator(void *, void *);
-int rbtIntComparator(void *, void *);
-int rbtRealComparator(void *, void *);
-int rbtStringComparator(void *, void *);
+int intComparator(void *, void *);
+int realComparator(void *, void *);
+int stringComparator(void *, void *);
+
 #endif /* comparator_h */

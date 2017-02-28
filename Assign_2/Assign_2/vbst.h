@@ -23,7 +23,6 @@ typedef struct vbst {
 	bst *tree;
 	void (*display)(FILE *, void *);
 	int (*compare)(void *, void *);
-	int size;
 	int words;
 }vbst;
 

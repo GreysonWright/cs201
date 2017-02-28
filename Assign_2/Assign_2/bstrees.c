@@ -25,53 +25,43 @@ typedef int (Find)(void *, string *);
 typedef void (Statistics)(void *, FILE *);
 typedef void (Display)(FILE *, void *);
 
-void rbtStringDisplay(FILE *file, void *string) {
-	rbtValue *stringVal = string;
-	displayString(file, stringVal->value);
-}
-
-void rbtInsert(void *tree, string *value) {
+static void rbtInsert(void *tree, string *value) {
 	insertRBT(tree, value);
 }
 
-void rbtDelete(void *tree, string *value) {
+static void rbtDelete(void *tree, string *value) {
 	deleteRBT(tree, value);
 }
 
-int rbtFind(void *tree, string *value) {
+static int rbtFind(void *tree, string *value) {
 	return findRBT(tree, value);
 }
 
-void rbtStatistics(void *tree, FILE *file) {
+static void rbtStatistics(void *tree, FILE *file) {
 	statisticsRBT(tree, file);
 }
 
-void rbtDisplay(FILE *file, void *tree) {
+static void rbtDisplay(FILE *file, void *tree) {
 	displayRBT(file, tree);
 }
 
-void vbstStringDisplay(FILE *file, void *string) {
-	vbstValue *stringVal = string;
-	displayString(file, stringVal->value);
-}
-
-void vbstInsert(void *tree, string *value) {
+static void vbstInsert(void *tree, string *value) {
 	(void)insertVBST(tree, value);
 }
 
-void vbstDelete(void *tree, string *value) {
+static void vbstDelete(void *tree, string *value) {
 	(void)deleteVBST(tree, value);
 }
 
-int vbstFind(void *tree, string *value) {
+static int vbstFind(void *tree, string *value) {
 	return findVBST(tree, value);
 }
 
-void vbstStatistics(void *tree, FILE *file) {
+static void vbstStatistics(void *tree, FILE *file) {
 	statisticsVBST(tree, file);
 }
 
-void vbstDisplay(FILE *file, void *tree) {
+static void vbstDisplay(FILE *file, void *tree) {
 	displayVBST(file, tree);
 }
 
@@ -87,8 +77,9 @@ string *scanString(FILE *file) {
 char *readWholeString(FILE *file) {
 	char *token = readToken(file);
 	long size = strlen(token);
-	char *string = malloc(size);
+	char *string = malloc(size + 1);
 	
+	strcat(string, " ");
 	while (token[strlen(token) - 1] != '"') {
 		strcat(string, token);
 		strcat(string, " ");
@@ -105,7 +96,7 @@ char *processString(char *string) {
 	char *str = malloc(strLength);
 	int count = 0;
 	for (int i = 0; i < strLength; i++) {
-		if (isalpha(string[i])) {
+		if (isalpha(string[i]) || isspace(string[i])) {
 			str[count++] = tolower(string[i]);
 		}
 	}
@@ -178,8 +169,8 @@ int main(int argc, const char * argv[]) {
 			find = vbstFind;
 			statistics = vbstStatistics;
 			display = vbstDisplay;
-			comparator = vbstStringComparator;
-			tree = newVBST(rbtStringDisplay, comparator);
+			comparator = stringComparator;
+			tree = newVBST(displayString, comparator);
 			break;
 		case 'r':
 			insert = rbtInsert;
@@ -187,11 +178,11 @@ int main(int argc, const char * argv[]) {
 			find = rbtFind;
 			statistics = rbtStatistics;
 			display = rbtDisplay;
-			comparator = rbtStringComparator;
-			tree = newRBT(rbtStringDisplay, comparator);
+			comparator = stringComparator;
+			tree = newRBT(displayString, comparator);
 			break;
 		default:
-			fprintf(stdout, "unknown flag '%c', valid flags are -v and -r\n", argv[1][1]);
+			fprintf(stderr, "unknown flag '%c', valid flags are -v and -r\n", argv[1][1]);
 			exit(-2);
 			break;
 	}

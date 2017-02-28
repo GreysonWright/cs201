@@ -10,42 +10,15 @@
 #include "integer.h"
 #include "real.h"
 #include "string.h"
-#include "vbst.h"
-#include "rbt.h"
 
-int vbstIntComparator(void *left, void *right) {
-	vbstValue *leftVal = left;
-	vbstValue *rightVal = right;
-	return compareInteger(leftVal->value, rightVal->value);
+int intComparator(void *left, void *right) {
+	return compareInteger(left, right);
 }
 
-int vbstRealComparator(void *left, void *right) {
-	vbstValue *leftVal = left;
-	vbstValue *rightVal = right;
-	return compareInteger(leftVal->value, rightVal->value);
+int realComparator(void *left, void *right) {
+	return compareReal(left, right);
 }
 
-int vbstStringComparator(void *left, void *right) {
-	vbstValue *leftVal = left;
-	vbstValue *rightVal = right;
-	return compareInteger(leftVal->value, rightVal->value);
+int stringComparator(void *left, void *right) {
+	return compareString(left, right);
 }
-
-int rbtIntComparator(void *left, void *right) {
-	rbtValue *leftVal = left;
-	rbtValue *rightVal = right;
-	return compareInteger(leftVal->value, rightVal->value);
-}
-
-int rbtRealComparator(void *left, void *right) {
-	rbtValue *leftVal = left;
-	rbtValue *rightVal = right;
-	return compareInteger(leftVal->value, rightVal->value);
-}
-
-int rbtStringComparator(void *left, void *right) {
-	rbtValue *leftVal = left;
-	rbtValue *rightVal = right;
-	return compareInteger(leftVal->value, rightVal->value);
-}
-

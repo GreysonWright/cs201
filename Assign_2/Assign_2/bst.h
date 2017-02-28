@@ -20,6 +20,7 @@ typedef struct bstNode {
 
 typedef struct bst {
 	bstNode *root;
+	int size;
 	void (*display)(FILE *, void *);
 	int (*compare)(void *, void *);
 } bst;
@@ -29,7 +30,7 @@ bstNode *insertBST(bst *, void *);
 int findBST(bst *, void *);
 bstNode *findBSTNode(bst *, void *);
 bstNode *swapToLeafBSTNode(bstNode *);
-void pruneBSTNode(bstNode *);
+void pruneBSTNode(bst *tree, bstNode *);
 void statisticsBST(bst *, FILE *);
 void displayBST(bst *, FILE *);
 #endif /* bst_h */
