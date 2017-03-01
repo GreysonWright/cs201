@@ -108,5 +108,4 @@ void statisticsVBST(vbst *tree, FILE *file) {
 
 void displayVBST(FILE *file, vbst *tree){
 	displayBST(file, tree->tree);
-	fprintf(file, "\n");
 }

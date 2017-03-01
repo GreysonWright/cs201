@@ -21,6 +21,9 @@ static int rbtComparator(void *left, void *right) {
 static void rbtDisplay(FILE *file, void *value) {
 	rbtValue *val = value;
 	val->display(file, val->value);
+	if (val->frequency > 1) {
+		fprintf(file, "-%d", val->frequency);
+	}
 	
 	if (val->color == RED) {
 		fprintf(file, "-R");
@@ -311,5 +314,4 @@ void statisticsRBT(rbt *tree, FILE *file) {
 
 void displayRBT(FILE *file, rbt *tree) {
 	displayBST(file, tree->tree);
-	fprintf(file, "\n");
 }
