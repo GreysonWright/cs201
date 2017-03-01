@@ -263,7 +263,10 @@ void insertRBT(rbt *tree, void *value) {
 
 int findRBT(rbt *tree, void *value) {
 	bstNode *node = findBSTNode(tree->tree, newRBTValue(value, tree->display, tree->compare));
-	return  ((rbtValue *)node->value)->frequency;
+	if (node == 0) {
+		return 0;
+	}
+	return ((rbtValue *)node->value)->frequency;
 }
 
 void deleteRBT(rbt *tree, void *value) {

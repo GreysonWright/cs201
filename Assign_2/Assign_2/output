@@ -1,0 +1,9 @@
+0: "beta"-B("beta"-B)-
+1: ="alpha"-B("beta"-B)-l "test"-R("beta"-B)-r
+2: "gamma"-B("test"-R)-l ="wow"-B("test"-R)-r
+3: ="dont break"-R("gamma"-B)-l ="idk"-R("gamma"-B)-r
+Frequency of "act": 0
+Words/Phrases: 7
+Nodes: 6
+Minimum depth: 2
+Maximum depth: 4

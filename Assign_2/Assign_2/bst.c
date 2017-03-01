@@ -270,7 +270,7 @@ void displayBST(bst *tree, FILE *file) {
 			}
 			
 			if (peekQueue(queueItems) != 0) {
-				printf(" ");
+				fprintf(file, " ");
 			}
 			
 			if (node->left) {

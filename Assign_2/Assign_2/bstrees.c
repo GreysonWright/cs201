@@ -165,7 +165,7 @@ int main(int argc, const char * argv[]) {
 	Comparator *comparator = 0;
 	void *tree = 0;
 	
-	if (argc > 5) {
+	if (argc > 4) {
 		output = fopen(argv[4], "w");
 	}
 	
