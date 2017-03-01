@@ -230,7 +230,7 @@ void statisticsBST(bst *tree, FILE *file) {
 	fprintf(file, "Nodes: %d\nMinimum depth: %d\nMaximum depth: %d\n", tree->size, minDepth, maxDepth);
 }
 
-void displayBST(bst *tree, FILE *file) {
+void displayBST(FILE * file, bst *tree) {
 	bstNode *node = tree->root;
 	queue *queueItems = newQueue(tree->display);
 	enqueue(queueItems, node);

@@ -33,5 +33,5 @@ bstNode *swapToLeafBSTNode(bstNode *);
 void pruneBSTNode(bst *tree, bstNode *);
 int sizeBST(bst *);
 void statisticsBST(bst *, FILE *);
-void displayBST(bst *, FILE *);
+void displayBST(FILE *, bst *);
 #endif /* bst_h */

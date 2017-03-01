@@ -310,6 +310,6 @@ void statisticsRBT(rbt *tree, FILE *file) {
 }
 
 void displayRBT(FILE *file, rbt *tree) {
-	displayBST(tree->tree, file);
+	displayBST(file, tree->tree);
 	fprintf(file, "\n");
 }
