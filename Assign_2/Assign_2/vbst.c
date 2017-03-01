@@ -102,7 +102,7 @@ int wordsVBST(vbst *tree) {
 }
 
 void statisticsVBST(vbst *tree, FILE *file) {
-	fprintf(file, "nWords/Phrases: %d\n", tree->words);
+	fprintf(file, "Words/Phrases: %d\n", tree->words);
 	statisticsBST(tree->tree, file);
 }
 
