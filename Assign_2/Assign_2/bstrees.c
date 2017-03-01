@@ -11,14 +11,12 @@
 #include <string.h>
 #include <ctype.h>
 #include "scanner.h"
-#include "integer.h"
-#include "real.h"
 #include "string.h"
 #include "bst.h"
 #include "vbst.h"
 #include "rbt.h"
-#include "comparator.h"
 
+typedef int (Comparator)(void *, void *);
 typedef void (Insert)(void *, string *);
 typedef void (Delete)(void *, string *);
 typedef int (Find)(void *, string *);
@@ -178,7 +176,7 @@ int main(int argc, const char * argv[]) {
 			find = vbstFind;
 			statistics = vbstStatistics;
 			display = vbstDisplay;
-			comparator = stringComparator;
+			comparator = compareString;
 			tree = newVBST(displayString, comparator);
 			break;
 		case 'r':
@@ -187,7 +185,7 @@ int main(int argc, const char * argv[]) {
 			find = rbtFind;
 			statistics = rbtStatistics;
 			display = rbtDisplay;
-			comparator = stringComparator;
+			comparator = compareString;
 			tree = newRBT(displayString, comparator);
 			break;
 		default:

@@ -7,11 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2E1315071E65F37300431BC6 /* comparator.c in Sources */ = {isa = PBXBuildFile; fileRef = 2E1315051E65F37300431BC6 /* comparator.c */; };
 		2E3160C51E538787002C9B50 /* bst.c in Sources */ = {isa = PBXBuildFile; fileRef = 2E3160C31E538787002C9B50 /* bst.c */; };
 		2E47F7341E4139BF006BBBF2 /* bstrees.c in Sources */ = {isa = PBXBuildFile; fileRef = 2E47F7331E4139BF006BBBF2 /* bstrees.c */; };
-		2E47F7491E417099006BBBF2 /* integer.c in Sources */ = {isa = PBXBuildFile; fileRef = 2E47F7431E417099006BBBF2 /* integer.c */; };
-		2E47F74A1E417099006BBBF2 /* real.c in Sources */ = {isa = PBXBuildFile; fileRef = 2E47F7451E417099006BBBF2 /* real.c */; };
 		2E47F74B1E417099006BBBF2 /* string.c in Sources */ = {isa = PBXBuildFile; fileRef = 2E47F7471E417099006BBBF2 /* string.c */; };
 		2E581CB81E5E33B5001F0836 /* vbst.c in Sources */ = {isa = PBXBuildFile; fileRef = 2E581CB61E5E33B5001F0836 /* vbst.c */; };
 		2EB608F21E60C2320008D888 /* rbt.c in Sources */ = {isa = PBXBuildFile; fileRef = 2EB608F01E60C2320008D888 /* rbt.c */; };
@@ -33,16 +30,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		2E1315051E65F37300431BC6 /* comparator.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = comparator.c; sourceTree = "<group>"; };
-		2E1315061E65F37300431BC6 /* comparator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = comparator.h; sourceTree = "<group>"; };
 		2E3160C31E538787002C9B50 /* bst.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = bst.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		2E3160C41E538787002C9B50 /* bst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bst.h; sourceTree = "<group>"; };
 		2E47F7301E4139BF006BBBF2 /* Assign_2 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Assign_2; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E47F7331E4139BF006BBBF2 /* bstrees.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = bstrees.c; sourceTree = "<group>"; };
-		2E47F7431E417099006BBBF2 /* integer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = integer.c; sourceTree = "<group>"; };
-		2E47F7441E417099006BBBF2 /* integer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = integer.h; sourceTree = "<group>"; };
-		2E47F7451E417099006BBBF2 /* real.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = real.c; sourceTree = "<group>"; };
-		2E47F7461E417099006BBBF2 /* real.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = real.h; sourceTree = "<group>"; };
 		2E47F7471E417099006BBBF2 /* string.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = string.c; sourceTree = "<group>"; };
 		2E47F7481E417099006BBBF2 /* string.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = string.h; sourceTree = "<group>"; };
 		2E581CB61E5E33B5001F0836 /* vbst.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = vbst.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
@@ -89,12 +80,6 @@
 			children = (
 				2EFEE5121E64A10200FF2CFD /* scanner.h */,
 				2EFEE5111E64A10200FF2CFD /* scanner.c */,
-				2E1315051E65F37300431BC6 /* comparator.c */,
-				2E1315061E65F37300431BC6 /* comparator.h */,
-				2E47F7441E417099006BBBF2 /* integer.h */,
-				2E47F7431E417099006BBBF2 /* integer.c */,
-				2E47F7461E417099006BBBF2 /* real.h */,
-				2E47F7451E417099006BBBF2 /* real.c */,
 				2E47F7481E417099006BBBF2 /* string.h */,
 				2E47F7471E417099006BBBF2 /* string.c */,
 				2EF60B141E4258A100160038 /* sll.h */,
@@ -172,13 +157,10 @@
 			files = (
 				2EF60B151E4258A100160038 /* sll.c in Sources */,
 				2E47F7341E4139BF006BBBF2 /* bstrees.c in Sources */,
-				2E47F7491E417099006BBBF2 /* integer.c in Sources */,
-				2E1315071E65F37300431BC6 /* comparator.c in Sources */,
 				2EFEE5131E64A10200FF2CFD /* scanner.c in Sources */,
 				2EF60B121E42575400160038 /* queue.c in Sources */,
 				2EB608F21E60C2320008D888 /* rbt.c in Sources */,
 				2E581CB81E5E33B5001F0836 /* vbst.c in Sources */,
-				2E47F74A1E417099006BBBF2 /* real.c in Sources */,
 				2E47F74B1E417099006BBBF2 /* string.c in Sources */,
 				2E3160C51E538787002C9B50 /* bst.c in Sources */,
 			);
