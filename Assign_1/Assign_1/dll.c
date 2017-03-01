@@ -8,7 +8,6 @@
 
 #include "dll.h"
 #include <stdlib.h>
-#include "integer.h"
 
 dllnode *newDLLNode(void *value) {
 	dllnode *node = malloc(sizeof *node);
@@ -175,8 +174,7 @@ void displayDLL(FILE *file, dll *items) {
 	
 	fprintf(file, "[");
 	while (node) {
-		integer *value = (integer*) node->value;
-		items->display(file, value);
+		items->display(file, node->value);
 		if (node->next) {
 			fprintf(file, ",");
 		}

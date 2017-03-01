@@ -8,7 +8,6 @@
 
 #include "sll.h"
 #include <stdlib.h>
-#include "integer.h"
 
 sllnode *newSLLNode(void *value) {
 	sllnode *node = malloc(sizeof *node);
@@ -157,8 +156,7 @@ void displaySLL(FILE *file, sll *items) {
 	
 	fprintf(file, "[");
 	while (node) {
-		integer *value = (integer*) node->value;
-		items->display(file, value);
+		items->display(file, node->value);
 		if (node->next) {
 			fprintf(file, ",");
 		}
