@@ -81,7 +81,16 @@ bstNode *deleteVBST(vbst *tree, void *value) {
 }
 
 int findVBST(vbst *tree, void *value) {
-	return findBST(tree->tree, value);
+	bstNode *node = findBSTNode(tree->tree, newVBSTValue(value, tree->display, tree->compare));
+	return  ((vbstValue *)node->value)->frequency;
+}
+
+int sizeVBST(vbst *tree) {
+	return tree->tree->size;
+}
+
+int wordsVBST(vbst *tree) {
+	return tree->words;
 }
 
 void statisticsVBST(vbst *tree, FILE *file) {

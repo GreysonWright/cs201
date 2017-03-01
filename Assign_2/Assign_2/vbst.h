@@ -30,6 +30,8 @@ vbst *newVBST(void (*)(FILE *, void *), int (*)(void *, void *));
 bstNode *insertVBST(vbst *, void *);
 bstNode *deleteVBST(vbst *, void *);
 int findVBST(vbst *, void *);
+int sizeVBST(vbst *);
+int wordsVBST(vbst *);
 void statisticsVBST(vbst *, FILE *);
 void displayVBST(FILE *, vbst *);
 #endif /* vbst_h */

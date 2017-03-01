@@ -262,7 +262,8 @@ void insertRBT(rbt *tree, void *value) {
 }
 
 int findRBT(rbt *tree, void *value) {
-	return findBST(tree->tree, value);
+	bstNode *node = findBSTNode(tree->tree, newRBTValue(value, tree->display, tree->compare));
+	return  ((rbtValue *)node->value)->frequency;
 }
 
 void deleteRBT(rbt *tree, void *value) {
@@ -287,6 +288,14 @@ void deleteRBT(rbt *tree, void *value) {
 	free(node->value);
 	free(node);
 	node = 0;
+}
+
+int sizeRBT(rbt *tree) {
+	return tree->tree->size;
+}
+
+int wordsRBT(rbt *tree) {
+	return tree->words;
 }
 
 void statisticsRBT(rbt *tree, FILE *file) {

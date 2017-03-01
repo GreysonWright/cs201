@@ -107,10 +107,12 @@ char *processString(char *string) {
 
 char *getInput(FILE *file) {
 	char *token = readToken(file);
-	if (token[0] == '"') {
+	if (token[0] == '"' && token[strlen(token) - 1] != '"') {
 		char *str = readWholeString(file);
 		token = realloc(token, strlen(token) + strlen(str));
 		strcat(token, str);
+	} else if (strlen(token) == 2) {
+		return 0;
 	}
 	return processString(token);
 }
@@ -130,13 +132,20 @@ void interpretCommands(FILE *input, FILE *output, void *tree, Insert *insert, De
 	while (!feof(input)) {
 		if (strcmp(token, "i") == 0) {
 			token = getInput(input);
-			insert(tree, newString(token));
+			if (token) {
+				insert(tree, newString(token));
+			}
 		} else if (strcmp(token, "d") == 0) {
 			token = getInput(input);
-			delete(tree, newString(token));
+			if (token) {
+				delete(tree, newString(token));
+			}
 		} else if (strcmp(token, "f") == 0) {
 			token = getInput(input);
-			find(tree, newString(token));
+			if (token) {
+				int frequency = find(tree, newString(token));
+				fprintf(output, "Frequency of \"%s\": %d\n", token, frequency);
+			}
 		} else if (strcmp(token, "s") == 0) {
 			display(output, tree);
 		} else {
