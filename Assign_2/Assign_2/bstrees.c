@@ -48,7 +48,11 @@ static void vbstInsert(void *tree, string *value) {
 }
 
 static void vbstDelete(void *tree, string *value) {
-	(void)deleteVBST(tree, value);
+	bstNode *node = deleteVBST(tree, value);
+	free(((vbstValue *)node->value)->value);
+	free(node->value);
+	free(node);
+	node = 0;
 }
 
 static int vbstFind(void *tree, string *value) {

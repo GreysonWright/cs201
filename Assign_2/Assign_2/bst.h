@@ -31,6 +31,7 @@ int findBST(bst *, void *);
 bstNode *findBSTNode(bst *, void *);
 bstNode *swapToLeafBSTNode(bstNode *);
 void pruneBSTNode(bst *tree, bstNode *);
+int sizeBST(bst *);
 void statisticsBST(bst *, FILE *);
 void displayBST(bst *, FILE *);
 #endif /* bst_h */

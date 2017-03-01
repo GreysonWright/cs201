@@ -245,6 +245,7 @@ rbt *newRBT(void (*display)(FILE *file, void *display), int (*compare)(void *lef
 	tree->display = display;
 	tree->compare = compare;
 	tree->tree = newBST(rbtDisplay, rbtComparator);
+	tree->size = 0;
 	tree->words = 0;
 	return tree;
 }
@@ -258,6 +259,7 @@ void insertRBT(rbt *tree, void *value) {
 		node = insertBST(tree->tree, val);
 		insertionFixUp(tree, node);
 	}
+	tree->size = tree->tree->size;
 	tree->words++;
 }
 
@@ -285,6 +287,7 @@ void deleteRBT(rbt *tree, void *value) {
 		deletionFixUp(tree, node);
 		pruneBSTNode(tree->tree, node);
 	}
+	tree->size = tree->tree->size;
 	tree->words--;
 	
 	free(((rbtValue *)node->value)->value);

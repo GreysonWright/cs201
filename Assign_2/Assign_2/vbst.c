@@ -18,7 +18,9 @@ static int vbstComparator(void *left, void *right) {
 static void vbstDisplay(FILE *file, void *value) {
 	vbstValue *val = value;
 	val->display(file, val->value);
-	fprintf(file, "-%d", val->frequency);
+	if (val->frequency > 1) {
+		fprintf(file, "-%d", val->frequency);
+	}
 }
 
 vbstValue *newVBSTValue(void *value, void (*display)(FILE *file, void *display), int (*compare)(void *left, void *right)) {
@@ -43,6 +45,7 @@ vbst *newVBST(void (*display)(FILE *file, void *display), int (*compare)(void *l
 	tree->display = display;
 	tree->compare = compare;
 	tree->tree = newBST(vbstDisplay, vbstComparator);
+	tree->size = 0;
 	tree->words = 0;
 	return tree;
 }
@@ -55,6 +58,7 @@ bstNode *insertVBST(vbst *tree, void *value) {
 		tree->words++;
 		return node;
 	}
+	tree->size = tree->tree->size;
 	tree->words++;
 	return insertBST(tree->tree, val);
 }
@@ -76,6 +80,7 @@ bstNode *deleteVBST(vbst *tree, void *value) {
 		node = swapToLeafBSTNode(node);
 		pruneBSTNode(tree->tree, node);
 	}
+	tree->size = tree->tree->size;
 	tree->words--;
 	return node;
 }
@@ -103,4 +108,5 @@ void statisticsVBST(vbst *tree, FILE *file) {
 
 void displayVBST(FILE *file, vbst *tree){
 	displayBST(tree->tree, file);
+	fprintf(file, "\n");
 }

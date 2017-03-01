@@ -208,6 +208,10 @@ bstNode *swapToLeafBSTNode(bstNode *node) {
 	return predecessor;
 }
 
+int sizeBST(bst *tree) {
+	return tree->size;
+}
+
 void pruneBSTNode(bst* tree, bstNode *node) {
 	if (node->parent != node) {
 		if (node->parent->left == node) {

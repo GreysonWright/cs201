@@ -24,6 +24,7 @@ typedef struct rbt {
 	bst *tree;
 	void (*display)(FILE *, void *);
 	int (*compare)(void *, void *);
+	int size;
 	int words;
 } rbt;
 
