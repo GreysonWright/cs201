@@ -137,6 +137,7 @@ bstNode *insertBST(bst *tree, void *value) {
 	bstNode *node = tree->root;
 	bstNode *current = node;
 	bstNode *newNode = newBSTNode(value);
+	tree->size++;
 	
 	if (node == 0) {
 		tree->root = newNode;
@@ -166,7 +167,6 @@ bstNode *insertBST(bst *tree, void *value) {
 		}
 	}
 	
-	tree->size++;
 	return current;
 }
 

@@ -162,7 +162,11 @@ void rotate(rbt *tree, bstNode *node) {
 void insertionFixUp(rbt *tree, bstNode *node) {
 	bstNode *parent = node->parent;
 	
-	while (node != tree->tree->root) {
+	while (1) {
+		if (node == tree->tree->root) {
+			break;
+		}
+		
 		if (getColor(parent) == BLACK) {
 			break;
 		}
@@ -174,7 +178,7 @@ void insertionFixUp(rbt *tree, bstNode *node) {
 			node = parent->parent;
 			parent = node->parent;
 		} else {
-			if (!isLinear(node) && !isLinear(parent)) {
+			if (!isLinear(node)) {
 				rotate(tree, node);
 				bstNode *tmp = parent;
 				parent = node;
