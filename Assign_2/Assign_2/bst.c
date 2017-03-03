@@ -96,8 +96,12 @@ bstNode *findPredecessor(bstNode *node) {
 		}
 	} else if (node->right == 0) {
 		predecessor = node->left;
-	} else if (node->right) {
+	} else if (node->left == 0) {
 		predecessor = node->right;
+		
+		while (predecessor->left) {
+			predecessor = predecessor->left;
+		}
 	}
 	
 	return predecessor;
@@ -238,7 +242,7 @@ void displayBST(FILE * file, bst *tree) {
 	int count = 0;
 	
 	if (node == 0) {
-		fprintf(file, "%d: ", count);
+		fprintf(file, "%d:\n", count);
 		return;
 	}
 

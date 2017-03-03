@@ -81,7 +81,7 @@ void cleanString(char *string) {
 	int count = 0;
 	for (int i = 0; i <= strLength; i++) {
 		if (isalpha(string[i]) || string[i] == '\0' || (isspace(string[i]) && !isspace(string[count-1]))) {
-			if (string[i] == '\t' || string[i] == '\n') {
+			if (isspace(string[i])) {
 				string[count++] = ' ';
 			} else {
 				string[count++] = tolower(string[i]);
@@ -105,8 +105,8 @@ void buildTree(FILE *file, void *tree, Insert *insert) {
 
 void interpretCommands(FILE *input, FILE *output, void *tree, Insert *insert, Delete *delete, Find *find, Statistics *statistics, Display *display) {
 	char *token = readToken(input);
-	cleanString(token);
 	while (!feof(input)) {
+		cleanString(token);
 		if (strcmp(token, "i") == 0) {
 			token = readInput(input);
 			cleanString(token);
