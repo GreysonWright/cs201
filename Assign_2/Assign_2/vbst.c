@@ -69,7 +69,7 @@ bstNode *deleteVBST(vbst *tree, void *value) {
 	
 	if (node == 0) {
 		fprintf(stderr, "Value ");
-		val->display(stderr, val);
+		tree->tree->display(stderr, val);
 		fprintf(stderr, " not found.\n");
 		return 0;
 	}

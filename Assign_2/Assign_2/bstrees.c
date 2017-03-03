@@ -49,10 +49,12 @@ static void vbstInsert(void *tree, string *value) {
 
 static void vbstDelete(void *tree, string *value) {
 	bstNode *node = deleteVBST(tree, value);
-	free(((vbstValue *)node->value)->value);
-	free(node->value);
-	free(node);
-	node = 0;
+	if (node) {
+		free(((vbstValue *)node->value)->value);
+		free(node->value);
+		free(node);
+		node = 0;
+	}
 }
 
 static int vbstFind(void *tree, string *value) {
@@ -67,84 +69,60 @@ static void vbstDisplay(FILE *file, void *tree) {
 	displayVBST(file, tree);
 }
 
-string *scanString(FILE *file) {
-	char *token = readToken(file);
-	if (token == 0) {
-		return 0;
+char *readInput(FILE *file) {
+	if (stringPending(file)) {
+		return readString(file);
 	}
-	string *newStr = newString(token);
-	return newStr;
+	return readToken(file);
 }
 
-char *readWholeString(FILE *file) {
-	char *token = readToken(file);
-	long size = strlen(token);
-	char *string = malloc(size + 1);
-	
-	strcat(string, " ");
-	while (token[strlen(token) - 1] != '"') {
-		strcat(string, token);
-		strcat(string, " ");
-		token = readToken(file);
-		size += strlen(token) + 1;
-		token = realloc(token, size);
-	}
-	strcat(string, token);
-	return string;
-}
-
-char *processString(char *string) {
+void cleanString(char *string) {
 	long strLength = strlen(string);
-	char *str = malloc(strLength);
 	int count = 0;
-	for (int i = 0; i < strLength; i++) {
-		if (isalpha(string[i]) || isspace(string[i])) {
-			str[count++] = tolower(string[i]);
+	for (int i = 0; i <= strLength; i++) {
+		if (isalpha(string[i]) || string[i] == '\0' || (isspace(string[i]) && !isspace(string[count-1]))) {
+			if (string[i] == '\t' || string[i] == '\n') {
+				string[count++] = ' ';
+			} else {
+				string[count++] = tolower(string[i]);
+			}
+		} else if (isdigit(string[i])) {
+			string[count++] = ' ';
 		}
 	}
-	str = realloc(str, count + 1);
-	str[count] = '\0';
-	return str;
-}
-
-char *getInput(FILE *file) {
-	char *token = readToken(file);
-	if (token[0] == '"' && token[strlen(token) - 1] != '"') {
-		char *str = readWholeString(file);
-		token = realloc(token, strlen(token) + strlen(str));
-		strcat(token, str);
-	} else if (strlen(token) == 2) {
-		return 0;
-	}
-	return processString(token);
 }
 
 void buildTree(FILE *file, void *tree, Insert *insert) {
-	string *token = scanString(file);
+	char *token = readInput(file);
 	while (!feof(file)) {
-		setString(token, processString(token->value));
-		insert(tree, token);
-		token = scanString(file);
+		if (strlen(token) > 0) {
+			cleanString(token);
+			insert(tree, newString(token));
+		}
+		token = readInput(file);
 	}
 }
 
 void interpretCommands(FILE *input, FILE *output, void *tree, Insert *insert, Delete *delete, Find *find, Statistics *statistics, Display *display) {
 	char *token = readToken(input);
-	processString(token);
+	cleanString(token);
 	while (!feof(input)) {
 		if (strcmp(token, "i") == 0) {
-			token = getInput(input);
-			if (token) {
+			token = readInput(input);
+			cleanString(token);
+			if (strlen(token) > 0) {
 				insert(tree, newString(token));
 			}
 		} else if (strcmp(token, "d") == 0) {
-			token = getInput(input);
-			if (token) {
+			token = readInput(input);
+			cleanString(token);
+			if (strlen(token) > 0) {
 				delete(tree, newString(token));
 			}
 		} else if (strcmp(token, "f") == 0) {
-			token = getInput(input);
-			if (token) {
+			token = readInput(input);
+			cleanString(token);
+			if (strlen(token) > 0) {
 				int frequency = find(tree, newString(token));
 				fprintf(output, "Frequency of \"%s\": %d\n", token, frequency);
 			}

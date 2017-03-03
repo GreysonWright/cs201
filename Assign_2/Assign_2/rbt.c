@@ -293,10 +293,12 @@ void deleteRBT(rbt *tree, void *value) {
 	tree->size = tree->tree->size;
 	tree->words--;
 	
-	free(((rbtValue *)node->value)->value);
-	free(node->value);
-	free(node);
-	node = 0;
+	if (node) {
+		free(((rbtValue *)node->value)->value);
+		free(node->value);
+		free(node);
+		node = 0;
+	}
 }
 
 int sizeRBT(rbt *tree) {

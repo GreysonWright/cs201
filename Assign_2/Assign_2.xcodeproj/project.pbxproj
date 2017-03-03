@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E0C6D9C1E68A89D0032BDD4 /* scanner.c in Sources */ = {isa = PBXBuildFile; fileRef = 2E0C6D9B1E68A89D0032BDD4 /* scanner.c */; };
 		2E3160C51E538787002C9B50 /* bst.c in Sources */ = {isa = PBXBuildFile; fileRef = 2E3160C31E538787002C9B50 /* bst.c */; };
 		2E47F7341E4139BF006BBBF2 /* bstrees.c in Sources */ = {isa = PBXBuildFile; fileRef = 2E47F7331E4139BF006BBBF2 /* bstrees.c */; };
 		2E47F74B1E417099006BBBF2 /* string.c in Sources */ = {isa = PBXBuildFile; fileRef = 2E47F7471E417099006BBBF2 /* string.c */; };
@@ -14,7 +15,6 @@
 		2EB608F21E60C2320008D888 /* rbt.c in Sources */ = {isa = PBXBuildFile; fileRef = 2EB608F01E60C2320008D888 /* rbt.c */; };
 		2EF60B121E42575400160038 /* queue.c in Sources */ = {isa = PBXBuildFile; fileRef = 2EF60B101E42575400160038 /* queue.c */; };
 		2EF60B151E4258A100160038 /* sll.c in Sources */ = {isa = PBXBuildFile; fileRef = 2EF60B131E4258A100160038 /* sll.c */; };
-		2EFEE5131E64A10200FF2CFD /* scanner.c in Sources */ = {isa = PBXBuildFile; fileRef = 2EFEE5111E64A10200FF2CFD /* scanner.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -30,6 +30,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2E0C6D9A1E68A89D0032BDD4 /* scanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = scanner.h; sourceTree = "<group>"; };
+		2E0C6D9B1E68A89D0032BDD4 /* scanner.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = scanner.c; sourceTree = "<group>"; };
 		2E3160C31E538787002C9B50 /* bst.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = bst.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		2E3160C41E538787002C9B50 /* bst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bst.h; sourceTree = "<group>"; };
 		2E47F7301E4139BF006BBBF2 /* Assign_2 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Assign_2; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -44,8 +46,6 @@
 		2EF60B111E42575400160038 /* queue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = queue.h; sourceTree = "<group>"; };
 		2EF60B131E4258A100160038 /* sll.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sll.c; sourceTree = "<group>"; };
 		2EF60B141E4258A100160038 /* sll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sll.h; sourceTree = "<group>"; };
-		2EFEE5111E64A10200FF2CFD /* scanner.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = scanner.c; sourceTree = "<group>"; };
-		2EFEE5121E64A10200FF2CFD /* scanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = scanner.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,8 +78,8 @@
 		2E47F7321E4139BF006BBBF2 /* Assign_2 */ = {
 			isa = PBXGroup;
 			children = (
-				2EFEE5121E64A10200FF2CFD /* scanner.h */,
-				2EFEE5111E64A10200FF2CFD /* scanner.c */,
+				2E0C6D9A1E68A89D0032BDD4 /* scanner.h */,
+				2E0C6D9B1E68A89D0032BDD4 /* scanner.c */,
 				2E47F7481E417099006BBBF2 /* string.h */,
 				2E47F7471E417099006BBBF2 /* string.c */,
 				2EF60B141E4258A100160038 /* sll.h */,
@@ -157,9 +157,9 @@
 			files = (
 				2EF60B151E4258A100160038 /* sll.c in Sources */,
 				2E47F7341E4139BF006BBBF2 /* bstrees.c in Sources */,
-				2EFEE5131E64A10200FF2CFD /* scanner.c in Sources */,
 				2EF60B121E42575400160038 /* queue.c in Sources */,
 				2EB608F21E60C2320008D888 /* rbt.c in Sources */,
+				2E0C6D9C1E68A89D0032BDD4 /* scanner.c in Sources */,
 				2E581CB81E5E33B5001F0836 /* vbst.c in Sources */,
 				2E47F74B1E417099006BBBF2 /* string.c in Sources */,
 				2E3160C51E538787002C9B50 /* bst.c in Sources */,
