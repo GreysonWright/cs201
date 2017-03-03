@@ -32,5 +32,5 @@ clean :
 		rm -f $(OBJS) bstrees
 
 test :	./bstrees
-		./bstrees -r corpus commands
+		./bstrees -r data commands
 		
