@@ -80,13 +80,13 @@ void cleanString(char *string) {
 	long strLength = strlen(string);
 	int count = 0;
 	for (int i = 0; i <= strLength; i++) {
-		if (isalpha(string[i]) || string[i] == '\0' || (isspace(string[i]) && !isspace(string[count-1]))) {
+		if (isalpha(string[i]) || string[i] == '\0' || (count != 0 && isspace(string[i]) && !isspace(string[count - 1]))) {
 			if (isspace(string[i])) {
 				string[count++] = ' ';
 			} else {
 				string[count++] = tolower(string[i]);
 			}
-		} else if (isdigit(string[i])) {
+		} else if (count == 0 || (count != 0 && isdigit(string[i]) && !isspace(string[count - 1]))) {
 			string[count++] = ' ';
 		}
 	}
@@ -175,6 +175,13 @@ int main(int argc, const char * argv[]) {
 			exit(-2);
 			break;
 	}
+
+//	char *token = readInput(stdin);
+//	while (!feof(stdin)) {
+//		cleanString(token);
+//		printf("'%s'\n", token);
+//		token = readInput(stdin);
+//	}
 	
 	buildTree(input, tree, insert);
 	fclose(input);
