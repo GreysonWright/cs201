@@ -74,12 +74,10 @@ void cleanString(char *string) {
 	long strLength = strlen(string);
 	int count = 0;
 	for (int i = 0; i <= strLength; i++) {
-		if (isalpha(string[i]) || string[i] == '\0' || (count != 0 && isspace(string[i]) && !isspace(string[count - 1]))) {
-			if (isspace(string[i])) {
-				string[count++] = ' ';
-			} else {
-				string[count++] = tolower(string[i]);
-			}
+		if (isalpha(string[i]) || string[i] == '\0') {
+			string[count++] = tolower(string[i]);
+		} else if (count != 0 && isspace(string[i]) && !isspace(string[count - 1])) {
+			string[count++] = ' ';
 		}
 	}
 }
