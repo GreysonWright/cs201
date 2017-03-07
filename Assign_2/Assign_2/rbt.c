@@ -229,7 +229,7 @@ void deletionFixUp(rbt *tree, bstNode *node) {
 	setColor(node, BLACK);
 }
 
-rbtValue *newRBTValue(void *value, void (*display)(FILE *file, void *display), int (*compare)(void *left, void *right)) {
+rbtValue *newRBTValue(void *value, rbt *tree) {
 	rbtValue *newNode = newNode = malloc(sizeof *newNode);
 	if (newNode == 0) {
 		fprintf(stderr, "out of memory");
@@ -238,8 +238,8 @@ rbtValue *newRBTValue(void *value, void (*display)(FILE *file, void *display), i
 	newNode->value = value;
 	newNode->frequency = 1;
 	newNode->color = RED;
-	newNode->display = display;
-	newNode->compare = compare;
+	newNode->display = tree->display;
+	newNode->compare = tree->compare;
 	return newNode;
 }
 
@@ -258,7 +258,7 @@ rbt *newRBT(void (*display)(FILE *file, void *display), int (*compare)(void *lef
 }
 
 void insertRBT(rbt *tree, void *value) {
-	rbtValue *val = newRBTValue(value, tree->display, tree->compare);
+	rbtValue *val = newRBTValue(value, tree);
 	bstNode *node = findBSTNode(tree->tree, val);
 	
 	if (node) {
@@ -272,7 +272,7 @@ void insertRBT(rbt *tree, void *value) {
 }
 
 int findRBT(rbt *tree, void *value) {
-	rbtValue *val =  newRBTValue(value, tree->display, tree->compare);
+	rbtValue *val =  newRBTValue(value, tree);
 	bstNode *node = findBSTNode(tree->tree, val);
 	
 	free(val->value);
@@ -286,7 +286,7 @@ int findRBT(rbt *tree, void *value) {
 }
 
 void deleteRBT(rbt *tree, void *value) {
-	rbtValue *val = newRBTValue(value, tree->display, tree->compare);
+	rbtValue *val = newRBTValue(value, tree);
 	bstNode *node = findBSTNode(tree->tree, val);
 	
 	if (node == 0) {

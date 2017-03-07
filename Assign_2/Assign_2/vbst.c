@@ -23,7 +23,7 @@ static void vbstDisplay(FILE *file, void *value) {
 	}
 }
 
-vbstValue *newVBSTValue(void *value, void (*display)(FILE *file, void *display), int (*compare)(void *left, void *right)) {
+vbstValue *newVBSTValue(void *value, vbst *tree) {
 	vbstValue *newNode = newNode = malloc(sizeof *newNode);
 	if (newNode == 0) {
 		fprintf(stderr, "out of memory");
@@ -31,8 +31,8 @@ vbstValue *newVBSTValue(void *value, void (*display)(FILE *file, void *display),
 	}
 	newNode->value = value;
 	newNode->frequency = 1;
-	newNode->display = display;
-	newNode->compare = compare;
+	newNode->display = tree->display;
+	newNode->compare = tree->compare;
 	return newNode;
 }
 
@@ -51,7 +51,7 @@ vbst *newVBST(void (*display)(FILE *file, void *display), int (*compare)(void *l
 }
 
 bstNode *insertVBST(vbst *tree, void *value) {
-	vbstValue *val = newVBSTValue(value, tree->display, tree->compare);
+	vbstValue *val = newVBSTValue(value, tree);
 	bstNode *node = findBSTNode(tree->tree, val);
 	
 	if (node) {
@@ -65,7 +65,7 @@ bstNode *insertVBST(vbst *tree, void *value) {
 }
 
 bstNode *deleteVBST(vbst *tree, void *value) {
-	vbstValue *val = newVBSTValue(value, tree->display, tree->compare);
+	vbstValue *val = newVBSTValue(value, tree);
 	bstNode *node = findBSTNode(tree->tree, val);
 	
 	if (node == 0) {
@@ -92,7 +92,7 @@ bstNode *deleteVBST(vbst *tree, void *value) {
 }
 
 int findVBST(vbst *tree, void *value) {
-	vbstValue *val = newVBSTValue(value, tree->display, tree->compare);
+	vbstValue *val = newVBSTValue(value, tree);
 	bstNode *node = findBSTNode(tree->tree, val);
 	
 	free(val->value);

@@ -12,7 +12,7 @@
 		2E47F7341E4139BF006BBBF2 /* bstrees.c in Sources */ = {isa = PBXBuildFile; fileRef = 2E47F7331E4139BF006BBBF2 /* bstrees.c */; };
 		2E47F74B1E417099006BBBF2 /* string.c in Sources */ = {isa = PBXBuildFile; fileRef = 2E47F7471E417099006BBBF2 /* string.c */; };
 		2E581CB81E5E33B5001F0836 /* vbst.c in Sources */ = {isa = PBXBuildFile; fileRef = 2E581CB61E5E33B5001F0836 /* vbst.c */; };
-		2EB608F21E60C2320008D888 /* rbt.c in Sources */ = {isa = PBXBuildFile; fileRef = 2EB608F01E60C2320008D888 /* rbt.c */; };
+		2EC66DB91E6F2B7C0028D164 /* rbt.c in Sources */ = {isa = PBXBuildFile; fileRef = 2EB608F01E60C2320008D888 /* rbt.c */; };
 		2EF60B121E42575400160038 /* queue.c in Sources */ = {isa = PBXBuildFile; fileRef = 2EF60B101E42575400160038 /* queue.c */; };
 		2EF60B151E4258A100160038 /* sll.c in Sources */ = {isa = PBXBuildFile; fileRef = 2EF60B131E4258A100160038 /* sll.c */; };
 /* End PBXBuildFile section */
@@ -158,10 +158,10 @@
 				2EF60B151E4258A100160038 /* sll.c in Sources */,
 				2E47F7341E4139BF006BBBF2 /* bstrees.c in Sources */,
 				2EF60B121E42575400160038 /* queue.c in Sources */,
-				2EB608F21E60C2320008D888 /* rbt.c in Sources */,
 				2E0C6D9C1E68A89D0032BDD4 /* scanner.c in Sources */,
 				2E581CB81E5E33B5001F0836 /* vbst.c in Sources */,
 				2E47F74B1E417099006BBBF2 /* string.c in Sources */,
+				2EC66DB91E6F2B7C0028D164 /* rbt.c in Sources */,
 				2E3160C51E538787002C9B50 /* bst.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
