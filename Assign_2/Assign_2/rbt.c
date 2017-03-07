@@ -275,9 +275,9 @@ int findRBT(rbt *tree, void *value) {
 	rbtValue *val =  newRBTValue(value, tree->display, tree->compare);
 	bstNode *node = findBSTNode(tree->tree, val);
 	
-	free(val->value);
-	free(val);
-	val = 0;
+//	free(val->value);
+//	free(val);
+//	val = 0;
 	
 	if (node == 0) {
 		return 0;
@@ -296,10 +296,10 @@ void deleteRBT(rbt *tree, void *value) {
 		return;
 	}
 	
-	free(val->value);
-	free(val);
-	val = 0;
-	
+//	free(val->value);
+//	free(val);
+//	val = 0;
+//	
 	if (((rbtValue *)node->value)->frequency > 1) {
 		((rbtValue *)node->value)->frequency--;
 	} else {
@@ -311,10 +311,10 @@ void deleteRBT(rbt *tree, void *value) {
 	tree->words--;
 	
 	if (node) {
-		free(((rbtValue *)node->value)->value);
-		free(node->value);
-		free(node);
-		node = 0;
+//		free(((rbtValue *)node->value)->value);
+//		free(node->value);
+//		free(node);
+//		node = 0;
 	}
 }
 
