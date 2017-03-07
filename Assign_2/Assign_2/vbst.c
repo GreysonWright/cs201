@@ -75,9 +75,9 @@ bstNode *deleteVBST(vbst *tree, void *value) {
 		return 0;
 	}
 	
-//	free(val->value);
-//	free(val);
-//	val = 0;
+	free(val->value);
+	free(val);
+	val = 0;
 	
 	if (((vbstValue *)node->value)->frequency > 1) {
 		((vbstValue *)node->value)->frequency--;
@@ -95,9 +95,9 @@ int findVBST(vbst *tree, void *value) {
 	vbstValue *val = newVBSTValue(value, tree->display, tree->compare);
 	bstNode *node = findBSTNode(tree->tree, val);
 	
-//	free(val->value);
-//	free(val);
-//	val = 0;
+	free(val->value);
+	free(val);
+	val = 0;
 	
 	if (node == 0) {
 		return 0;

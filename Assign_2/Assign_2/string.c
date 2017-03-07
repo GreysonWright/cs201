@@ -20,12 +20,13 @@ string *newString(char *str) {
 		fprintf(stderr, "out of memory");
 		exit(-1);
 	}
-	newStr->value = malloc(strlen(str));
-	if (newStr->value == 0) {
-		fprintf(stderr, "out of memory");
-		exit(-1);
-	}
-	strcpy(newStr->value, str);
+//	newStr->value = malloc(strlen(str));
+//	if (newStr->value == 0) {
+//		fprintf(stderr, "out of memory");
+//		exit(-1);
+//	}
+//	strcpy(newStr->value, str);
+	newStr->value = str;
 	return newStr;
 }
 
@@ -37,7 +38,7 @@ char *setString(string *stringItem, char *str) {
 	char *oldStr = malloc(strlen(stringItem->value));
 	strcpy(oldStr, stringItem->value);
 	
-	stringItem->value = malloc(strlen(str));
+//	stringItem->value = malloc(strlen(str));
 	stringItem->value = str;
 	return oldStr;
 }

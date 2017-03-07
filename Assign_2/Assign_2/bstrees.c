@@ -50,10 +50,10 @@ static void vbstInsert(void *tree, string *value) {
 static void vbstDelete(void *tree, string *value) {
 	bstNode *node = deleteVBST(tree, value);
 	if (node) {
-//		free(((vbstValue *)node->value)->value);
-//		free(node->value);
-//		free(node);
-//		node = 0;
+		free(((vbstValue *)node->value)->value);
+		free(node->value);
+		free(node);
+		node = 0;
 	}
 }
 
