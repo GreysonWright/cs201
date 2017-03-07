@@ -48,13 +48,7 @@ static void vbstInsert(void *tree, string *value) {
 }
 
 static void vbstDelete(void *tree, string *value) {
-	bstNode *node = deleteVBST(tree, value);
-	if (node) {
-		free(((vbstValue *)node->value)->value);
-		free(node->value);
-		free(node);
-		node = 0;
-	}
+	(void)deleteVBST(tree, value);
 }
 
 static int vbstFind(void *tree, string *value) {
@@ -110,19 +104,19 @@ void interpretCommands(FILE *input, FILE *output, void *tree, Insert *insert, De
 		if (strcmp(token, "i") == 0) {
 			token = readInput(input);
 			cleanString(token);
-			if (strlen(token) > 0) {
+			if (token && strlen(token) > 0) {
 				insert(tree, newString(token));
 			}
 		} else if (strcmp(token, "d") == 0) {
 			token = readInput(input);
 			cleanString(token);
-			if (strlen(token) > 0) {
+			if (token && strlen(token) > 0) {
 				delete(tree, newString(token));
 			}
 		} else if (strcmp(token, "f") == 0) {
 			token = readInput(input);
 			cleanString(token);
-			if (strlen(token) > 0) {
+			if (token && strlen(token) > 0) {
 				int frequency = find(tree, newString(token));
 				fprintf(output, "Frequency of \"%s\": %d\n", token, frequency);
 			}
