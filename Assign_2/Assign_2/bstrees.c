@@ -80,8 +80,6 @@ void cleanString(char *string) {
 			} else {
 				string[count++] = tolower(string[i]);
 			}
-		} else if (count == 0 || (count != 0 && isdigit(string[i]) && !isspace(string[count - 1]))) {
-			string[count++] = ' ';
 		}
 	}
 }
