@@ -306,16 +306,14 @@ void deleteRBT(rbt *tree, void *value) {
 		node = swapToLeafBSTNode(node);
 		deletionFixUp(tree, node);
 		pruneBSTNode(tree->tree, node);
-	}
-	tree->size = tree->tree->size;
-	tree->words--;
-	
-	if (node) {
+		
 		free(((rbtValue *)node->value)->value);
 		free(node->value);
 		free(node);
 		node = 0;
 	}
+	tree->size = tree->tree->size;
+	tree->words--;
 }
 
 int sizeRBT(rbt *tree) {
