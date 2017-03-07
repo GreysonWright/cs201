@@ -175,13 +175,6 @@ int main(int argc, const char * argv[]) {
 			exit(-2);
 			break;
 	}
-
-//	char *token = readInput(stdin);
-//	while (!feof(stdin)) {
-//		cleanString(token);
-//		printf("'%s'\n", token);
-//		token = readInput(stdin);
-//	}
 	
 	buildTree(input, tree, insert);
 	fclose(input);

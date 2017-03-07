@@ -260,6 +260,7 @@ rbt *newRBT(void (*display)(FILE *file, void *display), int (*compare)(void *lef
 void insertRBT(rbt *tree, void *value) {
 	rbtValue *val = newRBTValue(value, tree->display, tree->compare);
 	bstNode *node = findBSTNode(tree->tree, val);
+	
 	if (node) {
 		((rbtValue *)node->value)->frequency++;
 	} else {
@@ -271,7 +272,13 @@ void insertRBT(rbt *tree, void *value) {
 }
 
 int findRBT(rbt *tree, void *value) {
-	bstNode *node = findBSTNode(tree->tree, newRBTValue(value, tree->display, tree->compare));
+	rbtValue *val =  newRBTValue(value, tree->display, tree->compare);
+	bstNode *node = findBSTNode(tree->tree, val);
+	
+	free(val->value);
+	free(val);
+	val = 0;
+	
 	if (node == 0) {
 		return 0;
 	}
@@ -281,12 +288,18 @@ int findRBT(rbt *tree, void *value) {
 void deleteRBT(rbt *tree, void *value) {
 	rbtValue *val = newRBTValue(value, tree->display, tree->compare);
 	bstNode *node = findBSTNode(tree->tree, val);
+	
 	if (node == 0) {
 		fprintf(stderr, "Value ");
 		val->display(stderr, val);
 		fprintf(stderr, " not found.\n");
 		return;
 	}
+	
+	free(val->value);
+	free(val);
+	val = 0;
+	
 	if (((rbtValue *)node->value)->frequency > 1) {
 		((rbtValue *)node->value)->frequency--;
 	} else {

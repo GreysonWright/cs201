@@ -53,6 +53,7 @@ vbst *newVBST(void (*display)(FILE *file, void *display), int (*compare)(void *l
 bstNode *insertVBST(vbst *tree, void *value) {
 	vbstValue *val = newVBSTValue(value, tree->display, tree->compare);
 	bstNode *node = findBSTNode(tree->tree, val);
+	
 	if (node) {
 		((vbstValue *)node->value)->frequency++;
 		tree->words++;
@@ -74,7 +75,11 @@ bstNode *deleteVBST(vbst *tree, void *value) {
 		return 0;
 	}
 	
-	if (val->frequency > 1) {
+	free(val->value);
+	free(val);
+	val = 0;
+	
+	if (((vbstValue *)node->value)->frequency > 1) {
 		((vbstValue *)node->value)->frequency--;
 	} else {
 		node = swapToLeafBSTNode(node);
@@ -82,11 +87,18 @@ bstNode *deleteVBST(vbst *tree, void *value) {
 	}
 	tree->size = tree->tree->size;
 	tree->words--;
+	
 	return node;
 }
 
 int findVBST(vbst *tree, void *value) {
-	bstNode *node = findBSTNode(tree->tree, newVBSTValue(value, tree->display, tree->compare));
+	vbstValue *val = newVBSTValue(value, tree->display, tree->compare);
+	bstNode *node = findBSTNode(tree->tree, val);
+	
+	free(val->value);
+	free(val);
+	val = 0;
+	
 	if (node == 0) {
 		return 0;
 	}
