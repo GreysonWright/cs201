@@ -168,16 +168,16 @@ int main(int argc, const char * argv[]) {
 			break;
 	}
 
-	char *token = readInput(stdin);
-	while (!feof(stdin)) {
-		cleanString(token);
-		printf("'%s'\n", token);
-		token = readInput(stdin);
-	}
+//	char *token = readInput(stdin);
+//	while (!feof(stdin)) {
+//		cleanString(token);
+//		printf("'%s'\n", token);
+//		token = readInput(stdin);
+//	}
 	
-//	buildTree(input, tree, insert);
-//	fclose(input);
-//	interpretCommands(commands, output, tree, insert, delete, find, statistics, display);
-//	fclose(commands);
+	buildTree(input, tree, insert);
+	fclose(input);
+	interpretCommands(commands, output, tree, insert, delete, find, statistics, display);
+	fclose(commands);
 	return 0;
 }
