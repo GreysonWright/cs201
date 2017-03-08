@@ -88,13 +88,13 @@ bstNode *findPredecessor(bstNode *node) {
 		return predecessor;
 	}
 	
-	if (node->left && node->right) {
+	if (node->left) {
 		predecessor = node->left;
 		
 		while (predecessor->right) {
 			predecessor = predecessor->right;
 		}
-	} else if (node->left == 0) {
+	} else if (node->right) {
 		predecessor = node->right;
 		
 		while (predecessor->left) {
