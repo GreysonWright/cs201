@@ -206,6 +206,7 @@ void pruneBSTNode(bst* tree, bstNode *node) {
 	} else {
 		tree->root = 0;
 	}
+	tree->size--;
 }
 
 void statisticsBST(bst *tree, FILE *file) {
