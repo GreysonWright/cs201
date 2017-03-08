@@ -46,19 +46,10 @@ static int findMinHeight(bstNode *node) {
 		return 0;
 	}
 	
-	if (node->left == 0 && node->right == 0) {
-		return 1;
-	}
+	int right = findMinHeight(node->right);
+	int left = findMinHeight(node->left);
 	
-	if (node->left == 0) {
-		return findMinHeight(node->right) + 1;
-	}
-	
-	if (node->right == 0) {
-		return findMinHeight(node->left) + 1;
-	}
-	
-	return min(findMinHeight(node->left), findMinHeight(node->right)) + 1;
+	return min(right, left) + 1;
 }
 
 static int findMaxHeight(bstNode *node) {
@@ -66,19 +57,10 @@ static int findMaxHeight(bstNode *node) {
 		return 0;
 	}
 	
-	if (node->left == 0 && node->right == 0) {
-		return 1;
-	}
+	int right = findMaxHeight(node->right);
+	int left = findMaxHeight(node->left);
 	
-	if (node->left == 0) {
-		return findMaxHeight(node->right) + 1;
-	}
-	
-	if (node->right == 0) {
-		return findMaxHeight(node->left) + 1;
-	}
-	
-	return max(findMaxHeight(node->left), findMaxHeight(node->right)) + 1;
+	return max(right, left) + 1;
 }
 
 bstNode *findPredecessor(bstNode *node) {
