@@ -89,7 +89,9 @@ void buildTree(FILE *file, void *tree, Insert *insert) {
 	while (!feof(file)) {
 		if (strlen(token) > 0) {
 			cleanString(token);
-			insert(tree, newString(token));
+			if (token && strlen(token) > 0) {
+				insert(tree, newString(token));
+			}
 		}
 		token = readInput(file);
 	}
