@@ -76,8 +76,10 @@ void cleanString(char *string) {
 	for (int i = 0; i <= strLength; i++) {
 		if (isalpha(string[i]) || string[i] == '\0') {
 			string[count++] = tolower(string[i]);
-		} else if (count != 0 && isspace(string[i]) && !isspace(string[count - 1])) {
-			string[count++] = ' ';
+		} else if (isspace(string[i])) {
+			if (count == 0 || (count != 0 && !isspace(string[count - 1]))) {
+				string[count++] = ' ';
+			}
 		}
 	}
 }
@@ -165,10 +167,17 @@ int main(int argc, const char * argv[]) {
 			exit(-2);
 			break;
 	}
+
+	char *token = readInput(stdin);
+	while (!feof(stdin)) {
+		cleanString(token);
+		printf("'%s'\n", token);
+		token = readInput(stdin);
+	}
 	
-	buildTree(input, tree, insert);
-	fclose(input);
-	interpretCommands(commands, output, tree, insert, delete, find, statistics, display);
-	fclose(commands);
+//	buildTree(input, tree, insert);
+//	fclose(input);
+//	interpretCommands(commands, output, tree, insert, delete, find, statistics, display);
+//	fclose(commands);
 	return 0;
 }
