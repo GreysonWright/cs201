@@ -94,8 +94,6 @@ bstNode *findPredecessor(bstNode *node) {
 		while (predecessor->right) {
 			predecessor = predecessor->right;
 		}
-	} else if (node->right == 0) {
-		predecessor = node->left;
 	} else if (node->left == 0) {
 		predecessor = node->right;
 		
