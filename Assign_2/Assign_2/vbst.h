@@ -35,4 +35,5 @@ int sizeVBST(vbst *);
 int wordsVBST(vbst *);
 void statisticsVBST(vbst *, FILE *);
 void displayVBST(FILE *, vbst *);
+void checkVBST(vbst *);
 #endif /* vbst_h */

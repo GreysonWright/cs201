@@ -36,4 +36,5 @@ int sizeRBT(rbt *);
 int wordsRBT(rbt *);
 void statisticsRBT(rbt *, FILE *);
 void displayRBT(FILE *, rbt *);
+void checkRBT(rbt *);
 #endif /* rbt_h */

@@ -273,3 +273,7 @@ void displayBST(FILE * file, bst *tree) {
 	}
 	fprintf(file, "\n");
 }
+
+void checkBST(bst *tree) {
+	(void)tree;
+}

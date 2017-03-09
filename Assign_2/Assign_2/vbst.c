@@ -121,3 +121,7 @@ void statisticsVBST(vbst *tree, FILE *file) {
 void displayVBST(FILE *file, vbst *tree){
 	displayBST(file, tree->tree);
 }
+
+extern void checkVBST(vbst *tree) {
+	(void)tree;
+}

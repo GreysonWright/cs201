@@ -332,3 +332,7 @@ void statisticsRBT(rbt *tree, FILE *file) {
 void displayRBT(FILE *file, rbt *tree) {
 	displayBST(file, tree->tree);
 }
+
+void checkRBT(rbt *tree) {
+	(void)tree;
+}
