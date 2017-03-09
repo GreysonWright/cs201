@@ -181,5 +181,6 @@ int main(int argc, const char * argv[]) {
 	fclose(input);
 	interpretCommands(commands, output, tree, insert, delete, find, statistics, display);
 	fclose(commands);
+	fclose(output);
 	return 0;
 }
