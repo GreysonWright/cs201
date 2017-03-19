@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		2E1635521E7EFAC300F2E8A5 /* djikstra.c in Sources */ = {isa = PBXBuildFile; fileRef = 2E1635511E7EFAC300F2E8A5 /* djikstra.c */; };
+		2E16355A1E7EFCAB00F2E8A5 /* darray.c in Sources */ = {isa = PBXBuildFile; fileRef = 2E1635581E7EFCAB00F2E8A5 /* darray.c */; };
+		2E16355D1E7EFD1500F2E8A5 /* binomial.c in Sources */ = {isa = PBXBuildFile; fileRef = 2E16355B1E7EFD1500F2E8A5 /* binomial.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +27,10 @@
 /* Begin PBXFileReference section */
 		2E16354E1E7EFAC300F2E8A5 /* Assign_3 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Assign_3; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E1635511E7EFAC300F2E8A5 /* djikstra.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = djikstra.c; sourceTree = "<group>"; };
+		2E1635581E7EFCAB00F2E8A5 /* darray.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = darray.c; sourceTree = "<group>"; };
+		2E1635591E7EFCAB00F2E8A5 /* darray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = darray.h; sourceTree = "<group>"; };
+		2E16355B1E7EFD1500F2E8A5 /* binomial.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = binomial.c; sourceTree = "<group>"; };
+		2E16355C1E7EFD1500F2E8A5 /* binomial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = binomial.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +63,10 @@
 		2E1635501E7EFAC300F2E8A5 /* Assign_3 */ = {
 			isa = PBXGroup;
 			children = (
+				2E1635591E7EFCAB00F2E8A5 /* darray.h */,
+				2E1635581E7EFCAB00F2E8A5 /* darray.c */,
+				2E16355C1E7EFD1500F2E8A5 /* binomial.h */,
+				2E16355B1E7EFD1500F2E8A5 /* binomial.c */,
 				2E1635511E7EFAC300F2E8A5 /* djikstra.c */,
 			);
 			path = Assign_3;
@@ -120,6 +130,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2E16355A1E7EFCAB00F2E8A5 /* darray.c in Sources */,
+				2E16355D1E7EFD1500F2E8A5 /* binomial.c in Sources */,
 				2E1635521E7EFAC300F2E8A5 /* djikstra.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
