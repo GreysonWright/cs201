@@ -16,8 +16,8 @@ typedef struct DArray DArray; //forward declaration of the DArray struct
 DArray *newDArray(void (*)(FILE *, void *));
 void insertDArray(DArray *, void *);
 void *removeDArray(DArray *);
-void *getDArray(DArray *, int index);
-void setDArray(DArray *, int index, void *value);
+void *getDArray(DArray *, int);
+void setDArray(DArray *, int, void *);
 int sizeDArray(DArray *);
-void displayDArray(FILE *, DArray *a);
+void displayDArray(FILE *, DArray *);
 #endif /* darray_h */
