@@ -47,6 +47,16 @@ int getDegree(BinomialNode *node) {
 	return sizeDArray(node->children);
 }
 
+int arrayContains(DArray *darray) {
+	for (int i = 0; i < sizeDArray(darray); i++) {
+		if (getDArray(darray, i)) {
+			return 1;
+		}
+	}
+	
+	return 0;
+}
+
 BinomialNode *combine(Binomial *binHeap, BinomialNode *x, BinomialNode *y) {
 	int degree = 0;
 	
@@ -54,14 +64,12 @@ BinomialNode *combine(Binomial *binHeap, BinomialNode *x, BinomialNode *y) {
 		degree = getDegree(y);
 		setDArray(x->children, degree, y);
 		y->parent = x;
-		
 		return x;
 	}
 	
 	degree = getDegree(x);
 	setDArray(y->children, degree, x);
 	x->parent = y;
-	
 	return y;
 }
 
@@ -89,7 +97,7 @@ void merge(Binomial *binHeap, DArray *darray) {
 }
 
 BinomialNode *bubbleUp(Binomial *binHeap, BinomialNode *node) {
-	if (getDArray(binHeap->rootlist, 0) == node || binHeap->compare(node->value, node->parent->value) > 0) {
+	if (arrayContains(binHeap->rootlist) || binHeap->compare(node->value, node->parent->value) > 0) {
 		return node;
 	}
 	
