@@ -7,8 +7,17 @@
 //
 
 #include <stdio.h>
+#include "integer.h"
+#include "binomial.h"
 
 int main(int argc, const char * argv[]) {
+	Binomial *binHeap = newBinomial(displayInteger, compareInteger, 0);
+	insertBinomial(binHeap, newInteger(4));
+	insertBinomial(binHeap, newInteger(8));
+	insertBinomial(binHeap, newInteger(16));
+	insertBinomial(binHeap, newInteger(5));
+	insertBinomial(binHeap, newInteger(1));
+	displayBinomial(stdout, binHeap);
 	
     return 0;
 }

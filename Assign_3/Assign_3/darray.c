@@ -54,7 +54,7 @@ void *removeDArray(DArray *darray) {
 
 void *getDArray(DArray *darray, int index) {
 	if (index >= darray->size || index < 0) {
-		fprintf(stderr, "Index out of bounds.");
+//		fprintf(stderr, "Index out of bounds.");
 		return 0;
 	}
 	return darray->array[index];
@@ -62,7 +62,7 @@ void *getDArray(DArray *darray, int index) {
 
 void setDArray(DArray *darray, int index, void *value) {
 	if (index > darray->size || index < 0) {
-		fprintf(stderr, "Index out of bounds.");
+//		fprintf(stderr, "Index out of bounds.");
 		return;
 	}
 	
