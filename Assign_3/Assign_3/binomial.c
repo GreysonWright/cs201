@@ -186,6 +186,9 @@ void displayBinomial(FILE *file, Binomial *binHeap) {
 			
 			if (peekQueue(queueItems) != 0) {
 				fprintf(file, " ");
+			} else if (sizeDArray(node->children) == 0) {
+				count = 0;
+				fprintf(file, "\n----");
 			}
 			
 			enqueueList(queueItems, node->children);
