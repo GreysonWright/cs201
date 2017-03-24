@@ -9,11 +9,11 @@
 #include <stdlib.h>
 #include "Vertex.h"
 
-Vertex *newVertex(int name, int distance, DArray *adjacency) {
+Vertex *newVertex(int name, int distance, DArray *adjacency, void (*display)(FILE *, void *)) {
 	Vertex *vertex = malloc(sizeof *vertex);
 	vertex->name = name;
 	vertex->distance = 0;
-	vertex->adjacency = newDArray(displayInteger);
+	vertex->adjacency = newDArray(display);
 	return vertex;
 }
 
@@ -30,31 +30,14 @@ int compareVertex(void *left, void *right) {
 int getNameVertex(void *vertex) {
 	return ((Vertex *)vertex)->name;
 }
-//
-//int getDistanceVertex(void *vertex) {
-//	return ((Vertex *)vertex)->distance;
-//}
-//
-//Vertex *getPreviousVertex(Vertex *vertex) {
-//	return vertex->previous;
-//}
-
-//void addNeighborVertex(Vertex *vertex, integer *neighbor) {
-//	setDArray(vertex->neighbors, sizeDArray(vertex->neighbors), neighbor);
-//}
-//
-//DArray *getNeighborsVertex(Vertex *vertex) {
-//	return vertex->neighbors;
-//}
-//
-//void addEdgeWeightsVertex(Vertex *vertex, integer *weight) {
-//	insertDArray(vertex->edgeWeights, weight);
-//}
-//
-//DArray *getEdgeWeightsVertex(Vertex *vertex) {
-//	return vertex->edgeWeights;
-//}
 
 void displayVertex(FILE *file, void *vertex) {
-	fprintf(file, "%d", getNameVertex(vertex));
+	Vertex *vert = vertex;
+	if (vert) {
+		fprintf(file, "Vertex { name = %d, distance = %d, adjacency = ", vert->name, vert->distance);
+		displayDArray(file, vert->adjacency);
+		fprintf(file, " }");
+	} else {
+		fprintf(file, "Vertex { NULL }");
+	}
 }

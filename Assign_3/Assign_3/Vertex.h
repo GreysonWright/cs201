@@ -11,7 +11,6 @@
 
 #include <stdio.h>
 #include "darray.h"
-#include "integer.h"
 
 typedef struct Vertex {
 	int name;
@@ -20,7 +19,7 @@ typedef struct Vertex {
 	DArray *adjacency;
 } Vertex;
 
-Vertex *newVertex(int name, int distance, DArray *adjacency);
+Vertex *newVertex(int name, int distance, DArray *adjacency, void (*)(FILE *, void *));
 int getNameVertex(void *);
 //int getDistanceVertex(void *);
 //void addNeighborVertex(Vertex *, integer *);

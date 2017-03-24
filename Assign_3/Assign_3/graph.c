@@ -8,71 +8,59 @@
 
 #include <stdlib.h>
 #include "graph.h"
-#include "Vertex.h"
 
-typedef struct Graph {
-	DArray *matrix;
-	void (*display)(FILE *, void *);
-} Graph;
+DArray *initDarray(int size, void (*display)(FILE *, void *)) {
+	DArray *darray = newDArray(display);
+	for (int i = 0; i < size; i++) {
+		setDArray(darray, i, 0);
+	}
+	return darray;
+}
 
-int max(int a, int b) {
-	return a > b ? a : b;
+Vertex *initVertex(int name, int vertex2, void *weight, Graph *graph) {
+	DArray *adjacency = initDarray(sizeGraph(graph), graph->display);
+	setDArray(adjacency, vertex2, weight);
+	Vertex *vertex = newVertex(name, 0, adjacency, graph->display);
+	return vertex;
 }
 
 Graph *newGraph(int size, void (*display)(FILE *, void *)) {
 	Graph *graph = malloc(sizeof *graph);
 	graph->display = display;
-	graph->matrix = newDArray(display);
+	graph->vertices = initDarray(size, display);
 	
-	for (int i = 0; i < size; i++) {
-		setDArray(graph->matrix, i, newDArray(display));
-	}
-	
-	for (int i = 0; i < size; i++) {
-		for (int j = 0; j < size; j++) {
-			setDArray(getDArray(graph->matrix, i), j, newInteger(0));
-		}
-	}
 	return graph;
 }
 
-void insertGraph(Graph *graph, int v1, int v2, integer *weight) {
-	int oldSize = sizeDArray(graph->matrix);
-	int size = max(v1, v2) + 1;
-	if (size > oldSize) {
-		for (int i = oldSize; i < size; i++) {
-			setDArray(graph->matrix, i, newDArray(graph->display));
-		}
-		for (int i = oldSize; i < size; i++) {
-			for (int j = 0; j < size; j++) {
-				setDArray(getDArray(graph->matrix, i), j, newInteger(0));
-			}
-		}
+void insertGraph(Graph *graph, int v1, int v2, void *weight) {
+	Vertex *vert1 = getGraph(graph, v1);
+	Vertex *vert2 = getGraph(graph, v2);
+	if (vert1) {
+		setDArray(vert1->adjacency, v2, weight);
+	} else {
+		vert1 = initVertex(v1, v2, weight, graph);
+		setDArray(graph->vertices, v1, vert1);
 	}
-	setDArray(getDArray(graph->matrix, v1), v2, weight);
+	
+	if (vert2) {
+		setDArray(vert2->adjacency, v2, weight);
+	} else {
+		vert2 = initVertex(v2, v1, weight, graph);
+		setDArray(graph->vertices, v2, vert2);
+	}
 }
 
-integer *removeGraph(Graph* graph, int v1, int v2) {
-	void *value = getDArray(getDArray(graph->matrix, v2), v1);
-	setDArray(getDArray(graph->matrix, v1), v2, newInteger(0));
-	return value;
-}
-
-integer *getGraph(Graph *graph, int v1, int v2) {
-	return getDArray(getDArray(graph->matrix, v1), v2);
-}
-
-DArray *getAdjacencyGraph(Graph *graph, int vertex) {
-	return getDArray(graph->matrix, vertex);
+Vertex *getGraph(Graph *graph, int vertex) {
+	return getDArray(graph->vertices, vertex);
 }
 
 int sizeGraph(Graph *graph) {
-	return sizeDArray(graph->matrix);
+	return sizeDArray(graph->vertices);
 }
 
 void displayGraph(FILE *file, Graph *graph) {
-	for (int i = 0; i < sizeDArray(graph->matrix); i++) {
-			displayDArray(file, getDArray(graph->matrix, i));
+	for (int i = 0; i < sizeDArray(graph->vertices); i++) {
+		displayVertex(file, getGraph(graph, i));
 		fprintf(file, "\n");
 	}
 }

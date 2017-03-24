@@ -13,16 +13,18 @@
 #define graph_h
 
 #include <stdio.h>
-#include "integer.h"
 #include "darray.h"
+#include "Vertex.h"
 
-typedef struct Graph Graph;
+typedef struct Graph {
+	DArray *vertices;
+	void (*display)(FILE *, void *);
+} Graph;
 
-Graph *newGraph(int, void (*)(FILE *, void *));
-void insertGraph(Graph * ,int, int, integer *);
-integer *removeGraph(Graph *, int, int);
-integer *getGraph(Graph *, int, int);
-DArray *getAdjacencyGraph(Graph *, int);
-int sizeGraph(Graph *);
-void displayGraph(FILE *, Graph *);
+DArray *initDarray(int size, void (*display)(FILE *, void *));
+Graph *newGraph(int size, void (*display)(FILE *, void *));
+void insertGraph(Graph *graph, int v1, int v2, void *weight);
+Vertex *getGraph(Graph *graph, int vertex);
+int sizeGraph(Graph *graph);
+void displayGraph(FILE *file, Graph *graph);
 #endif /* graph_h */

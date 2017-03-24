@@ -54,41 +54,29 @@ DArray *initArray(int size) {
 	return darray;
 }
 
-//DArray *buildVertices(Graph *graph, int distance) {
-//	int graphSize = sizeGraph(graph);
-//	DArray *vertices = newDArray(displayVertex);
-//	for (int i = 0; i < graphSize; i++) {
-//		setDArray(vertices, i, newVertex(i, distance, getAdjacencyGraph(graph, i)));
-//	}
-//	return vertices;
-//}
-
-Binomial *initBinHeap(Graph *graph, DArray *vertices) {
+Binomial *initBinHeap(Graph *graph) {
 	Binomial *binHeap = newBinomial(displayVertex, binHeapComparator, 0);
-//	DArray *vertices = buildVertices(graph, 0);
+	Vertex *vertex = 0;
 	for (int i = 0; i < sizeGraph(graph); i++) {
-		insertBinomial(binHeap, getDArray(vertices, i));
+		vertex = getGraph(graph, i);
+		if (vertex) {
+			insertBinomial(binHeap, vertex);
+		}
 	}
 	return binHeap;
 }
 
-DArray *initSingleSource(Graph *graph, Vertex *source) {
+void initSingleSource(Graph *graph, Vertex *source) {
 	int graphSize = sizeGraph(graph);
-	DArray *vertices = newDArray(displayVertex);
-	integer *vertex = 0;
+	Vertex *vertex = 0;
 	for (int i = 0; i < graphSize; i++) {
-		for (int j = 0; j < graphSize; j++) {
-			vertex = getGraph(graph, i, j);
-			if (vertex->value != 0) {
-				setDArray(vertices, i, newVertex(i, INT_MAX, getAdjacencyGraph(graph, i)));
-				break;
-			}
-			
+		vertex = getGraph(graph, i);
+		if (vertex) {
+			vertex->distance = INT_MAX;
+			vertex->previous = 0;
 		}
 	}
-//	DArray *vertices = buildVertices(graph, INT_MAX);
 	source->distance = 0;
-	return vertices;
 }
 
 int getWeight(Vertex *previous, Vertex *current) {
@@ -108,73 +96,28 @@ void relaxEdge(Vertex *previous, Vertex *current) {
 }
 
 DArray *dijkstra(Graph *graph, int source) {
-	DArray *vertices = initSingleSource(graph, newVertex(source, 0, getAdjacencyGraph(graph, 0)));
+	initSingleSource(graph, getGraph(graph, source));
 	DArray *shortestVerts = newDArray(displayVertex);
-	Binomial *binHeap = initBinHeap(graph, vertices);
+	Binomial *binHeap = initBinHeap(graph);
 	Vertex *previous = 0;
-	while (sizeBinomial(binHeap)) {
+	while (sizeBinomial(binHeap) > 0) {
 		previous = extractBinomial(binHeap);
 		insertDArray(shortestVerts, previous);
-		for (int i = 0; i < sizeDArray(vertices); i++) {
-			relaxEdge(previous, getDArray(vertices, i));
+		for (int i = 0; i < sizeDArray(previous->adjacency); i++) {
+			relaxEdge(previous, getDArray(previous->adjacency, i));
 		}
 	}
 	return shortestVerts;
 }
-
-//Binomial *dijkstra(Graph *graph, int source) {
-//	Binomial *binHeap = newBinomial(displayVertex, compareVertex, 0);
-//	DArray *distance = initArray(sizeGraph(graph));
-//	DArray *previous = initArray(sizeGraph(graph));
-//	Vertex *bestVert = 0;
-//	DArray *bestNeighbors = 0;
-//	int neighborName = 0;
-//	int alt = 0;
-//	
-//	setDArray(distance, source, newInteger(0));
-//	
-//	int graphSize = sizeGraph(graph);
-//	for (int i = 0; i < graphSize; i++) {
-//		for (int j = 0; j < graphSize; i++) {
-//			if (getGraph(graph, i, j)->value != 0) {
-//				if (i != source) {
-//					setDArray(distance, j, newInteger(INT_MAX));
-//					setDArray(previous, j, newInteger(-1));
-//				}
-//				Vertex *vert = newVertex(j, getDistance(distance, j));
-////				addNeighbor(vert, <#Vertex *#>)
-//				insertBinomial(binHeap, vert);
-//			}
-//		}
-//	}
-//	
-//	while (sizeBinomial(binHeap)) {
-//		bestVert = extractBinomial(binHeap);
-//		bestNeighbors = getNeighborsVertex(bestVert);
-//		
-//		for (int i = 0; i < sizeDArray(bestNeighbors); i++) {
-//			alt = getDistance(distance, i) + getNeighborWeight(bestVert, i);
-//			neighborName = getNeighborName(bestVert, i);
-//			if (alt < getDistance(distance, neighborName)) {
-//				setDArray(distance, neighborName, newInteger(alt));
-//				setDArray(previous, getNameVertex(bestVert), newInteger(alt));
-//				
-//			}
-//		}
-//	}
-//	
-//	return binHeap;
-//}
 
 int main(int argc, const char * argv[]) {
 	Graph *graph = newGraph(10, displayInteger);
 	insertGraph(graph, 1, 2, newInteger(1));
 	insertGraph(graph, 2, 3, newInteger(2));
 	insertGraph(graph, 3, 1, newInteger(3));
-	int source = 1;
-	DArray *st00f = dijkstra(graph, source);
-	displayDArray(stdout, st00f);
-//	Binomial *binHeap = dijkstra(graph, source);
-//	displayBinomial(stdout, binHeap);
+	displayGraph(stdout, graph);
+//	int source = 1;
+//	DArray *st00f = dijkstra(graph, source);
+//	displayDArray(stdout, st00f);
     return 0;
 }
