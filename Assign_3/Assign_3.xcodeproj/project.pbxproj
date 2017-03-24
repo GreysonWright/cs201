@@ -14,6 +14,7 @@
 		2E16355D1E7EFD1500F2E8A5 /* binomial.c in Sources */ = {isa = PBXBuildFile; fileRef = 2E16355B1E7EFD1500F2E8A5 /* binomial.c */; };
 		2E1635601E7F102900F2E8A5 /* integer.c in Sources */ = {isa = PBXBuildFile; fileRef = 2E16355E1E7F102900F2E8A5 /* integer.c */; };
 		2E5E4C491E821D65003761F3 /* graph.c in Sources */ = {isa = PBXBuildFile; fileRef = 2E5E4C471E821D65003761F3 /* graph.c */; };
+		2EB159491E8428BA006ED61C /* Vertex.c in Sources */ = {isa = PBXBuildFile; fileRef = 2EB159471E8428BA006ED61C /* Vertex.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -43,6 +44,8 @@
 		2E16355F1E7F102900F2E8A5 /* integer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = integer.h; sourceTree = "<group>"; };
 		2E5E4C471E821D65003761F3 /* graph.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = graph.c; sourceTree = "<group>"; };
 		2E5E4C481E821D65003761F3 /* graph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = graph.h; sourceTree = "<group>"; };
+		2EB159471E8428BA006ED61C /* Vertex.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Vertex.c; sourceTree = "<group>"; };
+		2EB159481E8428BA006ED61C /* Vertex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vertex.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +90,8 @@
 				2E16355B1E7EFD1500F2E8A5 /* binomial.c */,
 				2E5E4C481E821D65003761F3 /* graph.h */,
 				2E5E4C471E821D65003761F3 /* graph.c */,
+				2EB159481E8428BA006ED61C /* Vertex.h */,
+				2EB159471E8428BA006ED61C /* Vertex.c */,
 				2E1635511E7EFAC300F2E8A5 /* dijkstra.c */,
 			);
 			path = Assign_3;
@@ -157,6 +162,7 @@
 				2E02D96F1E805E79009C5367 /* sll.c in Sources */,
 				2E16355D1E7EFD1500F2E8A5 /* binomial.c in Sources */,
 				2E1635521E7EFAC300F2E8A5 /* dijkstra.c in Sources */,
+				2EB159491E8428BA006ED61C /* Vertex.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

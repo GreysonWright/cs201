@@ -13,13 +13,14 @@
 #define graph_h
 
 #include <stdio.h>
+#include "integer.h"
 
 typedef struct Graph Graph;
 
 Graph *newGraph(int, void (*)(FILE *, void *));
-void insertGraph(Graph * ,int, int, void *);
-void *removeGraph(Graph *, int, int);
-void *getGraph(Graph *, int, int);
+void insertGraph(Graph * ,int, int, integer *);
+integer *removeGraph(Graph *, int, int);
+integer *getGraph(Graph *, int, int);
 void displayGraph(FILE *, Graph *);
 int sizeGraph(Graph *);
 #endif /* graph_h */
