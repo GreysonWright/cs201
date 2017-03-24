@@ -43,6 +43,27 @@ void displayBinomialNode(FILE *file, void *value) {
 }
 
 //Bin Heap
+void removeRootNode(Binomial *binHeap, BinomialNode *node) {
+	for (int i = 0; i < sizeDArray(binHeap->rootlist); i++) {
+		if (node == getDArray(binHeap->rootlist, i)) {
+			setDArray(binHeap->rootlist, i, 0);
+			return;
+		}
+	}
+}
+
+BinomialNode *findMin(Binomial *binHeap, DArray *darray) {
+	BinomialNode *current = 0;
+	BinomialNode *minVal = getDArray(darray, 0);
+	for (int i = 0; i < sizeDArray(darray); i++) {
+		current = getDArray(darray, i);
+		if (minVal && current && binHeap->compare(minVal->value, current->value)) {
+			minVal = getDArray(darray, i);
+		}
+	}
+	return minVal;
+}
+
 int getDegree(BinomialNode *node) {
 	return sizeDArray(node->children);
 }
@@ -142,6 +163,10 @@ void deleteBinomial(Binomial *binHeap, BinomialNode *node) {
 }
 
 void decreaseKeyBinomial(Binomial *binHeap, BinomialNode *node, void *value) {
+	if (node == 0) {
+		return;
+	}
+	
 	node->value = value;
 	node = bubbleUp(binHeap, node);
 	if (binHeap->compare(node->value, binHeap->extreme->value) < 0) {
@@ -151,12 +176,16 @@ void decreaseKeyBinomial(Binomial *binHeap, BinomialNode *node, void *value) {
 
 void *extractBinomial(Binomial *binHeap) {
 	BinomialNode *extremeNode = binHeap->extreme;
-	deleteBinomial(binHeap, extremeNode);
-	merge(binHeap, extremeNode->children);
+	removeRootNode(binHeap, extremeNode);
+	void *value = 0;
+	if (extremeNode) {
+		merge(binHeap, extremeNode->children);
+		value = extremeNode->value;
+		free(extremeNode);
+		extremeNode = 0;
+	}
 	binHeap->size--;
-	
-	void *value = extremeNode->value;
-	free(extremeNode);
+	binHeap->extreme = findMin(binHeap, binHeap->rootlist);
 	return value;
 }
 
@@ -172,6 +201,11 @@ void displayBinomial(FILE *file, Binomial *binHeap) {
 	enqueueList(queueItems, binHeap->rootlist);
 	enqueue(queueItems, 0);
 	int count = 0;
+	
+	if (node == 0) {
+		fprintf(file, "%d:\n", count);
+		return;
+	}
 	
 	fprintf(file, "%d: ", count++);
 	while (sizeQueue(queueItems) > 1) {

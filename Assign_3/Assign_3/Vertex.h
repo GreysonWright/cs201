@@ -17,11 +17,10 @@ typedef struct Vertex {
 	int name;
 	int distance;
 	struct Vertex *previous;
-	struct DArray *edgeWeights;
-	struct DArray *neighbors;
+	DArray *adjacency;
 } Vertex;
 
-Vertex *newVertex(int name, int distance);
+Vertex *newVertex(int name, int distance, DArray *adjacency);
 int getNameVertex(void *);
 //int getDistanceVertex(void *);
 //void addNeighborVertex(Vertex *, integer *);

@@ -9,18 +9,22 @@
 #include <stdlib.h>
 #include "Vertex.h"
 
-Vertex *newVertex(int name, int distance) {
+Vertex *newVertex(int name, int distance, DArray *adjacency) {
 	Vertex *vertex = malloc(sizeof *vertex);
 	vertex->name = name;
-	vertex->distance = distance;
-	vertex->neighbors = newDArray(displayVertex);
+	vertex->distance = 0;
+	vertex->adjacency = newDArray(displayInteger);
 	return vertex;
 }
 
 int compareVertex(void *left, void *right) {
 	Vertex *leftVert = left;
 	Vertex *rightVert = right;
-	return leftVert->distance - rightVert->distance;
+	int difference = leftVert->distance - rightVert->distance;
+	if (difference == 0) {
+		difference = leftVert->name - rightVert->name;
+	}
+	return difference;
 }
 
 int getNameVertex(void *vertex) {
