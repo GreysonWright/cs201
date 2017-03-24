@@ -43,11 +43,12 @@ void displayBinomialNode(FILE *file, void *value) {
 }
 
 //Bin Heap
-void removeRootNode(Binomial *binHeap, BinomialNode *node) {
-	for (int i = 0; i < sizeDArray(binHeap->rootlist); i++) {
-		if (node == getDArray(binHeap->rootlist, i)) {
-			setDArray(binHeap->rootlist, i, 0);
-			return;
+void enqueueList(queue *items, DArray *list) {
+	BinomialNode *node = 0;
+	for (int i = 0; i < sizeDArray(list); i++) {
+		node = getDArray(list, i);
+		if (node) {
+			enqueue(items, node);
 		}
 	}
 }
@@ -57,7 +58,9 @@ BinomialNode *findMin(Binomial *binHeap, DArray *darray) {
 	BinomialNode *minVal = getDArray(darray, 0);
 	for (int i = 0; i < sizeDArray(darray); i++) {
 		current = getDArray(darray, i);
-		if (minVal && current && binHeap->compare(minVal->value, current->value)) {
+		if (minVal == 0) {
+			minVal = current;
+		} else if (current && binHeap->compare(current->value, minVal->value) < 0) {
 			minVal = getDArray(darray, i);
 		}
 	}
@@ -111,7 +114,6 @@ void merge(Binomial *binHeap, DArray *darray) {
 		node = getDArray(darray, i);
 		consolidate(binHeap, node);
 		node->parent = node;
-		binHeap->size++;
 	}
 	
 	free(darray);
@@ -148,8 +150,10 @@ BinomialNode *insertBinomial(Binomial *binHeap, void *value) {
 	node->parent = node;
 	node->children = newDArray(binHeap->display);
 	consolidate(binHeap, node);
+	if (binHeap->extreme == 0 || (node->parent == node && binHeap->compare(node->value, binHeap->extreme->value) < 0)) {
+		binHeap->extreme = node;
+	}
 	binHeap->size++;
-	binHeap->extreme = getDArray(binHeap->rootlist, 0);
 	return node;
 }
 
@@ -163,10 +167,6 @@ void deleteBinomial(Binomial *binHeap, BinomialNode *node) {
 }
 
 void decreaseKeyBinomial(Binomial *binHeap, BinomialNode *node, void *value) {
-	if (node == 0) {
-		return;
-	}
-	
 	node->value = value;
 	node = bubbleUp(binHeap, node);
 	if (binHeap->compare(node->value, binHeap->extreme->value) < 0) {
@@ -176,64 +176,61 @@ void decreaseKeyBinomial(Binomial *binHeap, BinomialNode *node, void *value) {
 
 void *extractBinomial(Binomial *binHeap) {
 	BinomialNode *extremeNode = binHeap->extreme;
-	removeRootNode(binHeap, extremeNode);
+	setDArray(binHeap->rootlist, getDegree(extremeNode), 0);
 	void *value = 0;
-	if (extremeNode) {
-		merge(binHeap, extremeNode->children);
-		value = extremeNode->value;
-		free(extremeNode);
-		extremeNode = 0;
-	}
+	merge(binHeap, extremeNode->children);
 	binHeap->size--;
+	value = extremeNode->value;
+	free(extremeNode);
+	extremeNode = 0;
 	binHeap->extreme = findMin(binHeap, binHeap->rootlist);
 	return value;
-}
-
-void enqueueList(queue *items, DArray *list) {
-	for (int i = 0; i < sizeDArray(list); i++) {
-		enqueue(items, getDArray(list, i));
-	}
 }
 
 void displayBinomial(FILE *file, Binomial *binHeap) {
 	BinomialNode *node = 0;
 	queue *queueItems = newQueue(binHeap->display);
-	enqueueList(queueItems, binHeap->rootlist);
-	enqueue(queueItems, 0);
 	int count = 0;
 	
-	if (node == 0) {
-		fprintf(file, "%d:\n", count);
-		return;
+	fprintf(file, "%d:", count++);
+	if (sizeBinomial(binHeap) == 0) {
+		fprintf(file, "\n----");
 	}
 	
-	fprintf(file, "%d: ", count++);
-	while (sizeQueue(queueItems) > 1) {
-		node = dequeue(queueItems);
-		
-		if (node == 0) {
-			node = dequeue(queueItems);
-			fprintf(file, "\n");
-			fprintf(file, "%d: ", count++);
+	for (int i = 0; i< sizeDArray(binHeap->rootlist); i++) {
+		node = getDArray(binHeap->rootlist, i);
+		if (node) {
+			fprintf(stdout, " ");
+			enqueue(queueItems, node);
 			enqueue(queueItems, 0);
 		}
-		
-		if (node) {
-			displayBinomialNode(file, node);
-			if (node->parent != node) {
-				fprintf(file, "(");
-				displayBinomialNode(file, node->parent);
-				fprintf(file, ")");
+		while (sizeQueue(queueItems) > 1) {
+			node = dequeue(queueItems);
+			
+			if (node == 0) {
+				node = dequeue(queueItems);
+				fprintf(file, "\n");
+				fprintf(file, "%d: ", count++);
+				enqueue(queueItems, 0);
 			}
 			
-			if (peekQueue(queueItems) != 0) {
-				fprintf(file, " ");
-			} else if (sizeDArray(node->children) == 0) {
-				count = 0;
-				fprintf(file, "\n----");
+			if (node) {
+				displayBinomialNode(file, node);
+				if (node->parent != node) {
+					fprintf(file, "(");
+					displayBinomialNode(file, node->parent);
+					fprintf(file, ")");
+				}
+				
+				if (peekQueue(queueItems) != 0) {
+					fprintf(file, " ");
+				} else if (sizeDArray(node->children) == 0) {
+					count = 0;
+					fprintf(file, "\n----");
+				}
+				
+				enqueueList(queueItems, node->children);
 			}
-			
-			enqueueList(queueItems, node->children);
 		}
 	}
 	fprintf(file, "\n");
