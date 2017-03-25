@@ -114,7 +114,7 @@ DArray *dijkstra(int **graph, int *vertices, Vertex **vertObjects, int source, i
 		for (int i = 0; i < size; i++) {
 			if (vertObjects[i] && current->adjacency[i]) {
 				relaxEdge(current, vertObjects[i]);
-				decreaseKeyBinomial(binHeap, vertObjects[i]->binNode, vertObjects[i]);
+//				decreaseKeyBinomial(binHeap, vertObjects[i]->binNode, vertObjects[i]);
 			}
 		}
 	}
@@ -134,17 +134,23 @@ DArray *dijkstra(int **graph, int *vertices, Vertex **vertObjects, int source, i
 //}
 
 void printBreadthFirst(FILE *file, DArray *minPath, Vertex **vertObjects) {
+	int minPathSize = sizeDArray(minPath);
+	int *writtenNodes = calloc(minPathSize, (sizeof *writtenNodes) * minPathSize);
 	Vertex *vertex = 0;
+	int prevParentLevel = 0;
 	int count = 0;
 	
 	fprintf(file, "%d:", count++);
 	for (int i = 0; i < sizeDArray(minPath); i++) {
 		vertex = getDArray(minPath, i);
-		if (getDArray(minPath, i - 1) && getDArray(minPath, i - 1) == vertex->previous) {
+		
+		if (vertex->previous && writtenNodes[vertex->previous->name] > 0 && writtenNodes[vertex->previous->name] != prevParentLevel) {
 			fprintf(file, "\n%d:", count++);
+			prevParentLevel = writtenNodes[vertex->previous->name];
 		}
 		
 		fprintf(file, " ");
+		writtenNodes[vertex->name] = count + 1;
 		displayVertex(file, vertex);
 		if (vertex && vertex->previous) {
 			fprintf(file, "(");
@@ -158,6 +164,10 @@ void printBreadthFirst(FILE *file, DArray *minPath, Vertex **vertObjects) {
 		
 		if (getDArray(minPath, i + 1) == 0 || ((Vertex *)getDArray(minPath, i + 1))->distance == 0) {
 			printf("\n----\n");
+			count = 0;
+			if (i < sizeDArray(minPath) - 1) {
+				fprintf(file, "%d:", count++);
+			}
 		}
 	}
 }
