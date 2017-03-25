@@ -96,7 +96,7 @@ void relaxEdge(Vertex *current, Vertex *next) {
 	}
 	
 	int totalDist = getWeight(current, next) + current->distance;
-
+	
 	if (next->distance > totalDist) {
 		next->distance = totalDist;
 		next->previous = current;
@@ -137,42 +137,60 @@ DArray *dijkstra(int **graph, int *vertices, Vertex **vertObjects, int source, i
 
 void printBreadthFirst(FILE *file, DArray *minPath, Vertex **vertObjects) {
 	int minPathSize = sizeDArray(minPath);
-	int *writtenNodes = calloc(minPathSize, (sizeof *writtenNodes) * minPathSize);
-	Vertex *vertex = 0;
-	int prevParentLevel = 0;
 	int count = 0;
 	
-	fprintf(file, "%d:", count++);
-	for (int i = 0; i < sizeDArray(minPath); i++) {
-		vertex = getDArray(minPath, i);
-		
-		if (vertex->previous && writtenNodes[vertex->previous->name] > 0 && writtenNodes[vertex->previous->name] != prevParentLevel) {
-			fprintf(file, "\n%d:", count++);
-			prevParentLevel = writtenNodes[vertex->previous->name];
-		}
-		
-		fprintf(file, " ");
-		writtenNodes[vertex->name] = count + 1;
-		displayVertex(file, vertex);
-		if (vertex && vertex->previous) {
-			fprintf(file, "(");
-			displayVertex(file, vertex->previous);
-			fprintf(file, ")");
-		}
-		
-		if (vertex->distance > 0) {
-			fprintf(file, "%d", vertex->distance);
-		}
-		
-		if (getDArray(minPath, i + 1) == 0 || ((Vertex *)getDArray(minPath, i + 1))->distance == 0) {
-			printf("\n----\n");
-			count = 0;
-			if (i < sizeDArray(minPath) - 1) {
-				fprintf(file, "%d:", count++);
-			}
+	Vertex *vertex = 0;
+	Vertex *current = 0;
+	
+	queue *forrest = newQueue(0);
+	queue *items = newQueue(0);
+	
+	for (int i = 0; i < minPathSize; i++) {
+		current = getDArray(minPath, i);
+		if (current->previous == 0) {
+			enqueue(forrest, current);
 		}
 	}
+	
+	if (sizeDArray(minPath) == 0) {
+		fprintf(file, "0:\n----");
+	}
+	
+	fprintf(file, "%d: ", count++);
+	while (sizeQueue(forrest) > 0) {
+		enqueue(items, dequeue(forrest));
+		enqueue(items, 0);
+		while (sizeQueue(items) > 1) {
+			vertex = dequeue(items);
+			
+			if (vertex == 0) {
+				vertex = dequeue(items);
+				fprintf(file, "\n");
+				fprintf(file, "%d: ", count++);
+				enqueue(items, 0);
+			}
+			
+			if (vertex) {
+				displayVertex(file, vertex);
+				
+				if (peekQueue(items) != 0) {
+					fprintf(file, " ");
+				}
+				
+				for (int i = 0; i < minPathSize; i++) {
+					current = getDArray(minPath, i);
+					if (current->previous == vertex) {
+						enqueue(items, current);
+					}
+				}
+			}
+		}
+		count = 0;
+		fprintf(file, "\n----");
+	}
+	fprintf(file, "\n");
 }
+
 
 int main(int argc, const char *argv[]) {
 	int maxSize = 0;
