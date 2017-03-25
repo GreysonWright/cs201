@@ -43,7 +43,7 @@ int min(int a, int b) {
 int **newGraph(int size) {
 	int **graph = malloc((sizeof *graph) * size);
 	for (int i = 0; i < size; i++) {
-		graph = calloc(size, (sizeof *graph) * size);
+		graph[i] = calloc(size, (sizeof **graph) * size);
 	}
 	return graph;
 }
@@ -54,7 +54,7 @@ int *newVertArray(int size) {
 }
 
 Vertex **newVertObjects(int size) {
-	Vertex **vertObjects = calloc(size, (sizeof *vertObjects) * size);
+	Vertex **vertObjects = calloc(size, (sizeof **vertObjects) * size);
 	return vertObjects;
 }
 
@@ -74,46 +74,41 @@ int binHeapComparator(void *left, void *right) {
 	return compareVertex(left, right);
 }
 
-Binomial *initSingleSource(int **graph, Vertex ***vertObjects, int *vertices, int source, int size) {
+Binomial *initSingleSource(int **graph, Vertex **vertObjects, int *vertices, int source, int size) {
 	Binomial *binHeap = newBinomial(displayVertex, compareVertex, updateVertex);
-	Vertex *vertex = 0;
 	for (int i = 0; i < size; i++) {
 		if (vertices[i]) {
-			vertex = newVertex(i, graph[i]);
-			if (i == source) {
-				vertex->distance = 0;
-			}
-			insertBinomial(binHeap, vertex);
+			insertBinomial(binHeap, vertObjects[i]);
 		}
 	}
 	return binHeap;
 }
 
-int getWeight(Vertex *previous, Vertex *current) {
-	int weight = previous->adjacency[current->name];
+int getWeight(Vertex *current, Vertex *next) {
+	int weight = current->adjacency[next->name];
 	return weight;
 }
 
-void relaxEdge(Vertex *previous, Vertex *current) {
-	int totalDist = 0;
-	if (previous != 0) {
-		totalDist = getWeight(previous, current) + previous->distance;
-	}
-	if (current->distance > totalDist) {
-		current->distance = totalDist;
-		current->previous = previous;
+void relaxEdge(Vertex *current, Vertex *next) {
+	int totalDist = getWeight(current, next) + current->distance;
+	
+	if (next->distance > totalDist) {
+		next->distance = totalDist;
+		next->previous = current;
 	}
 }
 
 DArray *dijkstra(int **graph, int *vertices, Vertex **vertObjects, int source, int size) {
-	Binomial *binHeap = initSingleSource(graph, &vertObjects, vertices, source, size);
+	Binomial *binHeap = initSingleSource(graph, vertObjects, vertices, source, size);
 	DArray *shortestVerts = newDArray(displayVertex);
-	Vertex *previous = 0;
+	Vertex *current = 0;
 	while (sizeBinomial(binHeap) > 0) {
-		previous = extractBinomial(binHeap);
-		insertDArray(shortestVerts, previous);
+		current = extractBinomial(binHeap);
+		insertDArray(shortestVerts, current);
 		for (int i = 0; i < size; i++) {
-			relaxEdge(previous, vertObjects[previous->adjacency[i]]);
+			if (vertObjects[i] && current->adjacency[i]) {
+				relaxEdge(current, vertObjects[i]);
+			}
 		}
 	}
 	return shortestVerts;
@@ -130,11 +125,14 @@ int main(int argc, const char *argv[]) {
 	int weight = 0;
 	char *tmp = 0;
 	while (1) {
+		v1 = readInt(file);
+		v2 = readInt(file);
+		tmp = readToken(file);
+		
 		if (feof(file)) {
 			break;
 		}
-		v1 = atoi(readToken(file));
-		v2 = atoi(readToken(file));
+		
 		minSize = min(minSize, min(v1, v2));
 		maxSize = max(maxSize, max(v1, v2));
 		if (tmp[0] != ';') {
@@ -143,6 +141,7 @@ int main(int argc, const char *argv[]) {
 		} else {
 			weight = 1;
 		}
+		
 		enqueue(inputQueue, newInteger(v1));
 		enqueue(inputQueue, newInteger(v2));
 		enqueue(inputQueue, newInteger(weight));
@@ -170,8 +169,14 @@ int main(int argc, const char *argv[]) {
 	for (int i = 0; i < maxSize; i++) {
 		if (vertices[i]) {
 			vert = newVertex(i, graph[i]);
+			if (i == minSize) {
+				vert->distance = 0;
+			}
+			vertObjects[i] = vert;
 		}
 	}
+	
+	DArray *minPath = dijkstra(graph, vertices, vertObjects, minSize, maxSize);
 	
     return 0;
 }
