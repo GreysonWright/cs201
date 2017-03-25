@@ -9,12 +9,12 @@
 #include <stdlib.h>
 #include "darray.h"
 
-typedef struct DArray {
+struct DArray {
 	void **array; //an array of void pointers
 	int capacity; //total number of slots
 	int size; //number of filled slots
 	void (*display)(FILE *, void *);
-} DArray;
+};
 
 DArray *newDArray(void (*display)(FILE *file, void *value)) {
 	DArray *darray = malloc(sizeof *darray);

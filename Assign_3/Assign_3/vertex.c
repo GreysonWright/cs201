@@ -8,7 +8,7 @@
 
 #include <stdlib.h>
 #include <limits.h>
-#include "Vertex.h"
+#include "vertex.h"
 
 Vertex *newVertex(int name, int *adjacency) {
 	Vertex *vertex = malloc(sizeof *vertex);

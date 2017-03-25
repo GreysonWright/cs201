@@ -13,7 +13,7 @@
 		2E16355A1E7EFCAB00F2E8A5 /* darray.c in Sources */ = {isa = PBXBuildFile; fileRef = 2E1635581E7EFCAB00F2E8A5 /* darray.c */; };
 		2E16355D1E7EFD1500F2E8A5 /* binomial.c in Sources */ = {isa = PBXBuildFile; fileRef = 2E16355B1E7EFD1500F2E8A5 /* binomial.c */; };
 		2E1635601E7F102900F2E8A5 /* integer.c in Sources */ = {isa = PBXBuildFile; fileRef = 2E16355E1E7F102900F2E8A5 /* integer.c */; };
-		2EB159491E8428BA006ED61C /* Vertex.c in Sources */ = {isa = PBXBuildFile; fileRef = 2EB159471E8428BA006ED61C /* Vertex.c */; };
+		2EB159491E8428BA006ED61C /* vertex.c in Sources */ = {isa = PBXBuildFile; fileRef = 2EB159471E8428BA006ED61C /* vertex.c */; };
 		2ECD44BB1E864EA2003682C9 /* scanner.c in Sources */ = {isa = PBXBuildFile; fileRef = 2ECD44B91E864EA2003682C9 /* scanner.c */; };
 /* End PBXBuildFile section */
 
@@ -42,8 +42,8 @@
 		2E16355C1E7EFD1500F2E8A5 /* binomial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = binomial.h; sourceTree = "<group>"; };
 		2E16355E1E7F102900F2E8A5 /* integer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = integer.c; sourceTree = "<group>"; };
 		2E16355F1E7F102900F2E8A5 /* integer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = integer.h; sourceTree = "<group>"; };
-		2EB159471E8428BA006ED61C /* Vertex.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Vertex.c; sourceTree = "<group>"; };
-		2EB159481E8428BA006ED61C /* Vertex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vertex.h; sourceTree = "<group>"; };
+		2EB159471E8428BA006ED61C /* vertex.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vertex.c; sourceTree = "<group>"; };
+		2EB159481E8428BA006ED61C /* vertex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vertex.h; sourceTree = "<group>"; };
 		2ECD44B91E864EA2003682C9 /* scanner.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = scanner.c; sourceTree = "<group>"; };
 		2ECD44BA1E864EA2003682C9 /* scanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = scanner.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -90,8 +90,8 @@
 				2E1635581E7EFCAB00F2E8A5 /* darray.c */,
 				2E16355C1E7EFD1500F2E8A5 /* binomial.h */,
 				2E16355B1E7EFD1500F2E8A5 /* binomial.c */,
-				2EB159481E8428BA006ED61C /* Vertex.h */,
-				2EB159471E8428BA006ED61C /* Vertex.c */,
+				2EB159481E8428BA006ED61C /* vertex.h */,
+				2EB159471E8428BA006ED61C /* vertex.c */,
 				2E1635511E7EFAC300F2E8A5 /* dijkstra.c */,
 			);
 			path = Assign_3;
@@ -162,7 +162,7 @@
 				2ECD44BB1E864EA2003682C9 /* scanner.c in Sources */,
 				2E16355D1E7EFD1500F2E8A5 /* binomial.c in Sources */,
 				2E1635521E7EFAC300F2E8A5 /* dijkstra.c in Sources */,
-				2EB159491E8428BA006ED61C /* Vertex.c in Sources */,
+				2EB159491E8428BA006ED61C /* vertex.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

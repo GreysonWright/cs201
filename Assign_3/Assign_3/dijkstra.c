@@ -11,7 +11,7 @@
 #include "limits.h"
 #include "integer.h"
 #include "binomial.h"
-#include "Vertex.h"
+#include "vertex.h"
 #include "scanner.h"
 #include "queue.h"
 
@@ -74,7 +74,7 @@ int binHeapComparator(void *left, void *right) {
 	return compareVertex(left, right);
 }
 
-Binomial *initSingleSource(int **graph, Vertex **vertObjects, int *vertices, int source, int size) {
+Binomial *initSingleSource(Vertex **vertObjects, int *vertices, int size) {
 	Binomial *binHeap = newBinomial(displayVertex, binHeapComparator, updateVertex);
 	for (int i = 0; i < size; i++) {
 		if (vertices[i]) {
@@ -103,8 +103,8 @@ void relaxEdge(Vertex *current, Vertex *next) {
 	}
 }
 
-DArray *dijkstra(int **graph, int *vertices, Vertex **vertObjects, int source, int size) {
-	Binomial *binHeap = initSingleSource(graph, vertObjects, vertices, source, size);
+DArray *dijkstra(int *vertices, Vertex **vertObjects, int size) {
+	Binomial *binHeap = initSingleSource(vertObjects, vertices, size);
 	DArray *shortestVerts = newDArray(displayVertex);
 	Vertex *current = 0;
 	
@@ -123,19 +123,7 @@ DArray *dijkstra(int **graph, int *vertices, Vertex **vertObjects, int source, i
 	return shortestVerts;
 }
 
-//static void enqueueList(queue *items, Vertex **vertObjects, int *list, int size) {
-//	Vertex *vertex = 0;
-//	for (int i = 0; i < size; i++) {
-//		if (vertObjects[i] && list[i]) {
-//			vertex = vertObjects[i];
-//		}
-//		if (vertex) {
-//			enqueue(items, vertex);
-//		}
-//	}
-//}
-
-void printBreadthFirst(FILE *file, DArray *minPath, Vertex **vertObjects) {
+void printBreadthFirst(FILE *file, DArray *minPath) {
 	int minPathSize = sizeDArray(minPath);
 	int count = 0;
 	
@@ -193,6 +181,10 @@ void printBreadthFirst(FILE *file, DArray *minPath, Vertex **vertObjects) {
 
 
 int main(int argc, const char *argv[]) {
+	if (argc < 2) {
+		exit(-1);
+	}
+	
 	int maxSize = 0;
 	int minSize = INT_MAX;
 	FILE *file = fopen(argv[1], "r");
@@ -255,8 +247,8 @@ int main(int argc, const char *argv[]) {
 		}
 	}
 	
-	DArray *minPath = dijkstra(graph, vertices, vertObjects, minSize, maxSize);
-	printBreadthFirst(stdout, minPath, vertObjects);
+	DArray *minPath = dijkstra(vertices, vertObjects, maxSize);
+	printBreadthFirst(stdout, minPath);
 	
     return 0;
 }

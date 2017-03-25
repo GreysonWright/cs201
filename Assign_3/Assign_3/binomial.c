@@ -10,21 +10,21 @@
 #include "binomial.h"
 #include "queue.h"
 
-typedef struct BinomialNode {
+struct BinomialNode {
 	void *value;
 	DArray *children;
 	BinomialNode *parent;
 	void (*display)(FILE *, void *);
-} BinomialNode;
+};
 
-typedef struct Binomial {
+struct Binomial {
 	DArray *rootlist;
 	BinomialNode *extreme;
 	int size;
 	int (*compare)(void *, void *);
 	void (*update)(void *, BinomialNode *);
 	void (*display)(FILE *, void *);
-} Binomial;
+};
 
 // Bin Node
 BinomialNode *newBinomialNode(void (*display)(FILE *file, void *value), void *value) {
