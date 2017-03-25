@@ -7,13 +7,15 @@
 //
 
 #include <stdlib.h>
+#include <limits.h>
 #include "Vertex.h"
 
-Vertex *newVertex(int name, int distance, DArray *adjacency, void (*display)(FILE *, void *)) {
+Vertex *newVertex(int name, int *adjacency) {
 	Vertex *vertex = malloc(sizeof *vertex);
 	vertex->name = name;
-	vertex->distance = 0;
-	vertex->adjacency = newDArray(display);
+	vertex->distance = INT_MAX;
+	vertex->adjacency = 0;
+	vertex->binNode = 0;
 	return vertex;
 }
 
@@ -33,11 +35,10 @@ int getNameVertex(void *vertex) {
 
 void displayVertex(FILE *file, void *vertex) {
 	Vertex *vert = vertex;
-	if (vert) {
-		fprintf(file, "Vertex { name = %d, distance = %d, adjacency = ", vert->name, vert->distance);
-		displayDArray(file, vert->adjacency);
-		fprintf(file, " }");
-	} else {
-		fprintf(file, "Vertex { NULL }");
-	}
+	fprintf(file, "%d", vert->distance);
+}
+
+void updateVertex(void *value , BinomialNode *node) {
+	Vertex *vertex = value;
+	vertex->binNode = node;
 }

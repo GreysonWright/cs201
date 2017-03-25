@@ -11,21 +11,19 @@
 
 #include <stdio.h>
 #include "darray.h"
+#include "binomial.h"
 
 typedef struct Vertex {
 	int name;
 	int distance;
 	struct Vertex *previous;
-	DArray *adjacency;
+	int *adjacency;
+	BinomialNode *binNode;
 } Vertex;
 
-Vertex *newVertex(int name, int distance, DArray *adjacency, void (*)(FILE *, void *));
+Vertex *newVertex(int name, int *adjacency);
 int getNameVertex(void *);
-//int getDistanceVertex(void *);
-//void addNeighborVertex(Vertex *, integer *);
-//DArray *getNeighborsVertex(Vertex *);
-//void addEdgeWeightsVertex(Vertex *, integer *);
-//DArray *getEdgeWeightsVertex(Vertex *);
 int compareVertex(void *, void *);
 void displayVertex(FILE *, void *);
+void updateVertex(void *value , BinomialNode *node);
 #endif /* Vertex_h */
