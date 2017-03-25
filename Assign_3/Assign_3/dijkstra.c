@@ -119,8 +119,46 @@ DArray *dijkstra(int **graph, int *vertices, Vertex **vertObjects, int source, i
 	return shortestVerts;
 }
 
-void printBreadthFirst() {
+//static void enqueueList(queue *items, Vertex **vertObjects, int *list, int size) {
+//	Vertex *vertex = 0;
+//	for (int i = 0; i < size; i++) {
+//		if (vertObjects[i] && list[i]) {
+//			vertex = vertObjects[i];
+//		}
+//		if (vertex) {
+//			enqueue(items, vertex);
+//		}
+//	}
+//}
+
+void printBreadthFirst(FILE *file, DArray *minPath, Vertex **vertObjects) {
+	Vertex *vertex = 0;
+	int count = 0;
 	
+	fprintf(file, "%d:", count++);
+	for (int i = 0; i < sizeDArray(minPath); i++) {
+		vertex = getDArray(minPath, i);
+		if (getDArray(minPath, i - 1) && getDArray(minPath, i - 1) == vertex->previous) {
+			fprintf(file, "\n%d:", count++);
+		}
+		
+		fprintf(file, " ");
+		displayVertex(file, vertex);
+		if (vertex && vertex->previous) {
+			fprintf(file, "(");
+			displayVertex(file, vertex->previous);
+			fprintf(file, ")");
+		}
+		
+		if (vertex->distance > 0) {
+			fprintf(file, "%d", vertex->distance);
+		}
+		
+		if (getDArray(minPath, i + 1) == 0 || ((Vertex *)getDArray(minPath, i + 1))->distance == 0) {
+			printf("\n----");
+		}
+	}
+	fprintf(file, "\n");
 }
 
 int main(int argc, const char *argv[]) {
@@ -156,6 +194,7 @@ int main(int argc, const char *argv[]) {
 		enqueue(inputQueue, newInteger(weight));
 	}
 	maxSize++;
+	fclose(file);
 	
 	int **graph = newGraph(maxSize);
 	int *vertices = newVertArray(maxSize);
@@ -186,6 +225,7 @@ int main(int argc, const char *argv[]) {
 	}
 	
 	DArray *minPath = dijkstra(graph, vertices, vertObjects, minSize, maxSize);
+	printBreadthFirst(stdout, minPath, vertObjects);
 	
     return 0;
 }

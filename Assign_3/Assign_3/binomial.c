@@ -43,7 +43,7 @@ void displayBinomialNode(FILE *file, void *value) {
 }
 
 //Bin Heap
-void enqueueList(queue *items, DArray *list) {
+static void enqueueList(queue *items, DArray *list) {
 	BinomialNode *node = 0;
 	for (int i = 0; i < sizeDArray(list); i++) {
 		node = getDArray(list, i);
@@ -197,7 +197,7 @@ void displayBinomial(FILE *file, Binomial *binHeap) {
 		fprintf(file, "\n----");
 	}
 	
-	for (int i = 0; i< sizeDArray(binHeap->rootlist); i++) {
+	for (int i = 0; i < sizeDArray(binHeap->rootlist); i++) {
 		node = getDArray(binHeap->rootlist, i);
 		if (node) {
 			fprintf(stdout, " ");

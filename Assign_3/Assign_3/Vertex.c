@@ -35,7 +35,7 @@ int getNameVertex(void *vertex) {
 
 void displayVertex(FILE *file, void *vertex) {
 	Vertex *vert = vertex;
-	fprintf(file, "%d", vert->distance);
+	fprintf(file, "%d", vert->name);
 }
 
 void updateVertex(void *value , BinomialNode *node) {
