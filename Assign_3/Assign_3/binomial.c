@@ -106,6 +106,10 @@ void merge(Binomial *binHeap, DArray *darray) {
 		consolidate(binHeap, node);
 	}
 	
+	for (int i = 0; i < sizeDArray(darray); i++) {
+		removeDArray(darray);
+	}
+	
 	free(darray);
 }
 
@@ -177,6 +181,9 @@ void *extractBinomial(Binomial *binHeap) {
 	merge(binHeap, extremeNode->children);
 	binHeap->size--;
 	value = extremeNode->value;
+	if (binHeap->update) {
+		binHeap->update(extremeNode->value, 0);
+	}
 	free(extremeNode);
 	extremeNode = 0;
 	binHeap->extreme = findMin(binHeap, binHeap->rootlist);

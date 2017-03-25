@@ -114,7 +114,9 @@ DArray *dijkstra(int **graph, int *vertices, Vertex **vertObjects, int source, i
 		for (int i = 0; i < size; i++) {
 			if (vertObjects[i] && current->adjacency[i]) {
 				relaxEdge(current, vertObjects[i]);
-//				decreaseKeyBinomial(binHeap, vertObjects[i]->binNode, vertObjects[i]);
+				if (vertObjects[i]->binNode) {
+					decreaseKeyBinomial(binHeap, vertObjects[i]->binNode, vertObjects[i]);
+				}
 			}
 		}
 	}
