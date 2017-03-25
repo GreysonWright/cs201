@@ -78,7 +78,8 @@ Binomial *initSingleSource(int **graph, Vertex **vertObjects, int *vertices, int
 	Binomial *binHeap = newBinomial(displayVertex, compareVertex, updateVertex);
 	for (int i = 0; i < size; i++) {
 		if (vertices[i]) {
-			insertBinomial(binHeap, vertObjects[i]);
+			BinomialNode *node = insertBinomial(binHeap, vertObjects[i]);
+			vertObjects[i]->binNode = node;
 		}
 	}
 	return binHeap;
