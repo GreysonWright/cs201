@@ -124,8 +124,10 @@ BinomialNode *bubbleUp(Binomial *binHeap, BinomialNode *node) {
 		return node;
 	}
 	
-	binHeap->update(node->value, node->parent);
-	binHeap->update(node->parent->value, node);
+	if (binHeap->update) {
+		binHeap->update(node->value, node->parent);
+		binHeap->update(node->parent->value, node);
+	}
 	
 	void *tmp = node->value;
 	node->value = node->parent->value;
@@ -152,6 +154,9 @@ BinomialNode *insertBinomial(Binomial *binHeap, void *value) {
 	consolidate(binHeap, node);
 	if (binHeap->extreme == 0 || (node->parent == node && binHeap->compare(node->value, binHeap->extreme->value) < 0)) {
 		binHeap->extreme = node;
+	}
+	if (binHeap->update) {
+		binHeap->update(node, node->value);
 	}
 	binHeap->size++;
 	return node;

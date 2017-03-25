@@ -113,6 +113,7 @@ DArray *dijkstra(int **graph, int *vertices, Vertex **vertObjects, int source, i
 		for (int i = 0; i < size; i++) {
 			if (vertObjects[i] && current->adjacency[i]) {
 				relaxEdge(current, vertObjects[i]);
+				decreaseKeyBinomial(binHeap, vertObjects[i]->binNode, vertObjects[i]);
 			}
 		}
 	}
@@ -155,10 +156,9 @@ void printBreadthFirst(FILE *file, DArray *minPath, Vertex **vertObjects) {
 		}
 		
 		if (getDArray(minPath, i + 1) == 0 || ((Vertex *)getDArray(minPath, i + 1))->distance == 0) {
-			printf("\n----");
+			printf("\n----\n");
 		}
 	}
-	fprintf(file, "\n");
 }
 
 int main(int argc, const char *argv[]) {
