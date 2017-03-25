@@ -90,8 +90,12 @@ int getWeight(Vertex *current, Vertex *next) {
 }
 
 void relaxEdge(Vertex *current, Vertex *next) {
-	int totalDist = getWeight(current, next) + current->distance;
+	if (current->distance == INT_MAX) {
+		current->distance = 0;
+	}
 	
+	int totalDist = getWeight(current, next) + current->distance;
+
 	if (next->distance > totalDist) {
 		next->distance = totalDist;
 		next->previous = current;
@@ -102,6 +106,7 @@ DArray *dijkstra(int **graph, int *vertices, Vertex **vertObjects, int source, i
 	Binomial *binHeap = initSingleSource(graph, vertObjects, vertices, source, size);
 	DArray *shortestVerts = newDArray(displayVertex);
 	Vertex *current = 0;
+	
 	while (sizeBinomial(binHeap) > 0) {
 		current = extractBinomial(binHeap);
 		insertDArray(shortestVerts, current);
@@ -114,11 +119,15 @@ DArray *dijkstra(int **graph, int *vertices, Vertex **vertObjects, int source, i
 	return shortestVerts;
 }
 
+void printBreadthFirst() {
+	
+}
+
 int main(int argc, const char *argv[]) {
 	int maxSize = 0;
 	int minSize = INT_MAX;
 	FILE *file = fopen(argv[1], "r");
-	queue *inputQueue = newQueue(0);
+	queue *inputQueue = newQueue(displayInteger);
 	
 	int v1 = 0;
 	int v2 = 0;
@@ -151,18 +160,18 @@ int main(int argc, const char *argv[]) {
 	int **graph = newGraph(maxSize);
 	int *vertices = newVertArray(maxSize);
 	Vertex **vertObjects = newVertObjects(maxSize);
-	integer *v1Integer = dequeue(inputQueue);
-	integer *v2Integer = dequeue(inputQueue);
-	integer *weightInteger = dequeue(inputQueue);
+	integer *v1Integer = 0;
+	integer *v2Integer = 0;
+	integer *weightInteger = 0;
 	
 	while (sizeQueue(inputQueue) > 0) {
+		v1Integer = dequeue(inputQueue);
+		v2Integer = dequeue(inputQueue);
+		weightInteger = dequeue(inputQueue);
 		graph[v1Integer->value][v2Integer->value] = weightInteger->value;
 		graph[v2Integer->value][v1Integer->value] = weightInteger->value;
 		vertices[v1Integer->value] = 1;
 		vertices[v2Integer->value] = 1;
-		v1Integer = dequeue(inputQueue);
-		v2Integer = dequeue(inputQueue);
-		weightInteger = dequeue(inputQueue);
 	}
 	
 	Vertex *vert = 0;
