@@ -112,8 +112,8 @@ void merge(Binomial *binHeap, DArray *darray) {
 	BinomialNode *node = 0;
 	for (int i = 0; i < sizeDArray(darray); i++) {
 		node = getDArray(darray, i);
-		consolidate(binHeap, node);
 		node->parent = node;
+		consolidate(binHeap, node);
 	}
 	
 	free(darray);
