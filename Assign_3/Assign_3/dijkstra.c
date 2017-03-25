@@ -75,7 +75,7 @@ int binHeapComparator(void *left, void *right) {
 }
 
 Binomial *initSingleSource(int **graph, Vertex **vertObjects, int *vertices, int source, int size) {
-	Binomial *binHeap = newBinomial(displayVertex, compareVertex, updateVertex);
+	Binomial *binHeap = newBinomial(displayVertex, binHeapComparator, updateVertex);
 	for (int i = 0; i < size; i++) {
 		if (vertices[i]) {
 			BinomialNode *node = insertBinomial(binHeap, vertObjects[i]);
