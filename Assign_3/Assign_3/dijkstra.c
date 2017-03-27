@@ -15,22 +15,6 @@
 #include "scanner.h"
 #include "queue.h"
 
-//int getNeighborWeight(Vertex *vertex, int index) {
-//	DArray *weights = getEdgeWeightsVertex(vertex);
-//	integer *weight = getDArray(weights, index);
-//	return weight->value;
-//}
-//
-//int getNeighborName(Vertex *vertex, int index) {
-//	DArray *neighbors = getNeighborsVertex(vertex);
-//	integer *neighbor = getDArray(neighbors, index);
-//	return neighbor->value;
-//}
-
-//int getDistance(DArray *distances, int index) {
-//	integer *distance =  getDArray(distances, index);
-//	return distance->value;
-//}
 
 int max(int a, int b) {
 	return a > b ? a : b;
@@ -213,6 +197,7 @@ int main(int argc, const char *argv[]) {
 			weight = 1;
 		}
 		
+		// We enqueue so we can init graph with max
 		enqueue(inputQueue, newInteger(v1));
 		enqueue(inputQueue, newInteger(v2));
 		enqueue(inputQueue, newInteger(weight));
@@ -231,10 +216,15 @@ int main(int argc, const char *argv[]) {
 		v1Integer = dequeue(inputQueue);
 		v2Integer = dequeue(inputQueue);
 		weightInteger = dequeue(inputQueue);
-		graph[v1Integer->value][v2Integer->value] = weightInteger->value;
-		graph[v2Integer->value][v1Integer->value] = weightInteger->value;
-		vertices[v1Integer->value] = 1;
-		vertices[v2Integer->value] = 1;
+		if (graph[v1Integer->value][v2Integer->value] == 0) {
+			graph[v1Integer->value][v2Integer->value] = weightInteger->value;
+			graph[v2Integer->value][v1Integer->value] = weightInteger->value;
+			vertices[v1Integer->value] = 1;
+			vertices[v2Integer->value] = 1;
+		} else if (weightInteger->value < graph[v1Integer->value][v2Integer->value]) {
+			graph[v1Integer->value][v2Integer->value] = weightInteger->value;
+			graph[v2Integer->value][v1Integer->value] = weightInteger->value;
+		}
 	}
 	
 	Vertex *vert = 0;
