@@ -195,7 +195,7 @@ void displayBinomial(FILE *file, Binomial *binHeap) {
 	queue *queueItems = newQueue(binHeap->display);
 	int count = 0;
 	
-	fprintf(file, "%d:", count++);
+	fprintf(file, "%d :", count++);
 	if (sizeBinomial(binHeap) == 0) {
 		fprintf(file, "\n----");
 	}
@@ -213,7 +213,7 @@ void displayBinomial(FILE *file, Binomial *binHeap) {
 			if (node == 0) {
 				node = dequeue(queueItems);
 				fprintf(file, "\n");
-				fprintf(file, "%d: ", count++);
+				fprintf(file, "%d : ", count++);
 				enqueue(queueItems, 0);
 			}
 			
