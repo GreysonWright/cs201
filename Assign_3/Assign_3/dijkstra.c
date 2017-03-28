@@ -129,37 +129,34 @@ void printBreadthFirst(FILE *file, DArray *minPath) {
 		return;
 	}
 	
-//	fprintf(file, "%d :", count++);
+	fprintf(file, "%d :", count++);
 	while (sizeQueue(forrest) > 0) {
 		enqueue(items, dequeue(forrest));
 		enqueue(items, 0);
-		while (sizeQueue(items) > 1) {
+		while (sizeQueue(items) > 0) {
 			vertex = dequeue(items);
 			
 			if (vertex == 0) {
-				fprintf(file, "\n");
-				fprintf(file, "%d :", count++);
 				vertex = dequeue(items);
 				while (sizeBinomial(binHeap) > 0) {
 					fprintf(file, " ");
 					displayVertex(file, extractBinomial(binHeap));
 				}
-				enqueue(items, 0);
+				
+				if (getDArray(minPath, minPathSize) != vertex) {
+					fprintf(file, "\n");
+					fprintf(file, "%d :", count++);
+					enqueue(items, 0);
+				}
 			}
 			
 			if (vertex) {
-//				displayVertex(file, vertex);
 				insertBinomial(binHeap, vertex);
-				
-//				if (peekQueue(items) != 0) {
-//					fprintf(file, " ");
-//				}
 				
 				for (int i = 0; i < minPathSize; i++) {
 					current = getDArray(minPath, i);
 					if (current->previous == vertex) {
 						enqueue(items, current);
-//						insertBinomial(binHeap, vertex);
 					}
 				}
 			}
