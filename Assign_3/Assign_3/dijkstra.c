@@ -177,19 +177,11 @@ int main(int argc, const char *argv[]) {
 	FILE *file = fopen(argv[1], "r");
 	queue *inputQueue = newQueue(displayInteger);
 	
-	int v1 = 0;
-	int v2 = 0;
+	int v1 = readInt(file);
+	int v2 = readInt(file);
 	int weight = 0;
-	char *tmp = 0;
-	while (1) {
-		v1 = readInt(file);
-		v2 = readInt(file);
-		tmp = readToken(file);
-		
-		if (feof(file)) {
-			break;
-		}
-		
+	char *tmp = readToken(file);
+	while (!feof(file)) {
 		minSize = min(minSize, min(v1, v2));
 		maxSize = max(maxSize, max(v1, v2));
 		if (tmp[0] != ';') {
@@ -203,6 +195,10 @@ int main(int argc, const char *argv[]) {
 		enqueue(inputQueue, newInteger(v1));
 		enqueue(inputQueue, newInteger(v2));
 		enqueue(inputQueue, newInteger(weight));
+		
+		v1 = readInt(file);
+		v2 = readInt(file);
+		tmp = readToken(file);
 	}
 	maxSize++;
 	fclose(file);
