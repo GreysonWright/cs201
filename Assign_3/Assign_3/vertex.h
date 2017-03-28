@@ -21,9 +21,8 @@ typedef struct Vertex {
 	BinomialNode *binNode;
 } Vertex;
 
-Vertex *newVertex(int name, int *adjacency);
-int getNameVertex(void *);
+Vertex *newVertex(int , int *);
 int compareVertex(void *, void *);
 void displayVertex(FILE *, void *);
-void updateVertex(void *value , BinomialNode *node);
+void updateVertex(void * , BinomialNode *);
 #endif /* Vertex_h */

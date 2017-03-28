@@ -113,7 +113,7 @@ void printBreadthFirst(FILE *file, DArray *minPath) {
 	
 	Vertex *vertex = 0;
 	Vertex *current = 0;
-	
+	Binomial *binHeap = newBinomial(displayVertex, binHeapComparator, updateVertex);
 	queue *forrest = newQueue(0);
 	queue *items = newQueue(0);
 	
@@ -129,7 +129,7 @@ void printBreadthFirst(FILE *file, DArray *minPath) {
 		return;
 	}
 	
-	fprintf(file, "%d : ", count++);
+//	fprintf(file, "%d :", count++);
 	while (sizeQueue(forrest) > 0) {
 		enqueue(items, dequeue(forrest));
 		enqueue(items, 0);
@@ -137,23 +137,29 @@ void printBreadthFirst(FILE *file, DArray *minPath) {
 			vertex = dequeue(items);
 			
 			if (vertex == 0) {
-				vertex = dequeue(items);
 				fprintf(file, "\n");
-				fprintf(file, "%d : ", count++);
+				fprintf(file, "%d :", count++);
+				vertex = dequeue(items);
+				while (sizeBinomial(binHeap) > 0) {
+					fprintf(file, " ");
+					displayVertex(file, extractBinomial(binHeap));
+				}
 				enqueue(items, 0);
 			}
 			
 			if (vertex) {
-				displayVertex(file, vertex);
+//				displayVertex(file, vertex);
+				insertBinomial(binHeap, vertex);
 				
-				if (peekQueue(items) != 0) {
-					fprintf(file, " ");
-				}
+//				if (peekQueue(items) != 0) {
+//					fprintf(file, " ");
+//				}
 				
 				for (int i = 0; i < minPathSize; i++) {
 					current = getDArray(minPath, i);
 					if (current->previous == vertex) {
 						enqueue(items, current);
+//						insertBinomial(binHeap, vertex);
 					}
 				}
 			}

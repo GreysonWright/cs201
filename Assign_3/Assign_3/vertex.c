@@ -29,10 +29,6 @@ int compareVertex(void *left, void *right) {
 	return difference;
 }
 
-int getNameVertex(void *vertex) {
-	return ((Vertex *)vertex)->name;
-}
-
 void displayVertex(FILE *file, void *vertex) {
 	Vertex *vert = vertex;
 	
