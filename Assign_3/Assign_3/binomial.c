@@ -203,7 +203,7 @@ void displayBinomial(FILE *file, Binomial *binHeap) {
 	for (int i = 0; i < sizeDArray(binHeap->rootlist); i++) {
 		node = getDArray(binHeap->rootlist, i);
 		if (node) {
-			fprintf(stdout, " ");
+			fprintf(file, " ");
 			enqueue(queueItems, node);
 			enqueue(queueItems, 0);
 		}

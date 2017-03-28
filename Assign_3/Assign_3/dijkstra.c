@@ -129,8 +129,8 @@ void printBreadthFirst(FILE *file, DArray *minPath) {
 		return;
 	}
 	
-	fprintf(file, "%d :", count++);
 	while (sizeQueue(forrest) > 0) {
+		fprintf(file, "%d :", count++);
 		enqueue(items, dequeue(forrest));
 		enqueue(items, 0);
 		while (sizeQueue(items) > 0) {
@@ -162,9 +162,8 @@ void printBreadthFirst(FILE *file, DArray *minPath) {
 			}
 		}
 		count = 0;
-		fprintf(file, "\n----");
+		fprintf(file, "\n----\n");
 	}
-	fprintf(file, "\n");
 }
 
 
