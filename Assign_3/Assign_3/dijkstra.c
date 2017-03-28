@@ -89,7 +89,7 @@ void relaxEdge(Vertex *current, Vertex *next) {
 
 DArray *dijkstra(int *vertices, Vertex **vertObjects, int size) {
 	Binomial *binHeap = initSingleSource(vertObjects, vertices, size);
-	DArray *shortestVerts = newDArray(displayVertex);
+	DArray *shortestVerts = newDArray(0);
 	Vertex *current = 0;
 	
 	while (sizeBinomial(binHeap) > 0) {
@@ -125,11 +125,11 @@ void printBreadthFirst(FILE *file, DArray *minPath) {
 	}
 	
 	if (sizeDArray(minPath) == 0) {
-		fprintf(file, "0:\n----\n");
+		fprintf(file, "0 :\n----\n");
 		return;
 	}
 	
-	fprintf(file, "%d: ", count++);
+	fprintf(file, "%d : ", count++);
 	while (sizeQueue(forrest) > 0) {
 		enqueue(items, dequeue(forrest));
 		enqueue(items, 0);
@@ -139,7 +139,7 @@ void printBreadthFirst(FILE *file, DArray *minPath) {
 			if (vertex == 0) {
 				vertex = dequeue(items);
 				fprintf(file, "\n");
-				fprintf(file, "%d: ", count++);
+				fprintf(file, "%d : ", count++);
 				enqueue(items, 0);
 			}
 			
