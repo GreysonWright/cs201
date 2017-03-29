@@ -192,9 +192,11 @@ int main(int argc, const char *argv[]) {
 		}
 		
 		// We enqueue so we can init graph with max
-		enqueue(inputQueue, newInteger(v1));
-		enqueue(inputQueue, newInteger(v2));
-		enqueue(inputQueue, newInteger(weight));
+		if (v1 != v2) {
+			enqueue(inputQueue, newInteger(v1));
+			enqueue(inputQueue, newInteger(v2));
+			enqueue(inputQueue, newInteger(weight));
+		}
 		
 		v1 = readInt(file);
 		v2 = readInt(file);
