@@ -153,6 +153,10 @@ BinomialNode *insertBinomial(Binomial *binHeap, void *value) {
 	if (binHeap->extreme == 0 || (node->parent == node && binHeap->compare(node->value, binHeap->extreme->value) < 0)) {
 		binHeap->extreme = node;
 	}
+	
+	if (binHeap->update) {
+		binHeap->update(value, node);
+	}
 	binHeap->size++;
 	return node;
 }
@@ -167,6 +171,10 @@ void deleteBinomial(Binomial *binHeap, BinomialNode *node) {
 }
 
 void decreaseKeyBinomial(Binomial *binHeap, BinomialNode *node, void *value) {
+	if (node == 0 || value == 0) {
+		return;
+	}
+	
 	node->value = value;
 	node = bubbleUp(binHeap, node);
 	if (binHeap->compare(node->value, binHeap->extreme->value) < 0) {

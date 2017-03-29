@@ -143,7 +143,7 @@ void printBreadthFirst(FILE *file, DArray *minPath) {
 					displayVertex(file, extractBinomial(binHeap));
 				}
 				
-				if (getDArray(minPath, minPathSize) != vertex) {
+				if (vertex != 0) {
 					fprintf(file, "\n");
 					fprintf(file, "%d :", count++);
 					enqueue(items, 0);
