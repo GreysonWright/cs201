@@ -90,7 +90,7 @@ BinomialNode *combine(Binomial *binHeap, BinomialNode *x, BinomialNode *y) {
 void consolidate(Binomial *binHeap, BinomialNode *node) {
 	int degree = getDegree(node);
 	
-	while (getDArray(binHeap->rootlist, degree)) {
+	while (getDArray(binHeap->rootlist, degree) && degree < sizeDArray(binHeap->rootlist)) {
 		node = combine(binHeap, node, getDArray(binHeap->rootlist, degree));
 		setDArray(binHeap->rootlist, degree, 0);
 		degree++;
