@@ -14,6 +14,7 @@ Vertex *newVertex(int name, int *adjacency) {
 	Vertex *vertex = malloc(sizeof *vertex);
 	vertex->name = name;
 	vertex->distance = INT_MAX;
+	vertex->previous = 0;
 	vertex->adjacency = adjacency;
 	vertex->binNode = 0;
 	return vertex;
