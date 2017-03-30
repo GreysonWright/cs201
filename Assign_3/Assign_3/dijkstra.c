@@ -125,7 +125,7 @@ void printBreadthFirst(FILE *file, DArray *minPath) {
 	}
 	
 	if (sizeDArray(minPath) == 0) {
-		fprintf(file, "0 :\n----\n");
+//		fprintf(file, "0 :\n----\n");
 		return;
 	}
 	
