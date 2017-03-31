@@ -80,9 +80,7 @@ int sizeDArray(DArray *darray) {
 void displayDArray(FILE *file, DArray *darray) {
 	fprintf(file, "[");
 	for (int i = 0; i < darray->size; i++) {
-		if (darray->array[i] != 0) {
-			darray->display(file, darray->array[i]);	
-		}
+		darray->display(file, darray->array[i]);
 		if (i < darray->size - 1) {
 			fprintf(file, ",");
 		}
