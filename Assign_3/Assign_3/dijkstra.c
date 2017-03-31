@@ -172,8 +172,6 @@ int main(int argc, const char *argv[]) {
 		exit(-1);
 	}
 	
-	int maxSize = INT_MIN;
-	int minSize = INT_MAX;
 	FILE *file = fopen(argv[1], "r");
 	queue *inputQueue = newQueue(displayInteger);
 	
@@ -181,6 +179,10 @@ int main(int argc, const char *argv[]) {
 	int v2 = readInt(file);
 	int weight = 0;
 	char *tmp = readToken(file);
+	
+	int maxSize = max(v1, v2);
+	int minSize = min(v1, v2);
+	
 	while (!feof(file)) {
 		minSize = min(minSize, min(v1, v2));
 		maxSize = max(maxSize, max(v1, v2));
