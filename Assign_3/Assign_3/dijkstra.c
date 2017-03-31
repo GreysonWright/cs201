@@ -25,6 +25,10 @@ int min(int a, int b) {
 }
 
 int **newGraph(int size) {
+	if (size == 0) {
+		return 0;
+	}
+	
 	int **graph = malloc((sizeof *graph) * size);
 	for (int i = 0; i < size; i++) {
 		graph[i] = calloc(size, (sizeof **graph) * size);
@@ -33,11 +37,19 @@ int **newGraph(int size) {
 }
 
 int *newVertArray(int size) {
+	if (size == 0) {
+		return 0;
+	}
+	
 	int *vertArray = calloc(size, (sizeof *vertArray) * size);
 	return vertArray;
 }
 
 Vertex **newVertObjects(int size) {
+	if (size == 0) {
+		return 0;
+	}
+	
 	Vertex **vertObjects = calloc(size, (sizeof **vertObjects) * size);
 	return vertObjects;
 }
