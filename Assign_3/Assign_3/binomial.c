@@ -172,7 +172,7 @@ void deleteBinomial(Binomial *binHeap, BinomialNode *node) {
 }
 
 void decreaseKeyBinomial(Binomial *binHeap, BinomialNode *node, void *value) {
-	if (node == 0 || value == 0) {
+	if (node == 0) {
 		return;
 	}
 	

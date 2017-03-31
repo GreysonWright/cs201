@@ -42,5 +42,7 @@ void displayVertex(FILE *file, void *vertex) {
 
 void updateVertex(void *value , BinomialNode *node) {
 	Vertex *vertex = value;
-	vertex->binNode = node;
+	if (vertex) {
+		vertex->binNode = node;
+	}
 }
