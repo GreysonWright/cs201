@@ -193,7 +193,7 @@ void *extractBinomial(Binomial *binHeap) {
 	if (binHeap->update) {
 		binHeap->update(extremeNode->value, 0);
 	}
-//	free(extremeNode);
+	free(extremeNode);
 	extremeNode = 0;
 	binHeap->extreme = findMin(binHeap, binHeap->rootlist);
 	return value;
