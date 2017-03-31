@@ -172,7 +172,7 @@ int main(int argc, const char *argv[]) {
 		exit(-1);
 	}
 	
-	int maxSize = 0;
+	int maxSize = INT_MIN;
 	int minSize = INT_MAX;
 	FILE *file = fopen(argv[1], "r");
 	queue *inputQueue = newQueue(displayInteger);
