@@ -27,11 +27,12 @@ DArray *newDArray(void (*display)(FILE *file, void *value)) {
 }
 
 void insertDArray(DArray *darray, void *value) {
+	darray->array[darray->size++] = value;
+	
 	if (darray->size == darray->capacity) {
 		darray->capacity *= 2;
 		darray->array = realloc(darray->array, sizeof *(darray->array) * darray->capacity);
 	}
-	darray->array[darray->size++] = value;
 }
 
 void *removeDArray(DArray *darray) {
@@ -41,20 +42,20 @@ void *removeDArray(DArray *darray) {
 		return 0;
 	}
 	
+	setDArray(darray, darray->size - 1, 0);
+	darray->size--;
+	
 	if (darray->capacity * 0.25 > darray->size) {
 		darray->capacity /= 2;
 		darray->array = realloc(darray->array, sizeof *(darray->array) * darray->capacity);
 	}
-	
-	setDArray(darray, darray->size - 1, 0);
-	darray->size--;
 	
 	return value;
 }
 
 void *getDArray(DArray *darray, int index) {
 	if (index >= darray->size || index < 0) {
-		fprintf(stderr, "Index '%d' out of bounds.", index);
+		fprintf(stderr, "Index '%d' out of bounds.\n", index);
 		return 0;
 	}
 	return darray->array[index];
@@ -62,7 +63,7 @@ void *getDArray(DArray *darray, int index) {
 
 void setDArray(DArray *darray, int index, void *value) {
 	if (index > darray->size || index < 0) {
-		fprintf(stderr, "Index '%d' out of bounds.", index);
+		fprintf(stderr, "Index '%d' out of bounds.\n", index);
 		return;
 	}
 	
@@ -86,5 +87,6 @@ void displayDArray(FILE *file, DArray *darray) {
 		}
 	}
 	fprintf(file, "]");
+	fprintf(file, "[%d]", darray->capacity - darray->size);
 }
 
