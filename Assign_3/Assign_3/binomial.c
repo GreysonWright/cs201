@@ -212,7 +212,6 @@ void displayBinomial(FILE *file, Binomial *binHeap) {
 	for (int i = 0; i < sizeDArray(binHeap->rootlist); i++) {
 		node = getDArray(binHeap->rootlist, i);
 		if (node) {
-			fprintf(file, " ");
 			enqueue(queueItems, node);
 			enqueue(queueItems, 0);
 		}
@@ -222,11 +221,12 @@ void displayBinomial(FILE *file, Binomial *binHeap) {
 			if (node == 0) {
 				node = dequeue(queueItems);
 				fprintf(file, "\n");
-				fprintf(file, "%d: ", count++);
+				fprintf(file, "%d:", count++);
 				enqueue(queueItems, 0);
 			}
 			
 			if (node) {
+				fprintf(file, " ");
 				displayBinomialNode(file, node);
 				if (node->parent != node) {
 					fprintf(file, "(");
@@ -234,9 +234,7 @@ void displayBinomial(FILE *file, Binomial *binHeap) {
 					fprintf(file, ")");
 				}
 				
-				if (peekQueue(queueItems) != 0) {
-					fprintf(file, " ");
-				} else if (sizeDArray(node->children) == 0) {
+				if (peekQueue(queueItems) == 0 && sizeDArray(node->children) == 0) {
 					count = 0;
 					fprintf(file, "\n----");
 				}
